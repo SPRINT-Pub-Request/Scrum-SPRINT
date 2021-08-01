@@ -6,7 +6,7 @@ const passport = require('passport')
 const bodyparser = require('body-parser')
 const session = require('express-session')
 const express = require('express')
-
+const routes = require('./routes/routes.js');
 const app = express()
 
 const {
@@ -14,14 +14,14 @@ const {
     hostname = HOSTNAME,
 } = process.env
 
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.set('view engine', 'hbs');
 
 app.use(express.static('images'));
 
-app.get('/' , (req , res) => {
-    res.render("login");
-});
-
+app.use('/' , routes);
 
 
 app.listen(port, hostname, () => {

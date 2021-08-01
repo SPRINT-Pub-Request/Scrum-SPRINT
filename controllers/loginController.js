@@ -1,29 +1,10 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth2').Strategy;
-
-const dotenv = require('dotenv');
-dotenv.config();
-
-passport.serializeUser(function (user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-    done(null, user);
-});
-
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    passReqToCallback: true
-},
-    function (request, accessToken, refreshToken, profile, done) {
-        return done(null, profile);
-    }
-));
+// TODO: Will Add Session 
 
 const loginController = {
+
+    getIndex: function (req , res) { 
+        res.render('login');
+    },
 
     googleLogin: function (req , res) {
 
@@ -33,9 +14,20 @@ const loginController = {
         }
 
         if (account.hd === "dlsu.edu.ph" && account.domain === "dlsu.edu.ph") {
-            return res.redirect('/main');
+            return res.redirect('/add_request');
         }
+        else
+            res.redirect('/failed')
+    } ,
 
-        res.redirect('/failed')
-    }
+    loginFailed: function(req , res) {
+        res.render('login_fail')
+    },
+
+    logout: function(req , res) {
+        res.redirect('/');
+    },
+
 }
+
+module.exports = loginController;
