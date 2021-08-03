@@ -18,6 +18,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + `/views/partials`);
 
 app.use(express.static('public'));
 
