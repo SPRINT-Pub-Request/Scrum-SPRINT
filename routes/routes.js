@@ -16,5 +16,6 @@ app.get('/failed' , loginController.loginFailed);
 app.post('/logout' , loginController.logout);
 
 app.get('/add_request' , requestController.getIndex)
+app.post('/add_request', requestController.postRequest);
 
 module.exports = app;

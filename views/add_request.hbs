@@ -12,55 +12,58 @@
 
     <div>
         <h1>Add Request</h1>
-        <div><form>
-            <h3>Requester's Information</h3>
-                <input type="text" placeholder="requester name">
+        <div>
+            <form method = "post" action = "/add_request">
+                <h3>Requester's Information</h3>
+                    <input name = "reqname" type="text" placeholder="requester name">
 
-                <select>
-                  <option>Activities</option>
-                  <option>Finance</option>
-                  <option>HRD</option>
-                  <option>TND</option>
-                </select> 
+                    <select name = "committee">
+                        <option value = "activities">Activities</option>
+                        <option value = "finance">Finance</option>
+                        <option value = "hrd">HRD</option>
+                        <option value = "tnd">TND</option>
+                    </select> 
 
-            <h3>Activity Information</h3>
-                <input type="text" placeholder="activity name">
-                <input type="text" placeholder="description"> <br>
-                
-                <div>
-                    Start/End Dates :
-                    from <input type="date" placeholder="Start date"> <input type="time"> to
-                    <input type="date" placeholder="End date"> <input type="time"> <br>
+                <h3>Activity Information</h3>
+                    <input name = "activity_name" type="text" placeholder="activity name">
+                    <input name = "description" type="text" placeholder="description"> <br>
+                    
+                    <div>
+                        Start/End Dates :
+                        from <input name = "start_date" type="date" placeholder="Start date"> <input name = "start_time" type="time"> to
+                        <input name = "end_date" type="date" placeholder="End date"> <input name = "end_time" type="time"> <br>
 
-                    <input type="text" placeholder="Venue (if online, please put URL)"> <br>
-                    <input type="text" placeholder="theme">
-                </div>
+                        <input name = "venue" type="text" placeholder="Venue (if online, please put URL)"> <br>
+                        <input name = "theme" type="text" placeholder="theme">
+                    </div>
 
-            <h3>Publication Information</h3>
-                <h4>Type of publications :</h4>
-                    <input type="radio" value="poster"> Single Image/Poster <br>
-                    <input type="radio" value="album"> Album <br>
-                    <input type="radio" value="video"> Video (please specify length and upload the clips) <br>
-                    <input type="radio" value="fb_cover"> FB Event Cover <br>
-                    <input type="radio" value="other"> Other : <input type="text" placeholder="type" /><br>
-                
-                <br>
+                <h3>Publication Information</h3>
+                    <h4>Type of publications :</h4>
+                        <input type="radio" value="poster"> Single Image/Poster <br>
+                        <input type="radio" value="album"> Album <br>
+                        <input type="radio" value="video"> Video (please specify length and upload the clips) <br>
+                        <input type="radio" value="fb_cover"> FB Event Cover <br>
+                        <input type="radio" value="other"> Other : <input type="text" placeholder="type" /><br>
+                    <br>
 
-                Posting Date : <input type="date"> <input type="time"> <br>
+                    Posting Date : <input name = "posting_date" type="date"> <input name = "posting_time" type="time"> <br>
 
-                Will you be posting a post-event post (for post-event caption)
-                    <input type="radio" value="yes"> Yes
-                    <input type="radio" value="no"> No <br>
-                
-                <input type="url" placeholder="link to related files (if applicable)"> <br><br>
+                    Will you be posting a post-event post (for post-event caption)
+                        <input type="radio" value="yes"> Yes
+                        <input type="radio" value="no"> No <br>
+                    
+                    <input name = "files_url" type="url" placeholder="link to related files (if applicable)"> <br><br>
 
-                <input type="text" placeholder="details"><br>
-                <input type="text" placeholder="comments"><br>
-                <input type="text" placeholder="special request"><br><br>
+                    <input name = "details" type="text" placeholder="details"><br>
+                    <input name = "comments" type="text" placeholder="comments"><br>
+                    <input name = "specialRequest" type="text" placeholder="special request"><br><br>
 
-                <button>confirm</button>
+                    <!--<button>confirm</button>--->
 
-        </form></div>
+                    <input name = "submit" type = "submit" value = "SUBMIT">
+
+            </form>
+        </div>
     </div>
     
 </body>
