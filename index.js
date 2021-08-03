@@ -19,7 +19,7 @@ app.use(passport.session())
 
 app.set('view engine', 'hbs');
 
-app.use(express.static('images'));
+app.use(express.static('public'));
 
 app.use('/' , routes);
 

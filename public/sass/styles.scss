@@ -1,0 +1,44 @@
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+
+$light: #fffcf5;
+$dark: #1D1A1A;
+
+html,body {
+    min-height: 100%;
+}
+
+body{
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background: rgb(255,253,246);
+    background: linear-gradient(180deg, rgba(255,253,246,1) 25%, rgba(255,246,225,1) 60%, rgba(255,235,187,1) 90%, rgba(255,220,166,1) 100%);
+}
+
+.container-primary{
+    height: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-center{
+    display: flex;
+    margin-top: 5%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img_btnicon{
+    width: 20px;
+    height: 20px;
+}
+
+.logo{
+    max-width: 350px;
+}
+
+.h-spacer{
+    height: 30px;
+}
