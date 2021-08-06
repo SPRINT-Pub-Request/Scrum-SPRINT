@@ -17,8 +17,8 @@ const app = express();
 
 db.connect();
 
-port = process.env.PORT;
-hostname = process.env.HOSTNAME;
+port = process.env.PORT || 3000;
+hostname = process.env.HOSTNAME || '0.0.0.0';
 sessionSecret = process.env.SESSION_SECRET;
 sessionName = process.env.SESSION_NAME;
 
@@ -53,7 +53,8 @@ app.use((req , res) => {
     res.redirect('/failed');
 });
 
+// Using 5000 for it to work in heroku
 app.listen(port, hostname, () => {
     console.log('Server running at:');
-    console.log('http://' + hostname + ':' + port);
+    console.log('http://' + "localhost" + ':' + port);
 });
