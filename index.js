@@ -48,6 +48,10 @@ app.use(session({
 
 app.use('/' , routes);
 
+app.use((req , res) => {
+    req.session.httpCode = 404;
+    res.redirect('/failed');
+});
 
 app.listen(port, hostname, () => {
     console.log('Server running at:');
