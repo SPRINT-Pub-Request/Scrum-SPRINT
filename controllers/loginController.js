@@ -8,26 +8,24 @@ const loginController = {
             res.render('login');
     },
 
-    googleLogin: (req , res , err) => {
+    googleLogin: (req , res) => {
 
-        const { domain } =  req.user._json.domain;
+        const domain =  req.user._json.domain;
 
-        try{
-            if (account.domain === "dlsu.edu.ph") {
-                req.session.userID = req.user.id;
-                return res.redirect('/add_request');
-            }
-            else
-                res.redirect('/failed')
+        if(domain === "dlsu.edu.ph") {
+            req.session.userID = req.user.id;
+            return res.redirect('/add_request');
         }
-        catch(err){
-            return res.redirect('/');
-        }
-        
+        else
+            res.redirect('/failed')
+
     } ,
 
     loginFailed: (req , res) => {
-        res.render('login_fail')
+        if(req.session.userID)
+            res.redirect('/add_request');
+        else
+            res.render('login_fail')
     },
 
     logout: (req , res) => {
