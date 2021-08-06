@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
 
-const url = 'mongodb://localhost:27017';
+const url = process.env.DB_URL;
 
 const options = {
     useUnifiedTopology: true,
