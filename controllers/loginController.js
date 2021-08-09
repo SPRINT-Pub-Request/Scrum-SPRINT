@@ -1,30 +1,52 @@
 // TODO: Will Add Session 
-
 const loginController = {
-
-    getIndex: function (req , res) { 
-        res.render('login');
+    
+    getIndex: (req , res) => {  
+        if(req.session.userID)
+            res.redirect('/add_request');
+        else
+            res.render('login');
     },
 
-    googleLogin: function (req , res) {
+    googleLogin: (req , res) => {
 
-        account = {
-            hd: req.user._json.hd,
-            domain: req.user._json.domain
-        }
+        const domain =  req.user._json.domain;
 
-        if (account.hd === "dlsu.edu.ph" && account.domain === "dlsu.edu.ph") {
+        if(domain === "dlsu.edu.ph") {
+            req.session.userID = req.user.id;
+            req.session.httpCode = 200;
             return res.redirect('/add_request');
         }
-        else
-            res.redirect('/failed')
+        else{
+            req.session.httpCode = 404;
+            return res.redirect('/failed')
+        }
     } ,
 
-    loginFailed: function(req , res) {
-        res.render('login_fail')
+    loginFailed: (req , res) => {
+        if(req.session.userID)
+            res.redirect('/add_request');
+        else if(req.session.httpCode == 404){
+            req.session.destroy(err => {
+            if(err) {
+                return res.redirect('/')
+            }});
+            
+            res.clearCookie(sessionName);
+            res.render('login_fail');
+        }
+        else
+            res.redirect('/');
     },
 
-    logout: function(req , res) {
+    logout: (req , res) => {
+
+        req.session.destroy(err => {
+        if(err) {
+            return res.redirect('/');
+        }});
+
+        res.clearCookie(sessionName);
         res.redirect('/');
     },
 

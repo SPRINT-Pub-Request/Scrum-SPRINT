@@ -1,14 +1,25 @@
-<div>
-    <img src="img/SPRINT Gold.png">
-    <p>Username</p>
-    <p>user@dlsu.edu.ph</p>
+<div class="container-sidebar"> 
+<div class="sidebar-content">
+    <nav><img class="img-fluid" src="img/SPRINT Gold.png">
+        <div style="text-align: center;">
+        Username <br>
+        user@dlsu.edu.ph</div>
 
-    <div>
-        <ul>
-            <li><button>Add Request</button></li>
+        <div class="h-spacer50"></div>
+
+        <ul class="nav-sidebar">
+            <li><div class="btn-sidebar nav-active">Add Request</div></li>
+            <li><div class="btn-sidebar">View Requests</div></li>
+            <li><div class="btn-sidebar">Manage Requests</div></li>
+            <li><div class="btn-sidebar">Manage Users</div></li>
         </ul>
-    </div>
+    </nav>
+
     <form method = "post" action = "/logout">
-        <button type = "submit">Log out</button>
+        <button class="btn-logout" type = "submit"> 
+            <i class="bi-x-square-fill" alt="Bootstrap" style="font-size: 1.5rem; color: rgb(230, 190, 59);"></i>
+            Log out
+        </button>
     </form>
+</div>
 </div>

@@ -1,9 +1,12 @@
 const requestController = {
-    getIndex: function(req , res) {
-        res.render('add_request')
+    getIndex: (req , res) => {
+        if(req.session.userID)
+            res.render('add_request')
+        else
+            res.redirect('/')
     },
 
-    postRequest: function (req, res){
+    postRequest: (req, res) => {
 
         const reqname = req.body.reqname;
         const committee = req.body.committee;
