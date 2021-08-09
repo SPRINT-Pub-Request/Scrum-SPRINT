@@ -5,7 +5,6 @@ const requestController = {
 
     postRequest: function (req, res){
 
-
         const reqname = req.body.reqname;
         const committee = req.body.committee;
         const activity_name = req.body.activity_name;
@@ -22,6 +21,7 @@ const requestController = {
         const comments = req.body.comments;
         const specialRequest = req.body.specialRequest;
 
+        /* Test 
         console.log("reqname: " + reqname);
         console.log("committee: " + committee);
         console.log("activty_name: " + activity_name);
@@ -37,7 +37,10 @@ const requestController = {
         console.log("details: " + details);
         console.log("comments: " + comments);
         console.log("specialRequest: " + specialRequest);
+        */
         
+        
+
         res.send('Inputs ok!');
     }
 }
