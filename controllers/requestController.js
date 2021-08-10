@@ -1,3 +1,9 @@
+
+const db = require('../models/db.js')
+
+const PubRequest = require('../models/PubRequestModel.js');
+
+
 const requestController = {
     getIndex: (req , res) => {
         if(req.session.userID)
@@ -13,18 +19,40 @@ const requestController = {
         const activity_name = req.body.activity_name;
         const description = req.body.description;
         const start_date = req.body.start_date;
-        const start_time = req.body.start_time;
+        const start_temp_time = req.body.start_time;
         const end_date = req.body.end_date;
-        const end_time = req.body.end_time;
+        const end_temp_time = req.body.end_time;
         const venue = req.body.venue;
         const theme = req.body.theme;
         const posting_date = req.body.posting_date;
-        const posting_time = req.body.posting_time;
+        const posting_temp_time = req.body.posting_time;
         const details = req.body.details;
         const comments = req.body.comments;
         const specialRequest = req.body.specialRequest;
 
-        /* Test 
+        const start_time = start_temp_time.toString();
+        const end_time = end_temp_time.toString();
+        const posting_time = posting_temp_time.toString();
+
+        const pubrequest = {
+            reqname : reqname, 
+            committee : committee,
+            activity_name : activity_name,
+            description : description,
+            start_date : start_date,
+            start_time : start_time,
+            end_date : end_date,
+            end_time : end_time,
+            venue : venue,
+            theme : theme,
+            posting_date : posting_date,
+            posting_time : posting_time,
+            details : details,
+            comments : comments,
+            specialRequest : specialRequest
+        }
+
+        /*     // Test 
         console.log("reqname: " + reqname);
         console.log("committee: " + committee);
         console.log("activty_name: " + activity_name);
@@ -39,12 +67,17 @@ const requestController = {
         console.log("posting_time: " + posting_time);
         console.log("details: " + details);
         console.log("comments: " + comments);
-        console.log("specialRequest: " + specialRequest);
-        */
+        console.log("specialRequest: " + specialRequest);*/
         
-        
-
-        res.send('Inputs ok!');
+        db.insertOne(PubRequest, pubrequest, function(flag){
+            console.log(flag);
+            if (flag){
+                res.send('Inputs saved in database');
+            }
+            else{
+                res.send('error in database')
+            }
+        });
     }
 }
 
