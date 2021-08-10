@@ -26,6 +26,7 @@ const requestController = {
         const theme = req.body.theme;
         const posting_date = req.body.posting_date;
         const posting_temp_time = req.body.posting_time;
+        const links = req.body.files_url;
         const details = req.body.details;
         const comments = req.body.comments;
         const specialRequest = req.body.specialRequest;
@@ -47,9 +48,11 @@ const requestController = {
             theme : theme,
             posting_date : posting_date,
             posting_time : posting_time,
+            links : links,
             details : details,
             comments : comments,
-            specialRequest : specialRequest
+            specialRequest : specialRequest,
+            status : "Not Started"
         }
 
         /*     // Test 

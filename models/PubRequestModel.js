@@ -62,6 +62,11 @@ var PubRequestSchema = new mongoose.Schema({
         required: true
     },
 
+    links : {
+        type : String,
+        required: true
+    },
+
     details: {
         type : String,
         required: true
@@ -73,6 +78,11 @@ var PubRequestSchema = new mongoose.Schema({
     },
 
     specialRequest: {
+        type : String,
+        required: true
+    },
+
+    status: {
         type : String,
         required: true
     },
