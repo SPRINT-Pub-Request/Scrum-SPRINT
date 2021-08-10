@@ -12,6 +12,13 @@ const requestController = {
             res.redirect('/')
     },
 
+    getManageReq: (req , res) => {
+        if(req.session.userID)
+            res.render('manage_requests')
+        else
+            res.redirect('/')
+    },
+
     postRequest: (req, res) => {
 
         const reqname = req.body.reqname;
