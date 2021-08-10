@@ -21,6 +21,8 @@ app.post('/logout' ,  loginController.logout);
 app.get('/add_request' ,  requestController.getIndex)
 app.post('/add_request', requestController.postRequest);
 
+app.get('/manage_requests' ,  requestController.getManageReq);
+
 app.get('/manage_users', usersController.getIndex);
 
 module.exports = app;

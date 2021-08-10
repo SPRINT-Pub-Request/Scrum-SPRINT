@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css"/> 
+    <title>Manage Users</title>
+</head>
+<body>
+    
+    {{> sidebar }}
+
+    <div class="container-content">
+
+        <h1>Request Database</h1>
+        <div class="h-spacer50"></div>
+
+        <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+                    <div class="spacer"></div>
+
+                    <table id="requeststable" class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Request ID</th>
+                                <th scope="col">Activity Name</th>
+                                <th scope="col">Posting Date</th>
+                                <th scope="col">Assigned to</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>SPRINT General Assembly</td>
+                                <td>09/21/21 8:00PM</td>
+                                <td>.......</td>
+                                <td>Not Started</td>
+                            </tr>
+
+                           
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        </div>
+        
+        <div class="h-spacer50"></div>
+
+        <h2>Edit Request Information</h2>
+            <div class="h-spacer50"></div>
+
+            <div>
+            <form method = "post" action = "/add_request">
+                
+                    <input id = "reqname" name = "reqname" type="text" placeholder="requester name">
+
+                    <select id = "committee"name = "committee">
+                        <option value = " ">...</option>
+                        <option value = "activities">Activities</option>
+                        <option value = "finance">Finance</option>
+                        <option value = "hrd">HRD</option>
+                        <option value = "tnd">TND</option>
+                        <option value = "pevp">P-EVP</option>
+                        <option value = "secretariat">Secretariat</option>
+                        <option value = "externals">Externals</option>
+                        <option value = "sociocivic">Socio Civic</option>
+                    </select> <br>
+
+                
+                    <input id = "activity_name" name = "activity_name" type="text" placeholder="activity name">
+                    <input id = "description" name = "description" type="text" placeholder="description"> <br>
+                    
+                    <div>
+                        Activity time - from 
+                        <input id = "start_date" name = "start_date" type="date" placeholder="Start date"> 
+                        <input id = "start_time" name = "start_time" type="time"> to
+                        <input id = "end_date" name = "end_date" type="date" placeholder="End date"> 
+                        <input id = "end_time" name = "end_time" type="time"> <br>
+
+                        <input id = "venue" name = "venue" type="text" placeholder="Venue (if online, please put URL)"> <br>
+                        <input id = "theme" name = "theme" type="text" placeholder="theme">
+                    </div>
+
+                
+                    <h4>Publication Type :</h4>
+                        <input type="radio" name="pubType" value="poster"> Single Image/Poster <br>
+                        <input type="radio" name="pubType" value="album"> Album <br>
+                        <input type="radio" name="pubType" value="video"> Video (please specify length and upload the clips) <br>
+                        <input type="radio" name="pubType" value="fb_cover"> FB Event Cover <br>
+                        <input type="radio" name="pubType" value="other"> Other : <input type="text" placeholder="type" /><br>
+                    <br>
+
+                    Posting Date : <input id = "posting_date" name = "posting_date" type="date"> <input id = "posting_time" name = "posting_time" type="time"> <br>
+
+                    Post-event post (for post-event caption)
+                        <input type="radio" name="postevent" value="yes"> Yes
+                        <input type="radio" name="postevent" value="no"> No <br>
+                    
+                    <input id = "files_url" name = "files_url" type="url" placeholder="link to related files (if applicable)"> <br><br>
+
+                    <input id = "details" name = "details" type="text" placeholder="details"><br>
+                    <input id = "comments" name = "comments" type="text" placeholder="comments"><br>
+                    <input id = "specialRequest" name = "specialRequest" type="text" placeholder="special request"><br><br>
+
+                    Handled by : <input id = "handled_by" type="text" placeholder="...">
+
+                    Status : 
+                    <select id = "status" name = "status">
+                        <option value = "not_started">Not Started</option>
+                        <option value = "in_progress">In Progress</option>
+                        <option value = "finished">Finished</option>
+                    </select>
+
+            </form>
+            </div>
+
+            <p id = "error"></p><br>
+            <p id = "errorTime"></p>
+            <button>Save</button>
+            <button>Cancel</button>
+            <button>Delete Request</button>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.15/api/row().show().js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#requeststable').DataTable();
+        } );
+    </script>
+
+</body>
+</html>
