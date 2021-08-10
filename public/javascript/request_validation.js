@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     function isFilled(){
-        
+
         const reqname = validator.trim($('#reqname').val());
         const committee = validator.trim($('#committee').val());
         const activity_name = validator.trim($('#activity_name').val());
@@ -19,7 +19,7 @@ $(document).ready(function(){
         const comments = validator.trim($('#comments').val());
         const specialRequest = validator.trim($('#specialRequest').val());
 
-        
+
         const reqnameEmpty = validator.isEmpty(reqname);
         const committeeEmpty = validator.isEmpty(committee);
         const activity_nameEmpty = validator.isEmpty(activity_name);
@@ -69,11 +69,39 @@ $(document).ready(function(){
         }
     }
 
+    function isRadiosValid (field, callback){
+        let valid1 = false;
+        let valid2 = false;
+        const postevent = $(".postevent:checked").val();
+        const pubType = $(".pubType:checked").val();
+
+        if(pubType){
+            if (pubType == "other"){
+
+                const other = validator.trim($('#other').val());
+                const otherEmpty = validator.isEmpty(other);
+                valid1 = !otherEmpty;
+                $('#other').prop('disabled', false);
+            }
+            else{
+                $('#other').prop('disabled', true);
+                valid1 = true;
+            }
+        }
+
+        if (postevent){
+            valid2 = true;
+        }
+        return valid1 && valid2
+    }
+
     function validateField (field, fieldName, error){
         const value = validator.trim(field.val());
         const empty = validator.isEmpty(value);
 
         const tempError = $('#error')
+        const radioError = $('#radioerror')
+        
         
         if(empty) {
             field.prop('value', '');
@@ -84,7 +112,18 @@ $(document).ready(function(){
         
         var filled = isFilled();
         var datesValid = isValidEventDates(field);
-        if (filled && datesValid) {
+        var radioValid = isRadiosValid(field);
+        
+        if(radioValid) {
+            radioError.text('')
+        }
+        else{
+            radioError.text('Put input in radios');
+        }
+
+        tempError.text(filled + " " + datesValid + " " + radioValid);
+
+        if (filled && datesValid && radioValid) {
             $('#submit').prop('disabled', false);
         } else {
             $('#submit').prop('disabled', true);
@@ -131,12 +170,20 @@ $(document).ready(function(){
         validateField($('#theme'), 'Theme', $('#usernameError'));
     });
 
+    $('.pubType').change(function () {
+        validateField($('.pubType'), 'Pub Type', $('#usernameError'));
+    });
+
     $('#posting_date').change(function () {
         validateField($('#posting_date'), 'Posting Date', $('#usernameError'));
     });
 
     $('#posting_time').change(function () {
         validateField($('#posting_time'), 'Posting Time', $('#usernameError'));
+    });
+
+    $('.postevent').change(function () {
+        validateField($('.postevent'), 'Post Event', $('#usernameError'));
     });
 
     $('#files_url').keyup(function () {
@@ -153,5 +200,9 @@ $(document).ready(function(){
 
     $('#specialRequest').keyup(function () {
         validateField($('#specialRequest'), 'Speecial Request', $('#usernameError'));
+    });
+
+    $('#other').keyup(function () {
+        validateField($('#other'), 'Other', $('#usernameError'));
     });
 });

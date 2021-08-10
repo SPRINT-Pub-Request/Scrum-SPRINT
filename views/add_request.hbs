@@ -18,7 +18,7 @@
     <div class="container-content">
         <h1>Add Request</h1>
         <div>
-            <form method = "post" action = "/add_request">
+            <form id = "f1" method = "post" action = "/add_request">
                 <h3>Requester's Information</h3>
                     <input id = "reqname" name = "reqname" type="text" placeholder="requester name">
 
@@ -52,18 +52,18 @@
 
                 <h3>Publication Information</h3>
                     <h4>Type of publications :</h4>
-                        <input type="radio" name="pubType" value="poster"> Single Image/Poster <br>
-                        <input type="radio" name="pubType" value="album"> Album <br>
-                        <input type="radio" name="pubType" value="video"> Video (please specify length and upload the clips) <br>
-                        <input type="radio" name="pubType" value="fb_cover"> FB Event Cover <br>
-                        <input type="radio" name="pubType" value="other"> Other : <input type="text" placeholder="type" /><br>
+                        <input class = "pubType" type="radio" name="pubType" value="poster"> Single Image/Poster <br>
+                        <input class = "pubType" type="radio" name="pubType" value="album"> Album <br>
+                        <input class = "pubType" type="radio" name="pubType" value="video"> Video (please specify length and upload the clips) <br>
+                        <input class = "pubType" type="radio" name="pubType" value="fb_cover"> FB Event Cover <br>
+                        <input id = "other_radio" class = "pubType" type="radio" name="pubType" value="other"> Other : <input id = "other" name = "Other" type="text" placeholder="type" /><br>
                     <br>
 
                     Posting Date : <input id = "posting_date" name = "posting_date" type="date"> <input id = "posting_time" name = "posting_time" type="time"> <br>
 
                     Will you be posting a post-event post (for post-event caption)
-                        <input type="radio" name="postevent" value="yes"> Yes
-                        <input type="radio" name="postevent" value="no"> No <br>
+                        <input class = "postevent" type="radio" name="postevent" value="yes"> Yes
+                        <input class = "postevent" type="radio" name="postevent" value="no"> No <br>
                     
                     <input id = "files_url" name = "files_url" type="url" placeholder="link to related files (if applicable)"> <br><br>
 
@@ -76,6 +76,7 @@
                     <input id = "submit" name = "submit" type = "submit" value = "SUBMIT" disabled>
                     <p id = "error"></p><br>
                     <p id = "errorTime"></p>
+                    <p id = "radioerror"></p>
 
             </form>
         </div>

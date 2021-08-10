@@ -26,6 +26,7 @@ const requestController = {
         const theme = req.body.theme;
         const posting_date = req.body.posting_date;
         const posting_temp_time = req.body.posting_time;
+        const postevent = req.body.postevent;
         const links = req.body.files_url;
         const details = req.body.details;
         const comments = req.body.comments;
@@ -34,6 +35,12 @@ const requestController = {
         const start_time = start_temp_time.toString();
         const end_time = end_temp_time.toString();
         const posting_time = posting_temp_time.toString();
+
+        let pubType = req.body.pubType;
+
+        if(pubType == "other"){
+            pubType = req.body.Other;
+        }
 
         const pubrequest = {
             reqname : reqname, 
@@ -46,8 +53,10 @@ const requestController = {
             end_time : end_time,
             venue : venue,
             theme : theme,
+            pubType : pubType,
             posting_date : posting_date,
             posting_time : posting_time,
+            postevent : postevent,
             links : links,
             details : details,
             comments : comments,
@@ -55,7 +64,7 @@ const requestController = {
             status : "Not Started"
         }
 
-        /*     // Test 
+             // Test 
         console.log("reqname: " + reqname);
         console.log("committee: " + committee);
         console.log("activty_name: " + activity_name);
@@ -70,7 +79,9 @@ const requestController = {
         console.log("posting_time: " + posting_time);
         console.log("details: " + details);
         console.log("comments: " + comments);
-        console.log("specialRequest: " + specialRequest);*/
+        console.log("specialRequest: " + specialRequest);
+        console.log("Pub Type: " + pubType);
+        console.log("Post Event: " + postevent);
         
         db.insertOne(PubRequest, pubrequest, function(flag){
             console.log(flag);
