@@ -1,42 +1,43 @@
-// TODO: Will Add Session 
 const loginController = {
     
     getIndex: (req , res) => {  
-        if(req.session.userID)
+
+        if(req.session.userID) {
             res.redirect('/add_request');
-        else
-            res.render('login');
+        }
+
+        res.render('login');
     },
 
     googleLogin: (req , res) => {
 
-        const domain =  req.user._json.domain;
+        const { domain } =  req.user._json;
 
         if(domain === "dlsu.edu.ph") {
             req.session.userID = req.user.id;
             req.session.httpCode = 200;
             return res.redirect('/add_request');
-        }
-        else{
-            req.session.httpCode = 404;
-            return res.redirect('/failed')
-        }
+        } 
+
+        req.session.httpCode = 404;
+        res.redirect('/failed')
     } ,
 
     loginFailed: (req , res) => {
-        if(req.session.userID)
+
+        if(req.session.userID) {
             res.redirect('/add_request');
-        else if(req.session.httpCode == 404){
+        } else if(req.session.httpCode === 404) {
             req.session.destroy(err => {
             if(err) {
-                return res.redirect('/')
+                return res.redirect('/');
             }});
             
             res.clearCookie(sessionName);
             res.render('login_fail');
-        }
-        else
+        } else {
             res.redirect('/');
+        }
     },
 
     logout: (req , res) => {

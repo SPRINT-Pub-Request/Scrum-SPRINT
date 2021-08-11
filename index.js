@@ -1,4 +1,3 @@
-// TODO: Will Reformat Code to follow airbnb standards
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
@@ -22,7 +21,7 @@ hostname = process.env.HOSTNAME || '0.0.0.0';
 sessionSecret = process.env.SESSION_SECRET;
 sessionName = process.env.SESSION_NAME;
 
-var sessionLifeTime = 1000 * 60 * 60 * 2;// Session Last for 2 Hours
+const sessionLifeTime = 1000 * 60 * 60 * 2;// Session Last for 2 Hours
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended:true} ));

@@ -1,22 +1,22 @@
-
 const db = require('../models/db.js')
 
 const PubRequest = require('../models/PubRequestModel.js');
 
-
 const requestController = {
     getIndex: (req , res) => {
-        if(req.session.userID)
+        if(req.session.userID) {
             res.render('add_request')
-        else
+        } else {
             res.redirect('/')
+        }
     },
 
     getManageReq: (req , res) => {
-        if(req.session.userID)
+        if(req.session.userID) {
             res.render('manage_requests')
-        else
+        } else {
             res.redirect('/')
+        }
     },
 
     postRequest: (req, res) => {
@@ -45,7 +45,7 @@ const requestController = {
 
         let pubType = req.body.pubType;
 
-        if(pubType == "other"){
+        if(pubType == "other") {
             pubType = req.body.Other;
         }
 
