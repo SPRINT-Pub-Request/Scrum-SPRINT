@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="/css/styles.css" type="text/css"/> 
+    <title>Assigned Requests</title>
+</head>
+<body>
+    
+    {{> sidebar }}
+
+    <div class="container-content">
+
+        <h1>Assigned Requests</h1>
+        <div class="h-spacer50"></div>
+
+        <div class="row">
+        <div class="col-sm-12">
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+                    <div class="spacer"></div>
+
+                    <table id="requeststable" class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Request ID</th>
+                                <th scope="col">Activity Name</th>
+                                <th scope="col">Posting Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Media Link</th>
+                                <th scope="col">Caption</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>SPRINT General Assembly</td>
+                                <td>09/21/21 8:00PM</td>
+                                <td>Not Started</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+
+                           
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+        </div>
+        
+        <div class="h-spacer50"></div>
+
+        <h2>Request Information</h2>
+            <div class="h-spacer50"></div>
+
+            <div>
+            <form method = "post" action = "/add_request">
+
+                    Status : Not Started <button>Edit</button><br>
+                    Media Link : --- <button>Edit</button><br>
+                    Caption : --- <button>Edit</button><br><br>
+
+                    Requester : .......... -Finance-<br><br>
+
+                    Activity : ............... Venue : ............ <br>
+                    From mm/dd/yy 00:00AM to mm/dd/y 00:00AM<br>
+                    
+                    Activity description : ................ <br>
+                    Theme : .............. <br><br>
+
+                    Publication Type : Poster <br>
+                    Posting Date : mm/dd/yy 00:00AM <br>
+                    Post-event post : yes <br>
+                    Related Files : ...... <br><br>
+
+                    Details : .......... <br>
+                    Comments : .......... <br>
+                    Special Request : None <br>
+
+            </form>
+            </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.15/api/row().show().js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#requeststable').DataTable();
+        } );
+    </script>
+
+</body>
+</html>

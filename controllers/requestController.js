@@ -19,6 +19,13 @@ const requestController = {
         }
     },
 
+    getViewReq: (req , res) => {
+        if(req.session.userID)
+            res.render('view_requests')
+        else
+            res.redirect('/')
+    },
+
     postRequest: (req, res) => {
 
         const reqname = req.body.reqname;
