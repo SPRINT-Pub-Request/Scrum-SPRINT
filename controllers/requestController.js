@@ -50,28 +50,28 @@ const requestController = {
         }
 
         const pubrequest = {
-            reqname : reqname, 
-            committee : committee,
-            activity_name : activity_name,
-            description : description,
-            start_date : start_date,
-            start_time : start_time,
-            end_date : end_date,
-            end_time : end_time,
-            venue : venue,
-            theme : theme,
-            pubType : pubType,
-            posting_date : posting_date,
-            posting_time : posting_time,
-            postevent : postevent,
-            links : links,
-            details : details,
-            comments : comments,
-            specialRequest : specialRequest,
+            reqname, 
+            committee,
+            activity_name,
+            description,
+            start_date,
+            start_time,
+            end_date,
+            end_time,
+            venue,
+            theme,
+            pubType,
+            posting_date,
+            posting_time,
+            postevent,
+            links,
+            details,
+            comments,
+            specialRequest,
             status : "Not Started"
         }
 
-             // Test 
+        // Test 
         console.log("reqname: " + reqname);
         console.log("committee: " + committee);
         console.log("activty_name: " + activity_name);
@@ -90,12 +90,12 @@ const requestController = {
         console.log("Pub Type: " + pubType);
         console.log("Post Event: " + postevent);
         
-        db.insertOne(PubRequest, pubrequest, function(flag){
+        db.insertOne(PubRequest, pubrequest, function(flag) {
             console.log(flag);
-            if (flag){
+            if (flag) {
                 res.send('Inputs saved in database');
             }
-            else{
+            else {
                 res.send('error in database')
             }
         });

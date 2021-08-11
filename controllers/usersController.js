@@ -1,4 +1,3 @@
-// TODO: Will Add Session 
 const usersController = {
     
     getIndex: (req , res) => {  

@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
-/*local db is temporary - matt*/
-const url = 'mongodb://localhost:27017/Sprint-PubRequest-Tracker'//process.env.DB_URL;
+
+/* local db is temporary - matt
+ *
+ * process.env.DB_URL
+ */
+ 
+const url = 'mongodb://localhost:27017/Sprint-PubRequest-Tracker';
 
 const PubRequest = require('./PubRequestModel.js');
 

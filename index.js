@@ -21,7 +21,8 @@ hostname = process.env.HOSTNAME || '0.0.0.0';
 sessionSecret = process.env.SESSION_SECRET;
 sessionName = process.env.SESSION_NAME;
 
-const sessionLifeTime = 1000 * 60 * 60 * 2;// Session Last for 2 Hours
+// Session Last for 2 Hours
+const sessionLifeTime = 1000 * 60 * 60 * 2;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended:true} ));
