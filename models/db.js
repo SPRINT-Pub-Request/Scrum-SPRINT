@@ -9,6 +9,7 @@ const dotenv = require('dotenv').config();
 const url = 'mongodb://localhost:27017/Sprint-PubRequest-Tracker';
 
 const PubRequest = require('./PubRequestModel.js');
+const User = require('./UserModel.js');
 
 const options = {
     useUnifiedTopology: true,

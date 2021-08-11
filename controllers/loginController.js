@@ -1,3 +1,8 @@
+
+const db = require('../models/db.js')
+
+const User = require('../models/UserModel.js');
+
 const loginController = {
     
     getIndex: (req , res) => {  
@@ -16,11 +21,40 @@ const loginController = {
         if(domain === "dlsu.edu.ph") {
             req.session.userID = req.user.id;
             req.session.httpCode = 200;
-            return res.redirect('/add_request');
-        } 
 
-        req.session.httpCode = 404;
-        res.redirect('/failed')
+            const user ={
+                userID : req.user.id,
+            };
+
+            projection = 'userID';
+
+            db.findOne(User, user, projection, function(result){
+                if(result != null){
+                    return res.redirect('/add_request');
+                }
+                else{
+                    const userAdd ={
+                        userID : req.user.id,
+                        name : req.user.displayName,
+                        email : req.user.email,
+                        role : "Unassigned"
+                    };
+        
+                    db.insertOne(User, userAdd, function(flag){
+                        if(flag){
+                            res.redirect('/add_request');
+                        }
+                        else{
+                            return res.redirect('/failed');
+                        }
+                    });
+                }
+            });
+        }
+        else{
+            req.session.httpCode = 404;
+            return res.redirect('/failed');
+        }
     } ,
 
     loginFailed: (req , res) => {

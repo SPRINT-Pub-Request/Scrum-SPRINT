@@ -102,7 +102,6 @@ $(document).ready(function(){
         const tempError = $('#error')
         const radioError = $('#radioerror')
         
-        
         if(empty) {
             field.prop('value', '');
             tempError.text('Some Fields are empty.');
