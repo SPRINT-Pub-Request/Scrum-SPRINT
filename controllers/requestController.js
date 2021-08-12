@@ -1,13 +1,52 @@
+const { DBRef } = require('mongodb');
+
 const db = require('../models/db.js')
+const User = require('../models/UserModel.js');
 
 const PubRequest = require('../models/PubRequestModel.js');
 
 const requestController = {
     getIndex: (req , res) => {
+
         if(req.session.userID) {
-            res.render('add_request')
+
+            const query ={
+                userID : req.session.userID
+            };
+
+            db.findOne(User, query, {}, function(result){
+
+                if (result != null){
+                    let viewFlag = false;
+                    let mReqFlag = false;
+                    let mUserFlag = false;
+
+                    if (result.role === "Publicity and Creatives"){
+                        viewFlag = true;
+                        mReqFlag = true;
+                    }
+                    else if (result.role === "Secretariat" || result.role === "Administrator"){
+                        viewFlag = true;
+                        mReqFlag = true;
+                        mUserFlag = true;
+                    }
+
+                    const details = {
+                        viewFlag : viewFlag,
+                        mReqFlag : mReqFlag,
+                        mUserFlag : mUserFlag
+                    }
+
+                    res.render('add_request', details);
+                }
+                else{
+                    res.redirect('/');
+                }
+
+
+            });
         } else {
-            res.redirect('/')
+            res.redirect('/');
         }
     },
 

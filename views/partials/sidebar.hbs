@@ -9,9 +9,21 @@
 
         <ul class="nav-sidebar">
             <li><div class="btn-sidebar nav-active">Add Request</div></li>
+
+            {{#if viewFlag}}
             <li><div class="btn-sidebar">View Requests</div></li>
+            {{/if}}
+    
+
+            {{#if mReqFlag}}
             <li><div class="btn-sidebar">Manage Requests</div></li>
+            {{/if}}
+    
+
+            {{#if mUserFlag}}
             <li><div class="btn-sidebar">Manage Users</div></li>
+            {{/if}}
+    
         </ul>
     </nav>
 

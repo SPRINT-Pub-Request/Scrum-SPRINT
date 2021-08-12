@@ -33,11 +33,12 @@ const loginController = {
                     return res.redirect('/add_request');
                 }
                 else{
+                    //change role to test views in sidebar, or change value in mongoDB
                     const userAdd ={
                         userID : req.user.id,
                         name : req.user.displayName,
                         email : req.user.email,
-                        role : "Unassigned"
+                        role : "Publicity and Creatives"
                     };
         
                     db.insertOne(User, userAdd, function(flag){
