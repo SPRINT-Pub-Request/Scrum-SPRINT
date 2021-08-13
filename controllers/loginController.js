@@ -28,7 +28,7 @@ const loginController = {
 
             projection = 'userID';
 
-            db.findOne(User, user, projection, (result) => {
+            db.findOne(User, user, projection, function(result) {
                 if(result != null) {
                     return res.redirect('/add_request');
                 }
@@ -41,7 +41,7 @@ const loginController = {
                         role : "Publicity and Creatives"
                     };
         
-                    db.insertOne(User, userAdd, (flag) => {
+                    db.insertOne(User, userAdd, function(flag) {
                         if(flag) {
                             res.redirect('/add_request');
                         }

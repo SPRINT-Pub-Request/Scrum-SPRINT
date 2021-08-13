@@ -14,7 +14,7 @@ const requestController = {
                 userID : req.session.userID
             };
 
-            db.findOne(User, query, {}, (result) => {
+            db.findOne(User, query, {}, function(result) {
 
                 if (result != null) {
                     let viewFlag = false;
