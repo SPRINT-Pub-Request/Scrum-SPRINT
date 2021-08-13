@@ -10,25 +10,23 @@ const requestController = {
 
         if(req.session.userID) {
 
-            const query ={
+            const query = {
                 userID : req.session.userID
             };
 
-            db.findOne(User, query, {}, function(result){
+            db.findOne(User, query, {}, (result) => {
 
-                if (result != null){
+                if (result != null) {
                     let viewFlag = false;
                     let mReqFlag = false;
                     let mUserFlag = false;
 
-                    if (result.role === "Publicity and Creatives"){
+                    if (result.role === "Publicity and Creatives") {
                         viewFlag = true;
-                    }
-                    else if (result.role === "Secretariat"){
+                    } else if (result.role === "Secretariat") {
                         viewFlag = true;
                         mReqFlag = true;
-                    }
-                    else if (result.role === "Administrator"){
+                    } else if (result.role === "Administrator") {
                         viewFlag = true;
                         mReqFlag = true;
                         mUserFlag = true;
@@ -41,8 +39,7 @@ const requestController = {
                     }
 
                     res.render('add_request', details);
-                }
-                else{
+                } else {
                     res.redirect('/');
                 }
 
@@ -139,7 +136,7 @@ const requestController = {
         console.log("Pub Type: " + pubType);
         console.log("Post Event: " + postevent);
         
-        db.insertOne(PubRequest, pubrequest, function(flag) {
+        db.insertOne(PubRequest, pubrequest, (flag) => {
             console.log(flag);
             if (flag) {
                 res.send('Inputs saved in database');
