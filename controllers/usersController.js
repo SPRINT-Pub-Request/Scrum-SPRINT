@@ -8,7 +8,7 @@ const PubRequest = require('../models/PubRequestModel.js');
 const usersController = {
     
     getIndex: (req , res) => {  
-        if(req.session.userID && req.session.role === "Administrator") {
+        if(req.session.userID && req.session.role === 'Administrator') {
             res.render('manage_users');
         } else {
             res.redirect('/add_requests');
@@ -27,17 +27,17 @@ const usersController = {
         db.findOne(User , query , {} , function(result) {
 
             //Test Purposes
-            console.log("userName = " + result.name + "\nuserEmail = " + result.email + "\nrole = " + result.role + "\ncommittee = " + result.committee);
+            console.log('\nuserName = ' + result.name + '\nuserEmail = ' + result.email + '\nrole = ' + result.role + '\ncommittee = ' + result.committee);
         
             db.updateOne(User , { email : result.email } , {
                 $set : {
                     role : newRole,
                     committee : newCommittee
                 }, 
-                function(){
-
-            }});
-        
+            });
+            
+           
+            res.redirect('/manage_users');
         });
         
 

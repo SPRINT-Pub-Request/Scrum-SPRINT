@@ -18,7 +18,7 @@ const loginController = {
 
         const { domain } =  req.user._json;
 
-        if(domain === "dlsu.edu.ph") {
+        if(domain === 'dlsu.edu.ph') {
             req.session.userID = req.user.id;
             req.session.httpCode = 200;
 
@@ -38,8 +38,8 @@ const loginController = {
                         userID : req.user.id,
                         name : req.user.displayName,
                         email : req.user.email,
-                        committee : "None",
-                        role : "Administrator"
+                        committee : 'None',
+                        role : 'Administrator'
                     };
                     
                     req.session.role = userAdd.role;
