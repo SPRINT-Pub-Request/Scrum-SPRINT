@@ -48,25 +48,30 @@ $(document).ready(function(){
         
         const tempError = $('#errorTime')
 
-        if(start_date < end_date){
-            tempError.text('');
-            return true;
-        }
-        else if (start_date == end_date){
-            
-            if(start_time < end_time){
+
+        if(start_date && end_date){
+            if(start_date < end_date){
                 tempError.text('');
                 return true;
             }
+            else if (start_date == end_date){
+                
+                if(start_time < end_time){
+                    tempError.text('');
+                    return true;
+                }
+                else{
+                    tempError.text('Dates are Invalid');
+                    return false;
+                }
+            }
             else{
                 tempError.text('Dates are Invalid');
-                return false;
+                return false
             }
         }
-        else{
-            tempError.text('Dates are Invalid');
-            return false
-        }
+        else
+            return false;
     }
 
     function isRadiosValid (field, callback){
@@ -76,15 +81,15 @@ $(document).ready(function(){
         const pubType = $(".pubType:checked").val();
 
         if(pubType){
-            if (pubType == "other"){
+            if (pubType == "type_other"){
 
-                const other = validator.trim($('#other').val());
+                const other = validator.trim($('#type_other_value').val());
                 const otherEmpty = validator.isEmpty(other);
                 valid1 = !otherEmpty;
-                $('#other').prop('disabled', false);
+                $('#type_other_value').prop('disabled', false);
             }
             else{
-                $('#other').prop('disabled', true);
+                $('#type_other_value').prop('disabled', true);
                 valid1 = true;
             }
         }
@@ -109,9 +114,9 @@ $(document).ready(function(){
         else
             tempError.text('');
         
-        var filled = isFilled();
-        var datesValid = isValidEventDates(field);
-        var radioValid = isRadiosValid(field);
+        const filled = isFilled();
+        const datesValid = isValidEventDates(field);
+        const radioValid = isRadiosValid(field);
         
         if(radioValid) {
             radioError.text('')
@@ -201,7 +206,7 @@ $(document).ready(function(){
         validateField($('#specialRequest'), 'Speecial Request', $('#usernameError'));
     });
 
-    $('#other').keyup(function () {
-        validateField($('#other'), 'Other', $('#usernameError'));
+    $('#type_other_value').keyup(function () {
+        validateField($('#type_other_value'), 'Other', $('#usernameError'));
     });
 });

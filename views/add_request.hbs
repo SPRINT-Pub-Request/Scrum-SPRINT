@@ -26,7 +26,7 @@
                 <div class="row form-row">
                     <div class="col col-md-8">
                         <label for="reqname">Name <span class="asterisk">*</span> </label>
-                        <input type="text" class="form-control" id="reqname" placeholder="LAST NAME, First Name">
+                        <input type="text" class="form-control" name = "reqname" id="reqname" placeholder="LAST NAME, First Name">
                     </div>
                     
                     <div class="col">
@@ -52,11 +52,11 @@
                 <h3>Activity Information</h3>
                 <div class="form-row">
                     <label for="activity_name">Activity Name <span class="asterisk">*</span></label>
-                    <input type="text" class="form-control" id="activity_name" placeholder="Enter name">
+                    <input type="text" class="form-control" name = "activity_name" id="activity_name" placeholder="Enter name">
                 </div>
                 <div class="form-row">
                     <label for="activity_name">Description <span class="asterisk">*</span></label>
-                    <textarea type="text" class="form-control" id="description" placeholder="Enter activity description"></textarea>
+                    <textarea type="text" class="form-control" name = "description" id="description" placeholder="Enter activity description"></textarea>
                 </div>
 
                 <div class="row form-row">
@@ -64,16 +64,16 @@
                     <div class="col">
                         <label for="start_date_form">Start Date <span class="asterisk">*</span> </label>
                         <div class="input-group" id="start_date_form">
-                            <input type="date" class="form-control" id="start_date">
-                            <input type="time" class="form-control" id="start_time" value="11:00">
+                            <input type="date" class="form-control" name = "start_date" id="start_date">
+                            <input type="time" class="form-control" name = "start_time" id="start_time" value="11:00">
                         </div>
                     </div>
 
                     <div class="col"> 
                         <label for="end_date_form">End Date <span class="asterisk">*</span></label>
                         <div class="input-group" id="end_date_form">
-                            <input type="date" class="form-control" id="end_date">
-                            <input type="time" class="form-control" id="end_time" value="14:00">
+                            <input type="date" class="form-control" name = "end_date" id="end_date">
+                            <input type="time" class="form-control" name = "end_time" id="end_time" value="14:00">
                         </div>
                     </div>
 
@@ -82,12 +82,12 @@
                 <div class="row form-row">
                     <div class="col">
                         <label for="reqname">Venue <span class="asterisk">*</span></label>
-                        <input type="text" class="form-control" id="venue" placeholder="if online, please put URL">
+                        <input type="text" class="form-control" name = "venue" id="venue" placeholder="if online, please put URL">
                     </div>
 
                     <div class="col">
                         <label for="reqname">Theme</label>
-                        <input type="text" class="form-control" id="theme" placeholder="...">
+                        <input type="text" class="form-control" name = "theme" id="theme" placeholder="...">
                     </div>
                 </div>
 
@@ -99,19 +99,19 @@
                 <div class="row form-row">
                     <div class="col col-md-8 btn-group" role="group">
 
-                        <input type="radio" class="btn-check" name="pubType" value="poster" id="type_poster" autocomplete="off" checked>
+                        <input type="radio" class="btn-check pubType" name="pubType" value="poster" id="type_poster" autocomplete="off" checked>
                         <label class="btn btn-outline-dark" for="type_poster">Poster</label>
 
-                        <input type="radio" class="btn-check" name="pubType" value="album" id="type_album" autocomplete="off">
+                        <input type="radio" class="btn-check pubType" name="pubType" value="album" id="type_album" autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_album">Album</label>
 
-                        <input type="radio" class="btn-check" name="pubType" value="video" id="type_video" autocomplete="off">
+                        <input type="radio" class="btn-check pubType" name="pubType" value="video" id="type_video" autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_video">Video</label>
 
-                        <input type="radio" class="btn-check" name="pubType" value="fb_cover" id="type_fbcover" autocomplete="off">
+                        <input type="radio" class="btn-check pubType" name="pubType" value="fb_cover" id="type_fbcover" autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_fbcover">FB Cover</label>
 
-                        <input type="radio" class="btn-check" name="pubType" id="type_other" autocomplete="off">
+                        <input type="radio" class="btn-check pubType" name="pubType" id="type_other" autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_other">Other</label>
 
                     </div>
@@ -124,8 +124,8 @@
                     <label for="posting_date_form">Posting Date <span class="asterisk">*</span></label>
                     <div class="col col-md-7" id="posting_date_form">
                         <div class="input-group">
-                            <input type="date" class="form-control" id="posting_date">
-                            <input type="time" class="form-control" id="posting_time" value="11:00">
+                            <input type="date" class="form-control" name = "posting_date" id="posting_date">
+                            <input type="time" class="form-control" name = "posting_time" id="posting_time" value="11:00">
                         </div>
                     </div>
                 </div>
@@ -134,10 +134,10 @@
                     <div class="col" id="postevent_form">
                         Will you be posting a post-event post (for post-event caption) <span class="asterisk">*</span>
                         <div class="btn-group" role="group">
-                            <input type="radio" class="btn-check" name="postevent" value="no" id="postevent_no" autocomplete="off" checked>
+                            <input type="radio" class="btn-check postevent" name="postevent" value="no" id="postevent_no" autocomplete="off" checked>
                             <label class="btn btn-outline-dark" for="postevent_no">No</label>
 
-                            <input type="radio" class="btn-check" name="postevent" value="yes" id="postevent_yes" autocomplete="off">
+                            <input type="radio" class="btn-check postevent" name="postevent" value="yes" id="postevent_yes" autocomplete="off">
                             <label class="btn btn-outline-dark" for="postevent_yes">Yes</label>
                         </div>
                     </div>
@@ -145,22 +145,22 @@
 
                 <div class="form-row">
                     <label for="files_url">Link to Related Files (if applicable)</label>
-                    <input type="text" class="form-control" id="files_url" placeholder="Enter valid URL">
+                    <input type="text" class="form-control" name = "files_url" id="files_url" placeholder="Enter valid URL">
                 </div>
 
                 <div class="form-row">
                     <label for="details">Details</label>
-                    <textarea type="text" class="form-control" id="details" placeholder="..."></textarea>
+                    <textarea type="text" class="form-control" name = "details" id="details" placeholder="..."></textarea>
                 </div>
 
                 <div class="form-row">
                     <label for="comments">Comments</label>
-                    <textarea type="text" class="form-control" id="comments" placeholder="..."></textarea>
+                    <textarea type="text" class="form-control" name = "comments" id="comments" placeholder="..."></textarea>
                 </div>
 
                 <div class="form-row">
                     <label for="specialRequest">Special Request</label>
-                    <textarea type="text" class="form-control" id="specialRequest" placeholder="..."></textarea>
+                    <textarea type="text" class="form-control" name = "specialRequest" id="specialRequest" placeholder="..."></textarea>
                 </div>
 
                 <div class="h-spacer20"></div>
