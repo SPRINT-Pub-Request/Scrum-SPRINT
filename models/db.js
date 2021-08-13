@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
 /* local db is temporary - matt
- *
+ *  remote database link - mongodb+srv://admin:sprint123@sprintpubtracker.rcnfq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
  * process.env.DB_URL
  */
  

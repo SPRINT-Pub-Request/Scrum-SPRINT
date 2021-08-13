@@ -71,11 +71,11 @@
 
         <h2>Edit User Information</h2>
             <div class="h-spacer50"></div>
+        <form method="post" action="/updateUser">
+            <p name = "userEmail" id = "userEmail" type = "text">jerickson_lee@dlsu.edu.ph</p>
+            <input id = "name" name = "name" type="text" placeholder="Jerickson Lee" value = "Jerickson Lee">
 
-            john.doe@dlsu.edu.ph
-            <input name = "name" type="text" placeholder="John Doe">
-
-            <select name = "committee">
+            <select name = "committee" id = "committee">
                 <option value = "activities">Activities</option>
                 <option value = "finance">Finance</option>
                 <option selected value = "hrd">HRD</option>
@@ -86,7 +86,7 @@
                 <option value = "sociocivic">Socio Civic</option>
             </select>
 
-            <select name = "role">
+            <select name = "role" id = "role">
                 <option value = "requester" selected>Requester</option>
                 <option value = "publicity">Publicity and Creatives</option>
                 <option value = "secretariat">Secretariat</option>
@@ -94,10 +94,12 @@
             </select>
 
             Assigned : <input name = "assigned_committees" type="text" placeholder="N/A" disabled> <br><br>
-
-            <button>Save</button>
-            <button>Cancel</button>
-            <button>Remove User</button>
+                <button type = "submit">Save</button>
+        </form>
+                <button>Cancel</button>
+            <form method="post" action="/removeUser">
+                <button type="submit">Remove User</button>
+            </form>
     </div>
 
 

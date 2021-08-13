@@ -15,7 +15,6 @@ const requestController = {
             };
 
             db.findOne(User, query, {}, function(result) {
-
                 if (result != null) {
                     let viewFlag = false;
                     let mReqFlag = false;
@@ -136,7 +135,7 @@ const requestController = {
         console.log("Pub Type: " + pubType);
         console.log("Post Event: " + postevent);
         
-        db.insertOne(PubRequest, pubrequest, (flag) => {
+        db.insertOne(PubRequest, pubrequest, function(flag) {
             console.log(flag);
             if (flag) {
                 res.send('Inputs saved in database');
