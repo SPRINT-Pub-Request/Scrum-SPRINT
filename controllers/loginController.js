@@ -38,11 +38,12 @@ const loginController = {
                         userID : req.user.id,
                         name : req.user.displayName,
                         email : req.user.email,
-                        userCommittee : "None",
-                        role : "Publicity and Creatives"
+                        committee : "None",
+                        role : "Administrator"
                     };
+                    
+                    req.session.role = userAdd.role;
 
-                    console.log(userAdd);
                     db.insertOne(User, userAdd, function(flag) {
                         if(flag) {
                             res.redirect('/add_request');
