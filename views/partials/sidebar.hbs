@@ -20,24 +20,30 @@
                     <span class="btn-icon-text">Add Request</span>
                 </div>
             </li>
+
+            {{#if viewFlag}}
             <li>
                 <div class="btn-sidebar btn-withicon">
                     <i class="bi-file-text-fill btn-icon"></i>
                     <span class="btn-icon-text">View Requests</span>
                 </div>
-            </li>
+            </li>{{/if}}
+
+            {{#if viewFlag}}
             <li>
                 <div class="btn-sidebar btn-withicon">
                     <i class="bi-file-earmark-person-fill btn-icon"></i>
                     <span class="btn-icon-text">Manage Users</span>
                 </div>
-            </li>
+            </li>{{/if}}
+
+            {{#if viewFlag}}
             <li>
                 <div class="btn-sidebar btn-withicon">
                     <i class="bi-file-spreadsheet-fill btn-icon"></i>
                     <span class="btn-icon-text">Manage Requests</span>
                 </div>
-            </li>
+            </li>{{/if}}
         </ul>
     </nav>
 

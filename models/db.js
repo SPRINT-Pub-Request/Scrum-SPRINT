@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
 /* local db is temporary - matt
- *
+ *  remote database link - mongodb+srv://admin:sprint123@sprintpubtracker.rcnfq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
  * process.env.DB_URL
  */
  
@@ -19,14 +19,14 @@ const options = {
 const database = {
 
     connect: function () {
-        mongoose.connect(url, options, function(error) {
+        mongoose.connect(url, options, function(error)  {
             if(error) throw error;
             console.log('Connected to: ' + url);
         });
     },
 
     insertOne: function(model, doc, callback) {
-        model.create(doc, function(error, result) {
+        model.create(doc, function(error, result){
             if(error) return callback(false);
             console.log('Added ' + result);
             return callback(true);
@@ -73,7 +73,7 @@ const database = {
     },
 
     deleteOne: function(model, conditions) {
-        model.deleteOne(conditions, function (error, result) {
+        model.deleteOne(conditions,  function(error, result) {
             if(error) return callback(false);
             console.log('Document deleted: ' + result.deletedCount);
             return callback(true);
@@ -81,7 +81,7 @@ const database = {
     },
 
     deleteMany: function(model, conditions) {
-        model.deleteMany(conditions, function (error, result) {
+        model.deleteMany(conditions, function(error, result) {
             if(error) return callback(false);
             console.log('Document deleted: ' + result.deletedCount);
             return callback(true);

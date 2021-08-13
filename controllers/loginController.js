@@ -22,29 +22,32 @@ const loginController = {
             req.session.userID = req.user.id;
             req.session.httpCode = 200;
 
-            const user ={
+            const user = {
                 userID : req.user.id,
             };
 
             projection = 'userID';
 
-            db.findOne(User, user, projection, function(result){
-                if(result != null){
+            db.findOne(User, user, projection, function(result) {
+                if(result != null) {
                     return res.redirect('/add_request');
                 }
-                else{
-                    const userAdd ={
+                else {
+                    //change role to test views in sidebar, or change value in mongoDB
+                    const userAdd = {
                         userID : req.user.id,
                         name : req.user.displayName,
                         email : req.user.email,
-                        role : "Unassigned"
+                        userCommittee : "None",
+                        role : "Publicity and Creatives"
                     };
-        
-                    db.insertOne(User, userAdd, function(flag){
-                        if(flag){
+
+                    console.log(userAdd);
+                    db.insertOne(User, userAdd, function(flag) {
+                        if(flag) {
                             res.redirect('/add_request');
                         }
-                        else{
+                        else {
                             return res.redirect('/failed');
                         }
                     });
