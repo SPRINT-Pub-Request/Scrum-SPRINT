@@ -30,6 +30,7 @@ const loginController = {
 
             db.findOne(User, user, projection, function(result) {
                 if(result != null) {
+                    req.session.role = result.role;
                     return res.redirect('/add_request');
                 }
                 else {

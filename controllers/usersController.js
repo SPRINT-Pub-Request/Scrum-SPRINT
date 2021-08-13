@@ -35,7 +35,7 @@ const usersController = {
                     committee : newCommittee
                 }, 
                 function(){
-                    
+
             }});
         
         });
