@@ -62,7 +62,9 @@
                 <div class="row form-row">
 
                     <div class="col">
-                        <label for="start_date_form">Start Date <span class="asterisk">*</span> </label>
+                        <label for="start_date_form">Start Date <span class="asterisk">*</span> 
+                            <span class="error-message" id="date_error"></span>
+                        </label>
                         <div class="input-group" id="start_date_form">
                             <input type="date" class="form-control" name = "start_date" id="start_date">
                             <input type="time" class="form-control" name = "start_time" id="start_time" value="11:00">
@@ -111,14 +113,16 @@
                         <input type="radio" class="btn-check pubType" name="pubType" value="fb_cover" id="type_fbcover" autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_fbcover">FB Cover</label>
 
-                        <input type="radio" class="btn-check pubType" name="pubType" id="type_other" value = "type_other" autocomplete="off">
+                        <input type="radio" class="btn-check pubType" name="pubType" value = "other" id="type_other"  autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_other">Other</label>
 
                     </div>
 
-                    <div class="col"><input type="text" class="form-control" name = "type_other_value" id="type_other_value" placeholder="Other Type" disabled></div>   
+                    <div class="col">
+                        <input type="text" class="form-control" name = "type_other_value" id="type_other_value" placeholder="Other Type*" style="visibility: hidden;" disabled>
+                    </div>   
                 </div>
-                {{!-- <div name="message">- please specify length of the video and upload the clips</div> --}}
+                <div id="type-message" style="font-size: 12px; visibility: hidden">- please specify length of the video in 'details' and link to the clips</div>
 
                 <div class="row form-row">
                     <label for="posting_date_form">Posting Date <span class="asterisk">*</span></label>
@@ -166,10 +170,11 @@
                 <div class="h-spacer20"></div>
 
                 <div class="form-row" style="position: relative;">
-                    <input id = "submit" class="btn btn-dark btn-lg" name = "submit" type = "submit" value = "SUBMIT" disabled style="position: absolute; right : 0px;">
+                <div style="position: absolute; right : 0px;">
+                    <input id = "submit" class="btn btn-dark btn-lg" name = "submit" type = "submit" value = "SUBMIT" style="box-shadow: 2px 4px #817777;"disabled>
+                </div>
                 </div>
                     
-
                 <p id = "error"></p><br>
                 <p id = "errorTime"></p>
                 <p id = "radioerror"></p>

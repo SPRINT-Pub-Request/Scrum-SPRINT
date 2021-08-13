@@ -11,13 +11,9 @@ $(document).ready(function(){
         const end_date = validator.trim($('#end_date').val());
         const end_time = validator.trim($('#end_time').val());
         const venue = validator.trim($('#venue').val());
-        const theme = validator.trim($('#theme').val());
         const posting_date = validator.trim($('#posting_date').val());
         const posting_time = validator.trim($('#posting_time').val());
-        const links = validator.trim($('#files_url').val());
-        const details = validator.trim($('#details').val());
-        const comments = validator.trim($('#comments').val());
-        const specialRequest = validator.trim($('#specialRequest').val());
+        const pubType_other = validator.trim($('#type_other_value').val());
 
 
         const reqnameEmpty = validator.isEmpty(reqname);
@@ -29,15 +25,17 @@ $(document).ready(function(){
         const end_dateEmpty = validator.isEmpty(end_date);
         const end_timeEmpty = validator.isEmpty(end_time);
         const venueEmpty = validator.isEmpty(venue);
-        const themeEmpty = validator.isEmpty(theme);
         const posting_dateEmpty = validator.isEmpty(posting_date);
         const posting_timeEmpty = validator.isEmpty(posting_time);
-        const linksEmpty = validator.isEmpty(links);
-        const detailsEmpty = validator.isEmpty(details);
-        const commentsEmpty = validator.isEmpty(comments);
-        const specialRequestEmpty = validator.isEmpty(specialRequest);
 
-        return !reqnameEmpty && !committeeEmpty && !activity_nameEmpty && !descriptionEmpty && !start_dateEmpty && !start_timeEmpty && !end_dateEmpty && !end_timeEmpty && !venueEmpty && !themeEmpty && !posting_dateEmpty && !posting_timeEmpty && !linksEmpty && !detailsEmpty && !commentsEmpty && !specialRequestEmpty;
+        var pubType_otherEmpty;
+        if($('#type_other_value').prop('disabled'))
+            pubType_otherEmpty = false;
+        else {
+            pubType_otherEmpty = validator.isEmpty(pubType_other);
+        }
+        
+        return !reqnameEmpty && !committeeEmpty && !activity_nameEmpty && !descriptionEmpty && !start_dateEmpty && !start_timeEmpty && !end_dateEmpty && !end_timeEmpty && !venueEmpty && !posting_dateEmpty && !posting_timeEmpty && !pubType_otherEmpty;
     }
 
     function isValidEventDates(field, callback){
@@ -46,7 +44,7 @@ $(document).ready(function(){
         const end_date = validator.trim($('#end_date').val());
         const end_time = validator.trim($('#end_time').val());
         
-        const tempError = $('#errorTime')
+        const tempError = $('#date_error')
 
 
         if(start_date && end_date){
@@ -61,12 +59,12 @@ $(document).ready(function(){
                     return true;
                 }
                 else{
-                    tempError.text('Dates are Invalid');
+                    tempError.text('Dates are invalid');
                     return false;
                 }
             }
             else{
-                tempError.text('Dates are Invalid');
+                tempError.text('Dates are invalid');
                 return false
             }
         }
@@ -74,60 +72,26 @@ $(document).ready(function(){
             return false;
     }
 
-    function isRadiosValid (field, callback){
-        let valid1 = false;
-        let valid2 = false;
-        const postevent = $(".postevent:checked").val();
-        const pubType = $(".pubType:checked").val();
-
-        if(pubType){
-            if (pubType === "type_other"){
-
-                const other = validator.trim($('#type_other_value').val());
-                const otherEmpty = validator.isEmpty(other);
-                valid1 = !otherEmpty;
-                $('#type_other_value').prop('disabled', false);
-            }
-            else{
-                $('#type_other_value').prop('disabled', true);
-                valid1 = true;
-            }
-        }
-
-        if (postevent){
-            valid2 = true;
-        }
-        return valid1 && valid2
-    }
 
     function validateField (field, fieldName, error){
         const value = validator.trim(field.val());
         const empty = validator.isEmpty(value);
 
         const tempError = $('#error')
-        const radioError = $('#radioerror')
         
         if(empty) {
             field.prop('value', '');
-            tempError.text('Some Fields are empty.');
+            $(field).addClass('error');
         }
         else
-            tempError.text('');
+            $(field).removeClass('error');
         
         const filled = isFilled();
         const datesValid = isValidEventDates(field);
-        const radioValid = isRadiosValid(field);
-        
-        if(radioValid) {
-            radioError.text('')
-        }
-        else{
-            radioError.text('Put input in radios');
-        }
+    
+        //tempError.text(filled + " " + datesValid);
 
-        tempError.text(filled + " " + datesValid + " " + radioValid);
-
-        if (filled && datesValid && radioValid) {
+        if (filled && datesValid) {
             $('#submit').prop('disabled', false);
         } else {
             $('#submit').prop('disabled', true);
@@ -170,11 +134,26 @@ $(document).ready(function(){
         validateField($('#venue'), 'Venue', $('#usernameError'));
     });
 
-    $('#theme').keyup(function () {
-        validateField($('#theme'), 'Theme', $('#usernameError'));
-    });
-
     $('.pubType').change(function () {
+        var selected = $('.pubType:checked').val();
+        console.log(selected);
+        
+        if(selected == 'video'){
+            $("#type-message").css('visibility', 'visible');
+            $("#type_other_value").css('visibility', 'hidden');
+            $("#type_other_value").prop('disabled', true);
+        }
+        else if(selected == 'other'){
+            $("#type-message").css('visibility', 'hidden');
+            $("#type_other_value").css('visibility', 'visible');
+            $("#type_other_value").prop('disabled', false);
+        }
+        else {
+            $("#type-message").css('visibility', 'hidden');
+            $("#type_other_value").css('visibility', 'hidden');
+            $("#type_other_value").prop('disabled', true);
+        }
+
         validateField($('.pubType'), 'Pub Type', $('#usernameError'));
     });
 
@@ -188,22 +167,6 @@ $(document).ready(function(){
 
     $('.postevent').change(function () {
         validateField($('.postevent'), 'Post Event', $('#usernameError'));
-    });
-
-    $('#files_url').keyup(function () {
-        validateField($('#files_url'), 'Other Files', $('#usernameError'));
-    });
-
-    $('#details').keyup(function () {
-        validateField($('#details'), 'Details', $('#usernameError'));
-    });
-
-    $('#comments').keyup(function () {
-        validateField($('#comments'), 'Comments', $('#usernameError'));
-    });
-
-    $('#specialRequest').keyup(function () {
-        validateField($('#specialRequest'), 'Speecial Request', $('#usernameError'));
     });
 
     $('#type_other_value').keyup(function () {

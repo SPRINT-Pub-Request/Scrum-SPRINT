@@ -11588,9 +11588,17 @@ body {
   background: #f2cab3;
 }
 
-.asterisk, .form-error {
+.asterisk, .error-message {
   font-family: OpenSans-Light;
   color: #ca3333;
+}
+
+.error {
+  background-color: #ffc7c7 !important;
+}
+
+select.error > option {
+  background-color: #f3f3f3;
 }
 
 .bordered {
@@ -11700,12 +11708,13 @@ body {
 .container-form {
   position: relative;
   border-radius: 10px;
-  border: 2px solid #995b5b;
+  border: 2px solid #5a3535;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background: #fde5c1;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, #fde5c1), color-stop(97%, #ffc6af), to(#ffa987));
   background: linear-gradient(180deg, #fde5c1 80%, #ffc6af 97%, #ffa987 100%);
+  padding-top: 10px;
 }
 
 .form-row {
