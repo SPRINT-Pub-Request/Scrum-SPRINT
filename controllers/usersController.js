@@ -8,16 +8,17 @@ const PubRequest = require('../models/PubRequestModel.js');
 const usersController = {
     
     getIndex: (req , res) => {  
-        if(req.session.userID) {
+        if(req.session.userID && req.session.role === "Administrator") {
             res.render('manage_users');
         } else {
-            res.redirect('/');
+            res.redirect('/add_requests');
         }
     },
 
     updateUser: (req , res) => {
 
-        const { role , committee } = req.body;
+        const newRole = req.body.role;
+        const newCommittee = req.body.committee;
         
         const query = {
             name : req.body.name
@@ -27,6 +28,16 @@ const usersController = {
 
             //Test Purposes
             console.log("userName = " + result.name + "\nuserEmail = " + result.email + "\nrole = " + result.role + "\ncommittee = " + result.committee);
+        
+            db.updateOne(User , { email : result.email } , {
+                $set : {
+                    role : newRole,
+                    committee : newCommittee
+                }, 
+                function(){
+                    
+            }});
+        
         });
         
 
