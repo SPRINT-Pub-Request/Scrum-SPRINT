@@ -1,25 +1,51 @@
 <div class="container-sidebar"> 
 <div class="sidebar-content">
-    <nav><img class="img-fluid" src="img/SPRINT Gold.png">
-        <div style="text-align: center;">
+    <nav>
+        <div class="btn-sidebar btn-withicon">
+            <i class="bi-justify btn-icon"></i>
+        </div>
+
+        <img style="margin-top: 20px" class="img-fluid sidebar-logo" src="img/SPRINT Gold.png">
+
+        <div class="userheader" style="word-wrap: break-word; text-align: center;">
         Username <br>
-        user@dlsu.edu.ph</div>
+        <span style="font-size: 12px;">user@dlsu.edu.ph</span></div>
 
         <div class="h-spacer50"></div>
 
         <ul class="nav-sidebar">
-            <li><div class="btn-sidebar nav-active">Add Request</div></li>
-            <li><div class="btn-sidebar">View Requests</div></li>
-            <li><div class="btn-sidebar">Manage Requests</div></li>
-            <li><div class="btn-sidebar">Manage Users</div></li>
+            <li>
+                <div class="btn-sidebar btn-withicon nav-active">
+                    <i class="bi-plus-square-fill btn-icon"></i>
+                    <span class="btn-icon-text">Add Request</span>
+                </div>
+            </li>
+            <li>
+                <div class="btn-sidebar btn-withicon">
+                    <i class="bi-file-text-fill btn-icon"></i>
+                    <span class="btn-icon-text">View Requests</span>
+                </div>
+            </li>
+            <li>
+                <div class="btn-sidebar btn-withicon">
+                    <i class="bi-file-earmark-person-fill btn-icon"></i>
+                    <span class="btn-icon-text">Manage Users</span>
+                </div>
+            </li>
+            <li>
+                <div class="btn-sidebar btn-withicon">
+                    <i class="bi-file-spreadsheet-fill btn-icon"></i>
+                    <span class="btn-icon-text">Manage Requests</span>
+                </div>
+            </li>
         </ul>
     </nav>
 
     <form method = "post" action = "/logout">
-        <button class="btn-logout" type = "submit"> 
-            <i class="bi-x-square-fill" alt="Bootstrap" style="font-size: 1.5rem; color: rgb(230, 190, 59);"></i>
-            Log out
+        <button class="btn-withicon btn-logout" type = "submit"> 
+            <i class="bi-x-square-fill btn-icon"></i>
+            <span class="btn-icon-text">Log out</span>
         </button>
     </form>
 </div>
-</div>
+</div> 
