@@ -91,8 +91,8 @@ const requestController = {
 
         let pubType = req.body.pubType;
 
-        if(pubType == "other") {
-            pubType = req.body.Other;
+        if(pubType == "type_other") {
+            pubType = req.body.type_other_value;
         }
 
         const pubrequest = {

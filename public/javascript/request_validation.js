@@ -81,7 +81,7 @@ $(document).ready(function(){
         const pubType = $(".pubType:checked").val();
 
         if(pubType){
-            if (pubType == "type_other"){
+            if (pubType === "type_other"){
 
                 const other = validator.trim($('#type_other_value').val());
                 const otherEmpty = validator.isEmpty(other);
