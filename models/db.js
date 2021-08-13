@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
+const mongodb = require('mongodb');
 
 /* local db is temporary - matt
  *  remote database link - mongodb+srv://admin:sprint123@sprintpubtracker.rcnfq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
@@ -36,9 +37,9 @@ const database = {
 
     insertMany: function(model, docs) {
         model.insertMany(docs, function(error, result) {
-            if(error) return false;
+            if(error) return callback(false);
             console.log('Added ' + result);
-            return true;
+            return callback(true);
         });
     },
 
