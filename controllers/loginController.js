@@ -10,15 +10,16 @@ const loginController = {
         if(req.session.userID) {
             res.redirect('/add_request');
         }
-
-        res.render('login');
+        else {
+            res.render('login');
+        }
     },
 
     googleLogin: (req , res) => {
 
         const { domain } =  req.user._json;
-
-        if(domain === 'dlsu.edu.ph') {
+        
+        if(domain === "dlsu.edu.ph") {
             req.session.userID = req.user.id;
             req.session.httpCode = 200;
 
@@ -26,11 +27,16 @@ const loginController = {
                 userID : req.user.id,
             };
 
+            projection = 'userID';
 
-            db.findOne(User, user, {}, function(result) {
-                if(result.userID != null) {
-                    req.session.role = result.role;
-                    return res.redirect('/add_request');
+            db.findOne(User, user, projection, function(result) {
+                if(result != null) {
+
+                    db.findOne(User , user , {} , function(result) {
+                        req.session.role = result.role;
+                    });
+
+                    res.redirect('/add_request');
                 }
                 else {
                     //change role to test views in sidebar, or change value in mongoDB
@@ -38,8 +44,8 @@ const loginController = {
                         userID : req.user.id,
                         name : req.user.displayName,
                         email : req.user.email,
-                        committee : 'None',
-                        role : 'Administrator'
+                        committee : "None",
+                        role : "Administrator"
                     };
                     
                     req.session.role = userAdd.role;
@@ -49,7 +55,7 @@ const loginController = {
                             res.redirect('/add_request');
                         }
                         else {
-                            return res.redirect('/failed');
+                            res.redirect('/failed');
                         }
                     });
                 }
@@ -57,7 +63,7 @@ const loginController = {
         }
         else{
             req.session.httpCode = 404;
-            return res.redirect('/failed');
+            res.redirect('/failed');
         }
     } ,
 
@@ -68,7 +74,7 @@ const loginController = {
         } else if(req.session.httpCode === 404) {
             req.session.destroy(err => {
             if(err) {
-                return res.redirect('/');
+                res.redirect('/');
             }});
             
             res.clearCookie(sessionName);
