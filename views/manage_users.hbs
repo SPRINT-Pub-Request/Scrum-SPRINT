@@ -12,7 +12,7 @@
     
     {{> sidebar }}
 
-    <div class="container-content">
+    <div class="container-center with-sidebar">
 
         <h1>User Database</h1>
         <div class="h-spacer50"></div>
@@ -95,11 +95,12 @@
 
             Assigned : <input name = "assigned_committees" type="text" placeholder="N/A" disabled> <br><br>
                 <button type = "submit">Save</button>
-        </form>
                 <button>Cancel</button>
-            <form method="post" action="/removeUser">
-                <button type="submit">Remove User</button>
-            </form>
+                <form method="post" action="/removeUser">
+                    <button type="submit">Remove User</button>
+                </form>
+                
+        </form>
     </div>
 
 
