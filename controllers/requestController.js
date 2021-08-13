@@ -23,9 +23,12 @@ const requestController = {
 
                     if (result.role === "Publicity and Creatives"){
                         viewFlag = true;
+                    }
+                    else if (result.role === "Secretariat"){
+                        viewFlag = true;
                         mReqFlag = true;
                     }
-                    else if (result.role === "Secretariat" || result.role === "Administrator"){
+                    else if (result.role === "Administrator"){
                         viewFlag = true;
                         mReqFlag = true;
                         mUserFlag = true;
