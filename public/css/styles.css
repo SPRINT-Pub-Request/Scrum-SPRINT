@@ -11571,6 +11571,7 @@ h2, .h2, h3, .h3, h4, .h4,
 }
 
 label {
+  color: #995d65;
   font-family: OpenSans-SemiBold;
 }
 
@@ -11579,13 +11580,13 @@ label {
 }
 
 .btn-group .btn, .form-row .btn :not(.btn.btn-dark) {
-  background: #d1d1d1;
+  background: #d2cbe1;
 }
 
 body {
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background: #f2cab3;
+  background: #ebdbc6;
 }
 
 .asterisk, .error-message {
