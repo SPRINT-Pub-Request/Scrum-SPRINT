@@ -15,10 +15,12 @@
 
         <ul class="nav-sidebar">
             <li>
-                <div class="btn-sidebar btn-withicon nav-active">
-                    <i class="bi-plus-square-fill btn-icon"></i>
-                    <span class="btn-icon-text">Add Request</span>
-                </div>
+                <a href = "/add_requests">
+                    <div  class="btn-sidebar btn-withicon nav-active">
+                        <i class="bi-plus-square-fill btn-icon"></i>
+                        <span class="btn-icon-text">Add Request</span>
+                    </div>
+                </a>
             </li>
 
             {{#if viewFlag}}
@@ -31,10 +33,12 @@
 
             {{#if viewFlag}}
             <li>
-                <div class="btn-sidebar btn-withicon">
-                    <i class="bi-file-earmark-person-fill btn-icon"></i>
-                    <span class="btn-icon-text">Manage Users</span>
-                </div>
+                <a href = "/manage_users">
+                    <div class="btn-sidebar btn-withicon">
+                        <i class="bi-file-earmark-person-fill btn-icon"></i>
+                        <span class="btn-icon-text">Manage Users</span>
+                    </div>
+                </a>
             </li>{{/if}}
 
             {{#if viewFlag}}

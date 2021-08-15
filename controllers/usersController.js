@@ -8,8 +8,28 @@ const PubRequest = require('../models/PubRequestModel.js');
 const usersController = {
     
     getIndex: (req , res) => {  
-        if(req.session.userID /*&& req.session.role === 'Administrator'*/) {
-            res.render('manage_users');
+        if(req.session.userID && req.session.role === 'Administrator'){
+            let viewFlag = false;
+            let mReqFlag = false;
+            let mUserFlag = false;
+
+            if (req.session.role === "Publicity and Creatives") {
+                viewFlag = true;
+            } else if (req.session.role === "Secretariat") {
+                viewFlag = true;
+                mReqFlag = true;
+            } else if (req.session.role === "Administrator") {
+                viewFlag = true;
+                mReqFlag = true;
+                mUserFlag = true;
+            }
+
+            const details = {
+                viewFlag : viewFlag,
+                mReqFlag : mReqFlag,
+                mUserFlag : mUserFlag
+            }
+            res.render('manage_users', details);
         } else {
             res.redirect('/add_requests');
         }
