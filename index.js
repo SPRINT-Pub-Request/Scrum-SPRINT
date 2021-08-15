@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const hbs = require('hbs');
 const session = require('express-session');
-
+const nodemailer = require('nodemailer');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 
@@ -49,8 +49,13 @@ app.use(session({
 app.use('/' , routes);
 
 app.use((req , res) => {
-    req.session.httpCode = 404;
-    res.redirect('/failed');
+    if(req.session.userID === null) {
+        req.session.httpCode = 404;
+        res.redirect('/failed');    
+    } else {
+        req.session.httpCode = 200;
+        res.redirect('/add_request');
+    }
 });
 
 // Using 5000 for it to work in heroku

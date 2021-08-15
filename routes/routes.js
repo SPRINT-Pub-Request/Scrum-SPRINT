@@ -5,6 +5,7 @@ const requestController = require('../controllers/requestController.js');
 const loginController = require('../controllers/loginController.js');
 const usersController = require('../controllers/usersController.js');
 const passportSetup = require('../controllers/passportSetup.js');
+const mailController = require('../controllers/mailController.js');
 
 const app = express();
 
@@ -24,4 +25,9 @@ app.get('/view_requests' ,  requestController.getViewReq);
 // User Controllers
 app.post('/updateUser' , usersController.updateUser);
 app.get('/manage_users', usersController.getIndex);
+app.get('/deleteUser', usersController.deleteUser);
+
+// Mail Controllers
+app.get('/sendNotif' , mailController.sendNotif);
+
 module.exports = app;

@@ -22,7 +22,7 @@ const loginController = {
         if(domain === "dlsu.edu.ph") {
             req.session.userID = req.user.id;
             req.session.httpCode = 200;
-
+            
             const user = {
                 userID : req.user.id,
             };
@@ -34,11 +34,12 @@ const loginController = {
 
                     db.findOne(User , user , {} , function(result) {
                         req.session.role = result.role;
+                        req.session.userID = req.user.id;
+                        req.session.httpCode = 200;
+                        res.redirect('/add_request');
                     });
 
-                    res.redirect('/add_request');
-                }
-                else {
+                } else {
                     //change role to test views in sidebar, or change value in mongoDB
                     const userAdd = {
                         userID : req.user.id,
@@ -53,15 +54,13 @@ const loginController = {
                     db.insertOne(User, userAdd, function(flag) {
                         if(flag) {
                             res.redirect('/add_request');
-                        }
-                        else {
+                        } else {
                             res.redirect('/failed');
                         }
                     });
                 }
             });
-        }
-        else{
+        } else {
             req.session.httpCode = 404;
             res.redirect('/failed');
         }
