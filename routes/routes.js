@@ -24,5 +24,4 @@ app.get('/view_requests' ,  requestController.getViewReq);
 // User Controllers
 app.post('/updateUser' , usersController.updateUser);
 app.get('/manage_users', usersController.getIndex);
-
 module.exports = app;

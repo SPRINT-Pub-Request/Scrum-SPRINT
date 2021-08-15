@@ -8,7 +8,7 @@ const PubRequest = require('../models/PubRequestModel.js');
 const usersController = {
     
     getIndex: (req , res) => {  
-        if(req.session.userID && req.session.role === 'Administrator') {
+        if(req.session.userID /*&& req.session.role === 'Administrator'*/) {
             res.render('manage_users');
         } else {
             res.redirect('/add_requests');
