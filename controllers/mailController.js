@@ -20,14 +20,13 @@ const mailController = {
             email : req.session.mailReceiver
         }
 
-        console.log(req.session.mailReceiver , process.env.MAIL_AUTHEMAIL , process.env.MAIL_AUTHPASS);
         db.findOne(User , query , {} , function(result) {
             
             const options = {
                 from : process.env.MAIL_AUTHEMAIL,
                 to : result.email,
-                subject : "User Changes",
-                text : "Good day! \nThis is to notify you that there are changes to your info\nRole : " + result.role + "\nCommittee : " + result.committee
+                subject : "Account Changes",
+                text : "Good day " + result.name + "!\nThis is to notify you that there are changes to your account \n\nRole : "  + result.role + "\nCommittee : " + result.committee
             }
 
             transporter.sendMail(options, (err , info) => {
