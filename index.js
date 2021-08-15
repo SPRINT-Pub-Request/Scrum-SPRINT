@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv').config();
 const hbs = require('hbs');
 const session = require('express-session');
-
+const nodemailer = require('nodemailer');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 

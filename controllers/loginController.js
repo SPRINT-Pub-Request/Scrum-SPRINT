@@ -20,8 +20,6 @@ const loginController = {
         const { domain } =  req.user._json;
         
         if(domain === "dlsu.edu.ph") {
-            req.session.userID = req.user.id;
-            req.session.httpCode = 200;
 
             const user = {
                 userID : req.user.id,
@@ -36,6 +34,8 @@ const loginController = {
                         req.session.role = result.role;
                     });
 
+                    req.session.userID = req.user.id;
+                    req.session.httpCode = 200;
                     res.redirect('/add_request');
                 }
                 else {
@@ -61,8 +61,8 @@ const loginController = {
                 }
             });
         }
-        else{
-            req.session.httpCode = 404;
+        else {
+            req.session.httpCode = 403;
             res.redirect('/failed');
         }
     } ,
@@ -71,7 +71,7 @@ const loginController = {
 
         if(req.session.userID) {
             res.redirect('/add_request');
-        } else if(req.session.httpCode === 404) {
+        } else if(req.session.httpCode === 403) {
             req.session.destroy(err => {
             if(err) {
                 res.redirect('/');
