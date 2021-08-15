@@ -32,22 +32,17 @@ const usersController = {
             
             if(newRole !== result.role || newCommittee !== result.committee) {
                 
-                try {
                     db.updateOne(User , { email : result.email } , {
                         $set : {
                             role : newRole,
                             committee : newCommittee
                         }, 
                     });
-                } catch(err) {
-                    console.log(err);
-                    res.redirect('/logout');
-                }
-
-            } else {
-                res.redirect('/sendNotif');           
-            }
-
+                    req.session.mailReceiver = result.email;
+                return res.redirect('/sendNotif');  
+            } 
+            
+        
             res.redirect('/manage_users');
         });
         

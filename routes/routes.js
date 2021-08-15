@@ -28,4 +28,5 @@ app.get('/manage_users', usersController.getIndex);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);
+
 module.exports = app;

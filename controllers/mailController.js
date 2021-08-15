@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv').config();
+const db = require('../models/db.js')
+const User = require('../models/UserModel.js');
+const PubRequest = require('../models/PubRequestModel.js');
 
 const transporter = nodemailer.createTransport( {
     service: "hotmail",
@@ -14,9 +17,10 @@ const mailController = {
     sendNotif: (req , res) => {
 
         const query = {
-            name : req.body.name
+            email : req.session.mailReceiver
         }
 
+        console.log(req.session.mailReceiver , process.env.MAIL_AUTHEMAIL , process.env.MAIL_AUTHPASS);
         db.findOne(User , query , {} , function(result) {
             
             const options = {
@@ -33,7 +37,6 @@ const mailController = {
                 }
                 
                 console.log("Server has sent mail, Info: " + info.response);
-                alert("User has been notified, \nIf mail can't be seen please check the spam folder");
                 res.redirect('/manage_users');
             });
         });
