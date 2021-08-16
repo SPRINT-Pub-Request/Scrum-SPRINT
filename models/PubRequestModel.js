@@ -49,7 +49,7 @@ var PubRequestSchema = new mongoose.Schema({
 
     theme: {
         type : String,
-        required: true
+        required: false
     },
 
     pubType: {
