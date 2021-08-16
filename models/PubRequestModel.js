@@ -74,22 +74,22 @@ var PubRequestSchema = new mongoose.Schema({
 
     links : {
         type : String,
-        required: true
+        required: false
     },
 
     details: {
         type : String,
-        required: true
+        required: false
     },
 
     comments: {
         type : String,
-        required: true
+        required: false
     },
 
     specialRequest: {
         type : String,
-        required: true
+        required: false
     },
 
     status: {
