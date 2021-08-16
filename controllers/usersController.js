@@ -8,7 +8,7 @@ const PubRequest = require('../models/PubRequestModel.js');
 const usersController = {
     
     getIndex: (req , res) => {  
-        if(req.session.userID && req.session.role === 'Administrator'){
+        if(req.session.userID /*&& req.session.role === 'Administrator'*/){
             let viewFlag = false;
             let mReqFlag = false;
             let mUserFlag = false;
@@ -37,13 +37,22 @@ const usersController = {
 
     deleteUser: (req, res) => {
         var reqname = req.query.reqname;
-        console.log("------Del User--------");
-        console.log("REQ NAME: " + reqname);
+
         details = {
             error: ""
         }
 
-        db.deleteOne(User, {name : reqname}, function(result){
+        db.findOne(User ,  {name : reqname}, {} , function(result) {
+
+            if (req.session.userID != result.userID){
+                db.deleteOne(User, {name : reqname}, function(result){
+                });
+            }
+            else{
+                console.log('Cant Delete Your Own Account');
+            }
+
+
         });
     },
 
@@ -59,22 +68,30 @@ const usersController = {
         db.findOne(User , query , {} , function(result) {
 
             //Test Purposes
-            console.log('\nuserName = ' + result.name + '\nuserEmail = ' + result.email + '\nrole = ' + result.role + '\ncommittee = ' + result.committee);
-            
+            //console.log('\nuserName = ' + result.name  +  '\nnewrole = ' + newRole + '\nrole = ' + result.role + '\nsession role = ' + req.session.role);
+
             if(newRole !== result.role || newCommittee !== result.committee) {
-                
+
+                if (req.session.userID == result.userID && result.role === 'Administrator' && newRole !== 'Administrator'){ //If an Administrator tries to demote himself/herself
+                    console.log('Cant demote yourself (an administrator)');
+                    res.redirect('/manage_users');
+                }
+                else{//Valid Updating User
                     db.updateOne(User , { email : result.email } , {
                         $set : {
                             role : newRole,
                             committee : newCommittee
                         }, 
                     });
+                    req.session.role = newRole;
                     req.session.mailReceiver = result.email;
-                return res.redirect('/sendNotif');  
-            } 
-            
-        
-            res.redirect('/manage_users');
+    
+                    return res.redirect('/sendNotif');  
+                }
+            }
+            else{
+                res.redirect('/manage_users');
+            }
         });
         
 
