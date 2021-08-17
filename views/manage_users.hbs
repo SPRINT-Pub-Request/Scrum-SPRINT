@@ -80,17 +80,6 @@
             <p name = "userEmail" id = "userEmail" type = "text">jerickson_lee@dlsu.edu.ph</p>
             <input id = "name" name = "name" type="text" placeholder="Name">
 
-            <select name = "committee" id = "committee">
-                <option value = "Activities">Activities</option>
-                <option value = "Finance">Finance</option>
-                <option selected value = "HRD">HRD</option>
-                <option value = "TND<">TND</option>
-                <option value = "P-EVP">P-EVP</option>
-                <option value = "Secretariat">Secretariat</option>
-                <option value = "Externals">Externals</option>
-                <option value = "Socio Civic">Socio Civic</option>
-            </select>
-
             <select name = "role" id = "role">
                 <option value = "Requester" selected>Requester</option>
                 <option value = "Publicity and Creatives">Publicity and Creatives</option>
@@ -98,8 +87,18 @@
                 <option value = "Administrator">Administrator</option>
             </select>
 
-            Assigned : <input name = "assigned_committees" type="text" placeholder="N/A" disabled> <br><br>
-                <button type = "submit">Save</button>
+            Assigned : 
+            <select id = "assigned_committee" name = "assigned_committee" type="text" placeholder="N/A"> 
+                <option value = "Activities">Activities</option>
+                <option value = "Finance">Finance</option>
+                <option selected value = "HRD">HRD</option>
+                <option value = "TND">TND</option>
+                <option value = "P-EVP">P-EVP</option>
+                <option value = "Secretariat">Secretariat</option>
+                <option value = "Externals">Externals</option>
+                <option value = "Socio Civic">Socio Civic</option></select><br><br>
+            <button type = "submit">Save</button>
+
             </form>
                 <button>Cancel</button>
                 <button id = "btnRemoveUser">Remove User</button>

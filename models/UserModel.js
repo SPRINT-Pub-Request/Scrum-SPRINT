@@ -22,9 +22,9 @@ var UserSchema = new mongoose.Schema({
         required: true
     },
 
-    committee: {
+    assigned_committee: {
         type : String,
-        required: true
+        required: false
     },
 });
 

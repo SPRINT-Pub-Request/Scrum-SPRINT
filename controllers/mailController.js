@@ -26,7 +26,7 @@ const mailController = {
                 from : process.env.MAIL_AUTHEMAIL,
                 to : result.email,
                 subject : "Account Changes",
-                text : "Good day " + result.name + "!\nThis is to notify you that there are changes to your account \n\nRole : "  + result.role + "\nCommittee : " + result.committee
+                text : "Good day " + result.name + "!\nThis is to notify you that there are changes to your account \n\nRole : "  + result.role + "\nAssigned Committee : " + result.assigned_committee
             }
 
             transporter.sendMail(options, (err , info) => {
