@@ -64,6 +64,32 @@ const requestController = {
             res.redirect('/')
     },
 
+    loadViewReq : (req , res) => {
+
+        // Will Connect to Design When Available
+        if(req.session.role === "Administrator") {
+
+            // This will show all request 
+            db.findMany(PubRequest , {} , {} , function(result){
+                console.log(result);
+            });
+            
+
+        } else {
+
+            // This will view only request you made
+            const query = {
+                userID : req.session.userID
+            }
+
+            db.findMany(PubRequest , query , {} , function(result){
+                console.log(result);
+            });
+        }
+
+
+
+    },
     postRequest: (req, res) => {
 
         const reqname = req.body.reqname;
@@ -89,7 +115,7 @@ const requestController = {
         const posting_time = posting_temp_time.toString();
 
         let pubType = req.body.pubType;
-
+        
         if(pubType == 'other') {
             pubType = req.body.Other;
         }
@@ -113,8 +139,11 @@ const requestController = {
             details,
             comments,
             specialRequest,
+            userID : req.session.userID,
             status : 'Not Started'
         }
+        
+    
 
         // Test 
         console.log("reqname: " + reqname);
@@ -134,6 +163,7 @@ const requestController = {
         console.log("specialRequest: " + specialRequest);
         console.log("Pub Type: " + pubType);
         console.log("Post Event: " + postevent);
+        console.log("User ID: " + details.userID);
         
         db.insertOne(PubRequest, pubrequest, function(flag) {
             console.log(flag);

@@ -20,7 +20,7 @@ app.get('/failed' , loginController.loginFailed);
 app.post('/add_request', requestController.postRequest);
 app.get('/add_request' ,  requestController.getIndex)
 app.get('/manage_requests' ,  requestController.getManageReq);
-app.get('/view_requests' ,  requestController.getViewReq);
+app.get('/view_requests' ,  requestController.getViewReq , requestController.loadViewReq);
 
 // User Controllers
 app.post('/updateUser' , usersController.updateUser);
