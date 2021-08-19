@@ -59,7 +59,7 @@ const usersController = {
     updateUser: (req , res) => {
 
         const newRole = req.body.role;
-        const newCommittee = req.body.committee;
+        const newAC = req.body.assigned_committee;
         
         const query = {
             name : req.body.name
@@ -68,33 +68,35 @@ const usersController = {
         db.findOne(User , query , {} , function(result) {
 
             //Test Purposes
-            //console.log('\nuserName = ' + result.name  +  '\nnewrole = ' + newRole + '\nrole = ' + result.role + '\nsession role = ' + req.session.role);
+            //console.log('\nemail = ' + result.email  +  '\nAC = ' + newAC + '\nrole = ' + result.role + '\nsession role = ' + req.session.role);
+            console.log('email = ' + result.email);
+            console.log('assigned new committee = ' + newAC);
+            console.log('role = ' + result.role);
+            /*
+            if(newRole !== result.role) {
+                console.log('Hello');
+            } else {
+                console.log('Failed');
+                res.redirect('/manage_users');
+            }*/
 
-            if(newRole !== result.role || newCommittee !== result.committee) {
-
-                if (req.session.userID == result.userID && result.role === 'Administrator' && newRole !== 'Administrator'){ //If an Administrator tries to demote himself/herself
-                    console.log('Cant demote yourself (an administrator)');
-                    res.redirect('/manage_users');
-                }
-                else{//Valid Updating User
-                    db.updateOne(User , { email : result.email } , {
-                        $set : {
-                            role : newRole,
-                            committee : newCommittee
-                        }, 
-                    });
-                    req.session.role = newRole;
-                    req.session.mailReceiver = result.email;
-    
-                    return res.redirect('/sendNotif');  
-                }
-            }
-            else{
+            if (req.session.userID == result.userID && result.role === 'Administrator' && newRole !== 'Administrator'){ //If an Administrator tries to demote himself/herself
+                console.log('Cant demote yourself (an administrator)');
                 res.redirect('/manage_users');
             }
-        });
-        
+            else{//Valid Updating User
+                db.updateOne(User , { email : result.email } , {
+                    $set : {
+                        role : newRole,
+                        assigned_committee : newAC
+                    }, 
+                });
+                req.session.role = newRole;
+                req.session.mailReceiver = result.email;
 
+                return res.redirect('/sendNotif');  
+            }
+        });
     }
 }
 

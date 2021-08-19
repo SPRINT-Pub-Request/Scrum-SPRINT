@@ -92,10 +92,41 @@ var PubRequestSchema = new mongoose.Schema({
         required: false
     },
 
-    status: {
+    userID: {
         type : String,
         required: true
     },
+
+    pubStatus: {
+        type : String,
+        required: true
+    },
+
+    caption: {
+        type : String,
+        required: true
+    },
+
+    captionStatus: {
+        type : String, 
+        required: true
+    },
+
+    pubLink: {
+        type : String,
+        required:true
+    },
+
+    pubUserID: {
+        type : String,
+        required:false
+    },
+
+    secUserID : {
+        type : String,
+        required: false
+    }
+
 });
 
 module.exports = mongoose.model('PubRequest', PubRequestSchema, 'pubrequest')

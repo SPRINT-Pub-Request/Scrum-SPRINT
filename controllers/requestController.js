@@ -64,6 +64,56 @@ const requestController = {
             res.redirect('/')
     },
 
+    loadViewReq : (req , res) => {
+
+        console.log("test");
+        // Will Connect to Design When Available
+        if(req.session.role === "Administrator") {
+
+            // This will show all request 
+            db.findMany(PubRequest , {} , {} , function(result){
+                console.log(result);
+                
+                
+                // Will be implemented when front-end is available, will be placed so that admin can choose what people assigned to that committee gonna do the work
+                
+                const query = {
+                    committee : result.committee
+                }
+
+                db.findMany(PubRequest , {} , {} , function(result){
+                    for(let i = 0; i < result.length; i++)
+                    {
+                        //Test Purposes Only
+                        console.log(result[i].committee);
+                        
+                        db.findMany(User , {committee : result[i].committee} , {} , function(result){
+                            console.log(result)
+                        });
+                    }
+                });
+
+                
+                
+
+            });
+            
+
+        } else {
+
+            // This will view only request assigned to you, Will connect to front-end when the 'view whats assigned to me button is up' 
+            const query = {
+                userID : req.session.userID
+            }
+
+            db.findMany(PubRequest , query , {} , function(result){
+                console.log(result);
+            });
+        }
+
+
+
+    },
     postRequest: (req, res) => {
 
         const reqname = req.body.reqname;
@@ -89,11 +139,11 @@ const requestController = {
         const posting_time = posting_temp_time.toString();
 
         let pubType = req.body.pubType;
-
+        
         if(pubType == 'other') {
             pubType = req.body.Other;
         }
-
+        
         const pubrequest = {
             reqname, 
             committee,
@@ -113,8 +163,15 @@ const requestController = {
             details,
             comments,
             specialRequest,
-            status : 'Not Started'
+            userID : req.session.userID,
+            pubStatus : 'Not Started',
+            pubLink: 'N/A',
+            caption: 'N/A',
+            captionStatus: 'Not Started',
+            pubUserID: 'Not Assigned',
+            secUserID: 'Not Assigned'
         }
+        
 
         // Test 
         console.log("reqname: " + reqname);
@@ -134,6 +191,7 @@ const requestController = {
         console.log("specialRequest: " + specialRequest);
         console.log("Pub Type: " + pubType);
         console.log("Post Event: " + postevent);
+        console.log("User ID: " + details.userID);
         
         db.insertOne(PubRequest, pubrequest, function(flag) {
             console.log(flag);
