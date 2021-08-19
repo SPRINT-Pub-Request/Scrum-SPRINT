@@ -15,7 +15,7 @@
 
         <ul class="nav-sidebar">
             <li>
-                <a href = "/add_requests">
+                <a href = "/add_requests"  style="text-decoration: none">
                     <div  class="btn-sidebar btn-withicon nav-active">
                         <i class="bi-plus-square-fill btn-icon"></i>
                         <span class="btn-icon-text">Add Request</span>
@@ -32,22 +32,24 @@
             </li>{{/if}}
 
             {{#if viewFlag}}
+                {{#if mUserFlag}}
             <li>
-                <a href = "/manage_users">
+                <a href = "/manage_users" style="text-decoration: none" >
                     <div class="btn-sidebar btn-withicon">
                         <i class="bi-file-earmark-person-fill btn-icon"></i>
                         <span class="btn-icon-text">Manage Users</span>
                     </div>
                 </a>
-            </li>{{/if}}
+            </li>{{/if}}{{/if}}
 
             {{#if viewFlag}}
+                {{#if mReqFlag}}
             <li>
                 <div class="btn-sidebar btn-withicon">
                     <i class="bi-file-spreadsheet-fill btn-icon"></i>
                     <span class="btn-icon-text">Manage Requests</span>
                 </div>
-            </li>{{/if}}
+            </li>{{/if}}{{/if}}
         </ul>
     </nav>
 

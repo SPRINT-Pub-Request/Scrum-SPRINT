@@ -66,18 +66,42 @@ const requestController = {
 
     loadViewReq : (req , res) => {
 
+        console.log("test");
         // Will Connect to Design When Available
         if(req.session.role === "Administrator") {
 
             // This will show all request 
             db.findMany(PubRequest , {} , {} , function(result){
                 console.log(result);
+                
+                
+                // Will be implemented when front-end is available, will be placed so that admin can choose what people assigned to that committee gonna do the work
+                
+                const query = {
+                    committee : result.committee
+                }
+
+                db.findMany(PubRequest , {} , {} , function(result){
+                    for(let i = 0; i < result.length; i++)
+                    {
+                        //Test Purposes Only
+                        console.log(result[i].committee);
+                        
+                        db.findMany(User , {committee : result[i].committee} , {} , function(result){
+                            console.log(result)
+                        });
+                    }
+                });
+
+                
+                
+
             });
             
 
         } else {
 
-            // This will view only request you made
+            // This will view only request assigned to you, Will connect to front-end when the 'view whats assigned to me button is up' 
             const query = {
                 userID : req.session.userID
             }
@@ -119,7 +143,7 @@ const requestController = {
         if(pubType == 'other') {
             pubType = req.body.Other;
         }
-
+        
         const pubrequest = {
             reqname, 
             committee,
@@ -140,10 +164,14 @@ const requestController = {
             comments,
             specialRequest,
             userID : req.session.userID,
-            status : 'Not Started'
+            pubStatus : 'Not Started',
+            pubLink: 'N/A',
+            caption: 'N/A',
+            captionStatus: 'Not Started',
+            pubUserID: 'Not Assigned',
+            secUserID: 'Not Assigned'
         }
         
-    
 
         // Test 
         console.log("reqname: " + reqname);
