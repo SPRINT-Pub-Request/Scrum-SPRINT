@@ -28,6 +28,7 @@
 $light: #fffcf5;
 $dark: #1D1A1A;
 
+
 @include media-breakpoint-down(xxl) {
     .container-form{
         min-width: 60%;
@@ -41,6 +42,10 @@ $dark: #1D1A1A;
 
     .userheader{
         display: none;
+    }
+
+    .container-start{
+        padding: 0px 5px 0px 5px !important;
     }
 }
 
@@ -74,7 +79,7 @@ h1{
 }
 
 h2,h3,h4,
-.btn.btn-dark{
+.btn.btn-dark, .btn-delete{
     font-family: OpenSans-Bold;
 }
 
@@ -130,6 +135,14 @@ select.error > option{
     align-items: center;
 }
 
+.container-start{
+    display: flex;
+    padding: 30px;
+    padding-top: 5%;
+    flex-direction: column;
+    align-items: start;
+}
+
 //use on containers for pages with a sidebar
 .with-sidebar{
     margin-left: 10%;
@@ -140,7 +153,9 @@ select.error > option{
     min-width: 55%;
 }
 
+// ------- Sidebar
 .container-sidebar{
+    overflow:hidden;
     position: fixed;
     width: 10%;
     height: 100%;
@@ -186,7 +201,8 @@ select.error > option{
     padding-right: 5px;
 }
 
-.nav-active.btn-withicon > .btn-icon{
+.nav-active.btn-withicon > .btn-icon,
+td > .btn-icon{
     color: #1D1A1A;
 }
 
@@ -234,6 +250,110 @@ select.error > option{
     outline: 0;
     border-width: 0 0 2px;
     border-color: #312727;
+}
+
+.form-select:disabled{
+    opacity: 0.6;
+}
+
+//-------tables
+.container-table{
+    align-items: start; 
+    width: 100%;
+
+    max-width: 100%;
+}
+
+.dataTables_wrapper {
+    min-width: 600px;
+}
+
+thead, tbody, tfoot, tr, td, th {
+    border-width: 0 0 2px;
+    border-color: #d0686852;
+    padding-right: 10px;
+}
+
+table{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+thead{
+    background-color: #1d1a1a;
+    color: #ffd86b;
+    padding-left: 10px;
+}
+
+th.sorting{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+td > .btn-icon{
+    font-size: 1.2rem;
+}
+
+table.dataTable > thead .btn-col.sorting::before, 
+table.dataTable > thead .btn-col.sorting::after, 
+table.dataTable > thead .btn-col.sorting_asc::before, 
+table.dataTable > thead .btn-col.sorting_asc::after, 
+table.dataTable > thead .btn-col.sorting_desc::before, 
+table.dataTable > thead .btn-col.sorting_desc::after, 
+table.dataTable > thead .btn-col.sorting_asc_disabled::before, 
+table.dataTable > thead .btn-col.sorting_asc_disabled::after, 
+table.dataTable > thead .btn-col.sorting_desc_disabled::before, 
+table.dataTable > thead .btn-col.sorting_desc_disabled::after{
+    display: none;
+}
+
+table.dataTable > thead > tr > th:not(.sorting_disabled), 
+table.dataTable > thead > tr > td:not(.sorting_disabled){
+    padding-right: 5px;
+    padding-left: 5px;
+}   
+
+table tr td.btn-col:nth-child(1), table tr td.btn-col:nth-child(6){
+    text-align: center;
+    padding-bottom: 3px;
+}
+
+td .btn-icon::before,
+td .btn-icon::after{
+    margin-bottom: 4px;
+}
+
+.pagination .page-item.active .page-link,
+div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus,
+.pagination .page-item.active .page-link:hover { 
+    background-color: #ffc934; 
+    color: #1D1A1A;
+    border-color: #ffffff;
+}
+
+.pagination .page-item.active .page-link:hover {
+    border-color: #1D1A1A;
+}
+
+.modal-row{
+    padding-top: 5px;
+}
+
+.modal-footer > .btn{
+    background-color: #e3e3e3;
+}
+
+.modal-footer > .btn-edit{
+    background-color: #d8d0ff;
+}
+
+.modal-footer > .btn-save{
+    background-color: #ffc439;
+}
+
+.modal-footer > .btn-delete{
+    background-color: #ad2a2a;
+    color: white;
 }
 
 .img_btnicon{
