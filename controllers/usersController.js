@@ -57,28 +57,31 @@ const usersController = {
         }
     },
 
-    deleteUser: (req, res) => {
+    deleteUser: (req, res) => {        
+        const email = req.query.email;
 
-        console.log("DELETE USER");
-        /*
-        var reqname = req.query.reqname;
-
-        details = {
-            error: ""
+        let details = {
+            flag : false
         }
+        
+        db.findOne(User ,  {email:email}, {} , function(result) {
 
-        db.findOne(User ,  {name : reqname}, {} , function(result) {
-
-            if (req.session.userID != result.userID){
-                db.deleteOne(User, {name : reqname}, function(result){
-                });
+            if (req.session.userID == result.userID){
+                req.session.destroy(err => {
+                    if(err) {
+                        return res.redirect('/');
+                }});
+            
+                res.clearCookie(sessionName);
+                res.redirect('/');
             }
-            else{
-                console.log('Cant Delete Your Own Account');
-            }
 
-
-        });*/
+            db.deleteOne(User, {email : email}, function(result){
+                if(result)
+                    details.flag= true;
+                res.send(details);
+            });
+        });
     },
 
     updateUser: (req , res) => {
@@ -94,14 +97,11 @@ const usersController = {
         }
 
         db.updateOne(User , { email : email } , newUser, function(flag){
-            if (flag){
-                res.send(true);
+            result = {
+                flag : "Updated User!"
             }
-            else{
-                res.send(false);
-            }
+            res.send(result);
         });
-
     },
 
     getUserInfo: (req , res) => {
@@ -109,6 +109,14 @@ const usersController = {
 
         db.findOne(User ,  {email : email}, {} , function(result) {
             res.send(result)
+        });
+    },
+
+    adminsAvailable: (req, res) => {
+        db.findMany(User, {role : "Administrator"}, {}, function(result){   
+
+            console.log(result);
+            res.send(result);
         });
     }
 }

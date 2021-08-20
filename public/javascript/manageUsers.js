@@ -1,20 +1,34 @@
 
 $(document).ready(function () {
 
-    function deleteUser(field, error){
-        $.get('/deleteUser', {}, function(result){});
-        location.reload();
-        alert('User Deleted Successfully!');
-    }
+    let emailUser = "";
+    let adminResult = false;
+
+    $('#users_data').on('click', '.delete', function () {
+        //your code here
+        const email = $(this).parent().siblings('.emailInfo').text();
+        emailUser = email
+
+        $.get('/checkAdmins', {}, function(result){
+            if (result.length == 1){
+                $("#removeuserModal").modal('hide');
+                alert('Only 1 Admin Left! Assgin someone as Admin');
+            }
+            else{
+                $("#removeuserModal").modal('show');
+            }
+        });
+    });
 
     $('#btnRemoveUser').click(function () {
-        alert('delete');
-        deleteUser($('#name'), $('#error'));
+        const email = emailUser;
+        $.get('/deleteUser', {email: email}, function(result){
+            location.reload();
+        });
     });
 
     $('#btn-edit').click(function(){
         $('#committee').prop('disabled', false);
-        $('#role').prop('disabled', false);
 
         $('#Activities').prop('disabled', false);
         $('#Finance').prop('disabled', false);
@@ -25,11 +39,20 @@ $(document).ready(function () {
         $('#Secretariat').prop('disabled', false);
         $('#SocioCivic').prop('disabled', false);
         $('#Pubs').prop('disabled', false);
+
+        $.get('/checkAdmins', {}, function(result){
+            if (result.length > 1){
+                $('#role').prop('disabled', false);
+            }
+            else{
+                $('#role').prop('disabled', true);
+            }
+        });
     });
 
     $('#btn-save').click(function(){
         
-        const committees = ["Activities", "Finance","HRD","Externals","TND","P-EVP","SocioCivic", "Pubs",]
+        const committees = ["Activities", "Finance","HRD","Externals","TND","P-EVP","SocioCivic", "Pubs"]
         const email = $('#userEmail').text();
         const role = $('#role').val();
         let assigned_committee = "";
@@ -50,7 +73,9 @@ $(document).ready(function () {
         }
 
         $.get('/updateUser', user, function(result){
-            alert(result);
+            alert(result.flag);
+
+
         });
     });
 
@@ -94,24 +119,6 @@ $(document).ready(function () {
         const email = $(this).parent().siblings('.emailInfo').text();
 
         $.get('/getUser', {email: email}, function(result){
-            $('#userEmail').text(result.email);
-            $('#name').text(result.name);
-            $('#role').val(result.role);
-            const arr_ac = result.assigned_committee.split(" ");   
-            
-            for (let i = 0; i < arr_ac.length; i++){
-                tempCheck = "#" + arr_ac[i];
-                $(tempCheck).prop('checked', true);
-            }
-        });
-        
-    });
-
-    $('#users_data').on('click', '.delete', function () {
-        //your code here
-        const email = $(this).parent().siblings('.emailInfo').text();
-
-        $.get('/deleteUser', {email: email}, function(result){
             $('#userEmail').text(result.email);
             $('#name').text(result.name);
             $('#role').val(result.role);
