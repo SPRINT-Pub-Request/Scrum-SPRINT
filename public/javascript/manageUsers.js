@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     let emailUser = "";
     let adminResult = false;
+    let userRole = "";
 
     $('#users_data').on('click', '.delete', function () {
         //your code here
@@ -41,7 +42,8 @@ $(document).ready(function () {
         $('#Pubs').prop('disabled', false);
 
         $.get('/checkAdmins', {}, function(result){
-            if (result.length > 1){
+
+            if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
             }
             else{
@@ -117,8 +119,10 @@ $(document).ready(function () {
     $('#users_data').on('click', '.edit', function () {
         //your code here
         const email = $(this).parent().siblings('.emailInfo').text();
+        emailUser = email;
 
         $.get('/getUser', {email: email}, function(result){
+            userRole = result.role;
             $('#userEmail').text(result.email);
             $('#name').text(result.name);
             $('#role').val(result.role);
