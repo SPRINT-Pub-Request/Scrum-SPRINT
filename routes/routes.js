@@ -23,9 +23,10 @@ app.get('/manage_requests' ,  requestController.getManageReq);
 app.get('/view_requests' ,  requestController.getViewReq , requestController.loadViewReq);
 
 // User Controllers
-app.post('/updateUser' , usersController.updateUser);
+app.get('/updateUser' , usersController.updateUser);
 app.get('/manage_users', usersController.getIndex);
 app.get('/deleteUser', usersController.deleteUser);
+app.get('/getUser', usersController.getUserInfo);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);

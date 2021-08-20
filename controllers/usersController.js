@@ -13,6 +13,7 @@ const usersController = {
             let mReqFlag = false;
             let mUserFlag = false;
 
+
             if (req.session.role === "Publicity and Creatives") {
                 viewFlag = true;
             } else if (req.session.role === "Secretariat") {
@@ -24,18 +25,42 @@ const usersController = {
                 mUserFlag = true;
             }
 
-            const details = {
-                viewFlag : viewFlag,
-                mReqFlag : mReqFlag,
-                mUserFlag : mUserFlag
-            }
-            res.render('manage_users', details);
+            users_data = [];
+            db.findMany(User, {}, {}, function(result){                
+                for (i of result){
+                    let temp_data = {};
+                    temp_data["email"] = i.email;
+                    temp_data["name"] = i.name;
+                    temp_data["role"] = i.role;
+
+                    if(i.assigned_committee === ""){
+                        temp_data["assigned_committee"] = "None"
+                    }
+                    else
+                        temp_data["assigned_committee"] = i.assigned_committee;
+
+                    temp_data["userID"] = i.userID;
+                    users_data.push(temp_data);
+                }
+
+                const details = {
+                    viewFlag : viewFlag,
+                    mReqFlag : mReqFlag,
+                    mUserFlag : mUserFlag,
+                    users_data : users_data
+                }
+
+                res.render('manage_users', details);
+            });
         } else {
             res.redirect('/add_requests');
         }
     },
 
     deleteUser: (req, res) => {
+
+        console.log("DELETE USER");
+        /*
         var reqname = req.query.reqname;
 
         details = {
@@ -53,49 +78,37 @@ const usersController = {
             }
 
 
-        });
+        });*/
     },
 
     updateUser: (req , res) => {
 
-        const newRole = req.body.role;
-        const newAC = req.body.assigned_committee;
-        
-        const query = {
-            name : req.body.name
+        const email = req.query.email;
+        const role = req.query.role;
+        const assigned_committee = req.query.assigned_committee;
+
+        newUser ={
+            email : email,
+            role : role,
+            assigned_committee : assigned_committee
         }
 
-        db.findOne(User , query , {} , function(result) {
-
-            //Test Purposes
-            //console.log('\nemail = ' + result.email  +  '\nAC = ' + newAC + '\nrole = ' + result.role + '\nsession role = ' + req.session.role);
-            console.log('email = ' + result.email);
-            console.log('assigned new committee = ' + newAC);
-            console.log('role = ' + result.role);
-            /*
-            if(newRole !== result.role) {
-                console.log('Hello');
-            } else {
-                console.log('Failed');
-                res.redirect('/manage_users');
-            }*/
-
-            if (req.session.userID == result.userID && result.role === 'Administrator' && newRole !== 'Administrator'){ //If an Administrator tries to demote himself/herself
-                console.log('Cant demote yourself (an administrator)');
-                res.redirect('/manage_users');
+        db.updateOne(User , { email : email } , newUser, function(flag){
+            if (flag){
+                res.send(true);
             }
-            else{//Valid Updating User
-                db.updateOne(User , { email : result.email } , {
-                    $set : {
-                        role : newRole,
-                        assigned_committee : newAC
-                    }, 
-                });
-                req.session.role = newRole;
-                req.session.mailReceiver = result.email;
-
-                return res.redirect('/sendNotif');  
+            else{
+                res.send(false);
             }
+        });
+
+    },
+
+    getUserInfo: (req , res) => {
+        const email = req.query.email;
+
+        db.findOne(User ,  {email : email}, {} , function(result) {
+            res.send(result)
         });
     }
 }
