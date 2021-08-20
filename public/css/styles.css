@@ -11693,7 +11693,7 @@ select.error > option {
   background-color: #1D1A1A;
 }
 
-.btn-sidebar:hover:not(.nav-active) {
+.btn-sidebar:hover:not(.nav-active):not(.btn-logout) {
   background-color: #312727;
 }
 
@@ -11706,6 +11706,19 @@ select.error > option {
   background-color: #ffc934;
 }
 
+.logout {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+}
+
+.btn-logout {
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  outline: none;
+}
+
 .btn-withicon > .btn-icon {
   font-size: 1.5rem !important;
   color: #ffc934;
@@ -11715,16 +11728,6 @@ select.error > option {
 .nav-active.btn-withicon > .btn-icon,
 td > .btn-icon {
   color: #1D1A1A;
-}
-
-.btn-logout {
-  position: absolute;
-  bottom: 20px;
-  left: 4px;
-  background-color: Transparent;
-  background-repeat: no-repeat;
-  border: none;
-  outline: none;
 }
 
 .logo {
