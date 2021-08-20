@@ -50,14 +50,17 @@
                     <span class="btn-icon-text">Manage Requests</span>
                 </div>
             </li>{{/if}}{{/if}}
+
+            <li class="logout">  
+                <form method = "post" action = "/logout">
+                <button class="btn-sidebar btn-withicon btn-logout" type = "submit">
+                    <i class="bi-x-square-fill btn-icon"></i>
+                    <span class="btn-icon-text">Log out</span>
+                </button> 
+                </form>
+            </li>
         </ul>
     </nav>
 
-    <form method = "post" action = "/logout">
-        <button class="btn-withicon btn-logout" type = "submit"> 
-            <i class="bi-x-square-fill btn-icon"></i>
-            <span class="btn-icon-text">Log out</span>
-        </button>
-    </form>
 </div>
 </div> 
