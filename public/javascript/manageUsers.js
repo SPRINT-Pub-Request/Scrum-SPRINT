@@ -40,9 +40,8 @@ $(document).ready(function () {
         $('#Secretariat').prop('disabled', false);
         $('#SocioCivic').prop('disabled', false);
         $('#Pubs').prop('disabled', false);
-
+        
         $.get('/checkAdmins', {}, function(result){
-
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
             }
