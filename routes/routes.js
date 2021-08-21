@@ -28,7 +28,7 @@ app.get('/manage_users', usersController.getIndex);
 app.get('/deleteUser', usersController.deleteUser);
 app.get('/getUser', usersController.getUserInfo);
 app.get('/checkAdmins', usersController.adminsAvailable);
-
+app.get('/getEmail', usersController.getEmail);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);

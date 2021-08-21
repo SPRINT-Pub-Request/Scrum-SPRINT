@@ -114,10 +114,19 @@ const usersController = {
         
     },
 
+    getEmail: (req , res) => {
+        const userID = req.session.userID;
+
+        db.findOne(User , {userID : userID} , {} , function(result){
+            res.send(result.email);
+        })
+    },
+
     getUserInfo: (req , res) => {
         const email = req.query.email;
-
+        
         db.findOne(User ,  {email : email}, {} , function(result) {
+            console.log(result);
             res.send(result);
         });
     },
