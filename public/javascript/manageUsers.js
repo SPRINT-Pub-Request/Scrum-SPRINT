@@ -74,10 +74,18 @@ $(document).ready(function () {
         }
 
         $.get('/updateUser', user, function(result){
-            alert(result.flag);
-
-
+            
+            if(result) {
+                $.get('/sendNotif' , user , function(result){
+                    alert(result);
+                });
+            } else {
+                alert('Updating User Failed, Please Refresh and Try Again!')
+            }
         });
+
+        
+
     });
 
 

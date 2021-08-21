@@ -46,7 +46,8 @@ const loginController = {
                         name : req.user.displayName,
                         email : req.user.email,
                         committee : "None",
-                        role : "Administrator"
+                        role : "Administrator",
+                        assigned_committee: ""
                     };
                     
                     req.session.role = userAdd.role;

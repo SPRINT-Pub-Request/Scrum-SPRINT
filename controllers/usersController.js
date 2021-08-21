@@ -95,20 +95,30 @@ const usersController = {
             role : role,
             assigned_committee : assigned_committee
         }
-
-        db.updateOne(User , { email : email } , newUser, function(flag){
-            result = {
-                flag : "Updated User!"
+        
+        db.updateOne(User , { email : email } , {
+            $set : {
+                role : newUser.role,
+                assigned_committee : newUser.assigned_committee
             }
-            res.send(result);
+        } , function(result) {
+            if(result) {
+                res.send(result);
+            } else {
+                res.send(result);
+            }
+
         });
+
+
+        
     },
 
     getUserInfo: (req , res) => {
         const email = req.query.email;
 
         db.findOne(User ,  {email : email}, {} , function(result) {
-            res.send(result)
+            res.send(result);
         });
     },
 
