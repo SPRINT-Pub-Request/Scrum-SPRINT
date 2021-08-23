@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded( {extended:true} ));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/favicon.ico', express.static('public/img/favicon.ico'));
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + `/views/partials`);
 
