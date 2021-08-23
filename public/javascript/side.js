@@ -21,8 +21,8 @@ $(document).ready(function () {
         $('#view_request').removeClass('nav-active');
         $('#add_request').removeClass('nav-active');
         $('#manage_request').removeClass('nav-active');
-    } else if(currLoc == "/manage_request") {
-        $('#manage_request').addClass('nav-active')
+    } else if(currLoc == "/manage_requests") {
+        $('#manage_requests').addClass('nav-active')
         $('#view_request').removeClass('nav-active');
         $('#manage_users').removeClass('nav-active');
         $('#add_request').removeClass('nav-active');

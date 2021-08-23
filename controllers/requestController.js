@@ -51,17 +51,86 @@ const requestController = {
 
     getManageReq: (req , res) => {
         if(req.session.userID) {
-            res.render('manage_requests')
+
+            const query = {
+                userID : req.session.userID
+            };
+
+            db.findOne(User, query, {}, function(result) {
+                if (result != null) {
+                    let viewFlag = false;
+                    let mReqFlag = false;
+                    let mUserFlag = false;
+
+                    if (result.role === "Publicity and Creatives") {
+                        viewFlag = true;
+                    } else if (result.role === "Secretariat") {
+                        viewFlag = true;
+                        mReqFlag = true;
+                    } else if (result.role === "Administrator") {
+                        viewFlag = true;
+                        mReqFlag = true;
+                        mUserFlag = true;
+                    }
+
+                    const details = {
+                        viewFlag : viewFlag,
+                        mReqFlag : mReqFlag,
+                        mUserFlag : mUserFlag
+                    }
+
+                    res.render('manage_requests', details);
+                } else {
+                    res.redirect('/');
+                }
+
+            });
+
         } else {
-            res.redirect('/')
+            res.redirect('/');
         }
     },
 
     getViewReq: (req , res) => {
-        if(req.session.userID)
-            res.render('view_requests')
-        else
-            res.redirect('/')
+        if(req.session.userID) {
+
+            const query = {
+                userID : req.session.userID
+            };
+
+            db.findOne(User, query, {}, function(result) {
+                if (result != null) {
+                    let viewFlag = false;
+                    let mReqFlag = false;
+                    let mUserFlag = false;
+
+                    if (result.role === "Publicity and Creatives") {
+                        viewFlag = true;
+                    } else if (result.role === "Secretariat") {
+                        viewFlag = true;
+                        mReqFlag = true;
+                    } else if (result.role === "Administrator") {
+                        viewFlag = true;
+                        mReqFlag = true;
+                        mUserFlag = true;
+                    }
+
+                    const details = {
+                        viewFlag : viewFlag,
+                        mReqFlag : mReqFlag,
+                        mUserFlag : mUserFlag
+                    }
+
+                    res.render('view_requests', details);
+                } else {
+                    res.redirect('/');
+                }
+
+            });
+            
+        } else {
+            res.redirect('/');
+        }
     },
 
     loadViewReq : (req , res) => {
