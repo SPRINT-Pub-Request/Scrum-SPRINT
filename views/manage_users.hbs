@@ -26,8 +26,8 @@
         <div class="container-table">
         
             <div class="spacer"></div>
-
-            <table id="userstable" class="stripe" style="width: 100%">
+            
+            <table id="userstable" class="stripe sortable" style="width: 100%">
                 <thead>
                     <tr>
                         <th class="btn-col"></th>
@@ -38,42 +38,31 @@
                         <th class="btn-col"></th>
                     </tr>
                 </thead>
-
-                <tbody>
-                    <tr>
+                <tbody id = "users_data">
+                    {{#each users_data}}
+                    <tr class = "users_info">
                         <td class="btn-col" scope="row">
-                            <i class="bi-plus-square-fill btn-icon" type="button" 
+                            <i type = "button" class="bi-plus-square-fill btn-icon edit" 
                             data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
                         </td>
-                        <td>john.doe@dlsu.edu.ph</td>
-                        <td>John Doe</td>
-                        <td>Secretariat</td>
-                        <td>TND, Finance</td>
+                        <td class = "emailInfo">{{this.email}}</td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.role}}</td>
+                        <td>{{this.assigned_committee}}</td>
                         <td class="btn-col">
-                            <i class="bi-trash-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#removeuserModal"></i>
+                            <i class="bi-trash-fill btn-icon delete" type="button" 
+                            data-bs-toggle="modal"></i>
                         </td>
+                        <!--<p class = "hidden">{{userID}}</p> Dont remove (remove on final product)-->
                     </tr>
-                    <tr>
-                        <td class="btn-col" scope="row">
-                            <i class="bi-plus-square-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
-                        </td>
-                        <td>0ohn.doe@dlsu.edu.ph</td>
-                        <td>AAAQQQQQ QQQQ BB</td>
-                        <td>Requester</td>
-                        <td>N/A</td>
-                        <td class="btn-col">
-                            <i class="bi-trash-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#removeuserModal"></i>
-                        </td>
-                    </tr>
+                    {{/each}}
                 </tbody>
             </table>
 
         </div>
 
         <!-- USER DETAILS MODAL -->
+        
         <div class="modal fade" id="userdetailsModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -102,7 +91,7 @@
                             <select class="form-select" style='font-family: "OpenSans", Sans-Serif;' name = "role" id = "role" disabled>
                                 <option value = "Requester">Requester</option>
                                 <option value = "Publicity and Creatives">Publicity and Creatives</option>
-                                <option value = "Secretariat" selected>Secretariat</option>
+                                <option value = "Secretariat">Secretariat</option>
                                 <option style="color: #a53333" value = "Administrator">Administrator</option>
                             </select>
                         </div>
@@ -115,30 +104,33 @@
                     <div id="assigned_comm">
                     <div class="row modal-row">
                         <div class="col btn-group">
-                            <input type="checkbox" class="btn-check" value="Activities" id="comm_Activities" disabled>
-                            <label class="btn btn-outline-dark" for="comm_Activities">Activities</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Activities" id="Activities" disabled>
+                            <label class="btn btn-outline-dark" for="Activities">Activities</label>
 
-                            <input type="checkbox" class="btn-check" value="Finance" id="comm_Finance" checked disabled>
-                            <label class="btn btn-outline-dark" for="comm_Finance">Finance</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Finance" id="Finance"disabled>
+                            <label class="btn btn-outline-dark" for="Finance">Finance</label>
 
-                            <input type="checkbox" class="btn-check" value="HRD" id="comm_HRD" disabled>
-                            <label class="btn btn-outline-dark" for="comm_HRD">HRD</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="HRD" id="HRD" disabled>
+                            <label class="btn btn-outline-dark" for="HRD">HRD</label>
 
-                            <input type="checkbox" class="btn-check" value="Externals" id="comm_Externals" disabled>
-                            <label class="btn btn-outline-dark" for="comm_Externals">Externals</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Externals" id="Externals"disabled>
+                            <label class="btn btn-outline-dark" for="Externals">Externals</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col btn-group">
-                            <input type="checkbox" class="btn-check" value="TND" id="comm_TND" checked disabled>
-                            <label class="btn btn-outline-dark" for="comm_TND">TND</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="TND" id="TND" disabled>
+                            <label class="btn btn-outline-dark" for="TND">TND</label>
 
-                            <input type="checkbox" class="btn-check" value="P-EVP" id="comm_P-EVP" disabled>
-                            <label class="btn btn-outline-dark" for="comm_P-EVP">P-EVP</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="P-EVP" id="P-EVP" disabled>
+                            <label class="btn btn-outline-dark" for="P-EVP">P-EVP</label>
 
-                            <input type="checkbox" class="btn-check" value="Socio Civic" id="comm_SocioCivic" disabled>
-                            <label class="btn btn-outline-dark" for="comm_SocioCivic">Socio Civic</label>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="SocioCivic" id="SocioCivic" disabled>
+                            <label class="btn btn-outline-dark" for="SocioCivic">Socio Civic</label>
+
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Pubs" id="Pubs" disabled>
+                            <label class="btn btn-outline-dark" for="Pubs">Pubs</label>
                         </div>
                     </div>
                     </div>
@@ -166,7 +158,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                    <button type ="submit" id="btnRemoveUser" class="btn btn-delete" data-bs-dismiss="modal">Delete</button>
+                    <button id = "btnRemoveUser" type ="submit" class="btn btn-delete" data-bs-dismiss="modal">Delete</button>
                 </div>
                 </div>
             </div>

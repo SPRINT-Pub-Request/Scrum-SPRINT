@@ -17,11 +17,12 @@ const mailController = {
     sendNotif: (req , res) => {
 
         const query = {
-            email : req.session.mailReceiver
+            email : req.query.email
         }
 
         db.findOne(User , query , {} , function(result) {
             
+            console.log(result);
             const options = {
                 from : process.env.MAIL_AUTHEMAIL,
                 to : result.email,
@@ -32,11 +33,11 @@ const mailController = {
             transporter.sendMail(options, (err , info) => {
                 if(err) {
                     console.log(err);
-                    res.redirect('/logout');
+                    res.send('Fail to Notify User! Please Refresh and Try again');
                 }
                 
                 console.log("Server has sent mail, Info: " + info.response);
-                res.redirect('/manage_users');
+                res.send('Successfully Updated and Notified User!');
             });
         });
 
