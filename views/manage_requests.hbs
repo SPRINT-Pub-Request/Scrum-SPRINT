@@ -4,54 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.10.25/r-2.2.9/datatables.min.css"/>
     <link rel="stylesheet" href="/css/styles.css" type="text/css"/> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <title>Manage Requests</title>
 </head>
 <body>
     
     {{> sidebar }}
 
-    <div class="container-content">
+    <div class="container-start with-sidebar" style="padding-left: 100px; padding-right: 100px; overflow: auto;">
 
-        <h1>Request Database</h1>
+        <h1>REQUEST DATABASE</h1>
         <div class="h-spacer50"></div>
 
-        <div class="row">
-        <div class="col-sm-12">
+         <div class="container-table">
 
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
-                    <div class="spacer"></div>
-
-                    <table id="requeststable" class="table table-striped">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">Request ID</th>
-                                <th scope="col">Activity Name</th>
-                                <th scope="col">Posting Date</th>
-                                <th scope="col">Assigned to</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>SPRINT General Assembly</td>
-                                <td>09/21/21 8:00PM</td>
-                                <td>.......</td>
-                                <td>Not Started</td>
-                            </tr>
-
-                           
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
+            <table id="requeststable" style="width: 100%">
+                <thead>
+                    <tr>
+                        <th class="btn-col"></th>
+                        <th scope="col">Activity Name</th>
+                        <th scope="col">Posting Date</th>
+                        <th scope="col">Status</th>
+                        <th class="btn-col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="btn-col" scope="row">
+                            <i class="bi-plus-square-fill btn-icon" type="button" 
+                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
+                        </td>
+                        <td>SPRINT General Assembly</td>
+                        <td>09/21/21 8:00PM</td>
+                        <td>Not Started</td>
+                        <td class="btn-col">
+                            <i class="bi-trash-fill btn-icon" type="button" 
+                            data-bs-toggle="modal" data-bs-target="#removeuserModal"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="btn-col" scope="row">
+                            <i class="bi-plus-square-fill btn-icon" type="button" 
+                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
+                        </td>
+                        <td>SPRINT General Assembly</td>
+                        <td>09/21/21 8:00PM</td>
+                        <td>Not Started</td>
+                        <td class="btn-col">
+                            <i class="bi-trash-fill btn-icon" type="button" 
+                            data-bs-toggle="modal" data-bs-target="#removeuserModal"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
-        </div>
+
         
         <div class="h-spacer50"></div>
 
@@ -134,14 +147,14 @@
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/1.10.15/api/row().show().js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.10.25/r-2.2.9/datatables.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#requeststable').DataTable();
-        } );
+        $(document).ready(function(){
+            $('#requeststable').DataTable({
+            });
+        });
     </script>
 
 </body>
