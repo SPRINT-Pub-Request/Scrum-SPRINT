@@ -106,16 +106,17 @@ const requestController = {
                             
                             request_data.push(temp_data);
                         }
+
+                        const details = {
+                            viewFlag : viewFlag,
+                            mReqFlag : mReqFlag, 
+                            mUserFlag : mUserFlag,
+                            request_data : request_data
+                        }
+                    
+                        res.render('manage_requests', details);
                     });
                     
-                    const details = {
-                        viewFlag,
-                        mReqFlag, 
-                        mUserFlag,
-                        request_data
-                    }
-
-                    res.render('manage_requests', details);
                 } else {
                     res.redirect('/');
                 }
