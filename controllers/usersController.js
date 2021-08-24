@@ -7,8 +7,8 @@ const PubRequest = require('../models/PubRequestModel.js');
 
 const usersController = {
     
-    getIndex: (req , res) => {  
-        if(req.session.userID /*&& req.session.role === 'Administrator'*/){
+    getIndex: (req , res) => { 
+        if(req.session.userID && req.session.role === 'Administrator'){
             let viewFlag = false;
             let mReqFlag = false;
             let mUserFlag = false;
@@ -85,7 +85,7 @@ const usersController = {
     },
 
     updateUser: (req , res) => {
-
+        let transfer = false;
         const email = req.query.email;
         const role = req.query.role;
         const assigned_committee = req.query.assigned_committee;
@@ -95,19 +95,29 @@ const usersController = {
             role : role,
             assigned_committee : assigned_committee
         }
-        
-        db.updateOne(User , { email : email } , {
-            $set : {
-                role : newUser.role,
-                assigned_committee : newUser.assigned_committee
-            }
-        } , function(result) {
-            if(result) {
-                res.send(result);
-            } else {
-                res.send(result);
+
+        db.findOne(User, {email : email}, {}, function(result){
+            if (result.userID === req.session.userID){
+                transfer = true;
+                console.log("transfer true!");
             }
 
+            db.updateOne(User , { email : email } , {
+                $set : {
+                    role : newUser.role,
+                    assigned_committee : newUser.assigned_committee
+                }
+            } , function(result) {
+                if(result) {
+                    if(transfer){
+                        req.session.role = newUser.role;
+                    }
+                    res.send(result);
+                } else {
+                    res.send(result);
+                }
+    
+            });
         });
 
     },
@@ -126,6 +136,29 @@ const usersController = {
         db.findOne(User ,  {email : email}, {} , function(result) {
             res.send(result);
         });
+    },
+
+    getNoAssigned:(req , res) => {
+
+        console.log("Get No Assigned");
+        
+        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+        let committee = [false , false , false , false , false , false , false , false];
+
+
+        db.findMany(User, {}, {}, function(result){
+            for (let i = 0; i < result.length; i++){
+                for (let j = 0; j < namesCommittee.length; j++){
+                    console.log(result[i].assigned_committee.indexOf(namesCommittee[j]))
+                    if (result[i].assigned_committee.indexOf(namesCommittee[j]) != -1){
+                        committee[j] = true;
+                    }
+                }
+            }
+            console.log(committee);
+            res.send(committee);
+        })
+
     },
 
     adminsAvailable: (req, res) => {

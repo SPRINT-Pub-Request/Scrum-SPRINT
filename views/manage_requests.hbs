@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/styles.css" type="text/css"/> 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <script src="javascript\manageRequest.js" type="text/javascript"></script>
     <title>Manage Requests</title>
 </head>
 <body>
@@ -30,6 +30,8 @@
                         <th scope="col">Activity Name</th>
                         <th scope="col">Posting Date</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Assigned Pubs</th>
+                        <th scope="col">Assigned Secretariat</th>
                         <th class="btn-col"></th>
                     </tr>
                 </thead>
@@ -42,19 +44,8 @@
                         <td>SPRINT General Assembly</td>
                         <td>09/21/21 8:00PM</td>
                         <td>Not Started</td>
-                        <td class="btn-col">
-                            <i class="bi-trash-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#removerequestModal"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="btn-col" scope="row">
-                            <i class="bi-plus-square-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#requestdetailsModal"></i>
-                        </td>
-                        <td>SPRINT General Assembly</td>
-                        <td>09/21/21 8:00PM</td>
-                        <td>Not Started</td>
+                        <td></td>
+                        <td></td>
                         <td class="btn-col">
                             <i class="bi-trash-fill btn-icon" type="button" 
                             data-bs-toggle="modal" data-bs-target="#removerequestModal"></i>
@@ -102,7 +93,27 @@
                                 <textarea type="text" class="form-control" name = "description" id="description" placeholder="..."></textarea>
                             </div>
                         </div>
-                    
+
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="pub">Assigned Pub</label>
+                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="status" name="status">
+                                    <option class="not_started" value="not_started">Not Started</option>
+                                    <option class="in_progress" value="in_progress" selected>In Progress</option>
+                                    <option class="finished" value="finished">Finished</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="secretariat">Assigned Secretariat</label>
+                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="status" name="status">
+                                    <option class="not_started" value="not_started">Not Started</option>
+                                    <option class="in_progress" value="in_progress" selected>In Progress</option>
+                                    <option class="finished" value="finished">Finished</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="h-spacer20"><hr></div>
 
                         <div class="row form-row">
