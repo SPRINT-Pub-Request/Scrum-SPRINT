@@ -35,22 +35,24 @@
                         <th class="btn-col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id = "request_data">
+                    {{#each request_data}}
                     <tr>
                         <td class="btn-col" scope="row">
-                            <i class="bi-plus-square-fill btn-icon" type="button" 
+                            <i class="bi-plus-square-fill btn-icon edit" type="button" 
                             data-bs-toggle="modal" data-bs-target="#requestdetailsModal"></i>
                         </td>
-                        <td>SPRINT General Assembly</td>
-                        <td>09/21/21 8:00PM</td>
-                        <td>Not Started</td>
-                        <td></td>
-                        <td></td>
+                        <td class = "activity_name">{{this.activity_name}}</td>
+                        <td>{{this.posting_date}} {{this.posting_time}}</td>
+                        <td>{{this.status}}</td>
+                        <td>{{this.pubName}}</td>
+                        <td>{{this.secName}}</td>
                         <td class="btn-col">
                             <i class="bi-trash-fill btn-icon" type="button" 
                             data-bs-toggle="modal" data-bs-target="#removerequestModal"></i>
                         </td>
                     </tr>
+                    {{/each}}
                 </tbody>
             </table>
 
@@ -73,7 +75,7 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="status">Status</label>
-                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select"  id = "status" name = "status">
+                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select"  id = "status" name = "status" disabled>
                                     <option class="not_started" value = "not_started">Not Started</option>
                                     <option class="in_progress" value = "in_progress" selected>In Progress</option>
                                     <option class="finished" value = "finished">Finished</option>
@@ -82,7 +84,7 @@
 
                             <div class="col col-9">
                                 <label for="medialink">Media Link</label>
-                                <input type="text" class="form-control" name = "medialink" id="medialink" placeholder="...">
+                                <input type="text" class="form-control" name = "medialink" id="medialink" placeholder="..." disabled>
                             </div>
 
                         </div>
@@ -90,14 +92,14 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="caption">Caption</label>
-                                <textarea type="text" class="form-control" name = "description" id="description" placeholder="..."></textarea>
+                                <textarea type="text" class="form-control" name = "caption" id="caption" placeholder="..." disabled></textarea>
                             </div>
                         </div>
 
                         <div class="row form-row">
                             <div class="col">
                                 <label for="pub">Assigned Pub</label>
-                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="status" name="status">
+                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="assignPub" name="assignPub" disabled>
                                     <option class="not_started" value="not_started">Not Started</option>
                                     <option class="in_progress" value="in_progress" selected>In Progress</option>
                                     <option class="finished" value="finished">Finished</option>
@@ -106,7 +108,7 @@
 
                             <div class="col">
                                 <label for="secretariat">Assigned Secretariat</label>
-                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="status" name="status">
+                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="assignSec" name="assignSec" disabled>
                                     <option class="not_started" value="not_started">Not Started</option>
                                     <option class="in_progress" value="in_progress" selected>In Progress</option>
                                     <option class="finished" value="finished">Finished</option>
@@ -119,14 +121,14 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="reqname">Name </label>
-                                <input type="text" class="form-control" name = "reqname" id="reqname" placeholder="LAST NAME, First Name">
+                                <input type="text" class="form-control" name = "reqname" id="reqname" placeholder="LAST NAME, First Name" disabled>
                             </div>
                             
                             <div class="col">
                                 <label for="committee">
                                     Committee
                                 </label>
-                                <select style='font-family: "OpenSans", Sans-Serif;' class="form-select" id = "committee" name = "committee">
+                                <select style='font-family: "OpenSans", Sans-Serif;' class="form-select" id = "committee" name = "committee" disabled>
                                     <option value = "" style="display: none;">Select Committee</option>
                                     <option value = "activities">Activities</option>
                                     <option value = "finance">Finance</option>
@@ -145,14 +147,14 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="activity_name">Activity Name</label>
-                                <input type="text" class="form-control" name = "activity_name" id="activity_name" placeholder="...">
+                                <input type="text" class="form-control" name = "activity_name" id="activity_name" placeholder="..." disabled>
                             </div>
                         </div>
                         
                         <div class="row form-row">
                             <div class="col">
                                 <label for="activity_name">Description</label>
-                                <textarea type="text" class="form-control" name = "description" id="description" placeholder="..."></textarea>
+                                <textarea type="text" class="form-control" name = "description" id="description" placeholder="..." disabled></textarea>
                             </div>
                         </div>
 
@@ -162,16 +164,16 @@
                                     <span class="error-message" id="date_error"></span>
                                 </label>
                                 <div class="input-group" id="start_date_form">
-                                    <input type="date" class="form-control" name = "start_date" id="start_date">
-                                    <input type="time" class="form-control" name = "start_time" id="start_time" value="11:00">
+                                    <input type="date" class="form-control" name = "start_date" id="start_date" disabled>
+                                    <input type="time" class="form-control" name = "start_time" id="start_time" value="11:00" disabled>
                                 </div>
                             </div>
 
                             <div class="col">
                                 <label for="end_date_form">End Date <span class="asterisk">*</span></label>
                                 <div class="input-group" id="end_date_form">
-                                    <input type="date" class="form-control" name = "end_date" id="end_date">
-                                    <input type="time" class="form-control" name = "end_time" id="end_time" value="14:00">
+                                    <input type="date" class="form-control" name = "end_date" id="end_date" disabled>
+                                    <input type="time" class="form-control" name = "end_time" id="end_time" value="14:00" disabled>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +181,7 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="reqname">Venue <span class="asterisk">*</span></label>
-                                <input type="text" class="form-control" name = "venue" id="venue" placeholder="if online, please put URL">
+                                <input type="text" class="form-control" name = "venue" id="venue" placeholder="if online, please put URL" disabled>
                             </div>
                             <div class="col">
                                 <label for="reqname">Theme</label>
@@ -193,19 +195,19 @@
                         <div class="row form-row">
                             <div class="col col-8 btn-group" role="group">
 
-                                <input type="radio" class="btn-check pubType" name="pubType" value="poster" id="type_poster" autocomplete="off" checked>
+                                <input type="radio" class="btn-check pubType" name="pubType" value="poster" id="type_poster" autocomplete="off" checked disabled>
                                 <label class="btn btn-outline-dark" for="type_poster">Poster</label>
 
-                                <input type="radio" class="btn-check pubType" name="pubType" value="album" id="type_album" autocomplete="off">
+                                <input type="radio" class="btn-check pubType" name="pubType" value="album" id="type_album" autocomplete="off" disabled>
                                 <label class="btn btn-outline-dark" for="type_album">Album</label>
 
-                                <input type="radio" class="btn-check pubType" name="pubType" value="video" id="type_video" autocomplete="off">
+                                <input type="radio" class="btn-check pubType" name="pubType" value="video" id="type_video" autocomplete="off" disabled>
                                 <label class="btn btn-outline-dark" for="type_video">Video</label>
 
-                                <input type="radio" class="btn-check pubType" name="pubType" value="fb_cover" id="type_fbcover" autocomplete="off">
+                                <input type="radio" class="btn-check pubType" name="pubType" value="fb_cover" id="type_fbcover" autocomplete="off" disabled>
                                 <label class="btn btn-outline-dark" for="type_fbcover">FB Cover</label>
 
-                                <input type="radio" class="btn-check pubType" name="pubType" value = "other" id="type_other"  autocomplete="off">
+                                <input type="radio" class="btn-check pubType" name="pubType" value = "other" id="type_other"  autocomplete="off" disabled>
                                 <label class="btn btn-outline-dark" for="type_other">Other</label>
 
                             </div>
@@ -219,8 +221,8 @@
                             <label for="posting_date_form">Posting Date</label>
                             <div class="col col-7" id="posting_date_form">
                                 <div class="input-group">
-                                    <input type="date" class="form-control" name = "posting_date" id="posting_date">
-                                    <input type="time" class="form-control" name = "posting_time" id="posting_time" value="11:00">
+                                    <input type="date" class="form-control" name = "posting_date" id="posting_date" disabled>
+                                    <input type="time" class="form-control" name = "posting_time" id="posting_time" value="11:00" disabled>
                                 </div>
                             </div>
                         </div>
@@ -229,10 +231,10 @@
                             <div class="col" id="postevent_form">
                             Will you be posting a post-event post (for post-event caption)
                             <div class="btn-group" role="group">
-                                <input type="radio" class="btn-check postevent" name="postevent" value="no" id="postevent_no" autocomplete="off" checked>
+                                <input type="radio" class="btn-check postevent" name="postevent" value="no" id="postevent_no" autocomplete="off" checked disabled>
                                 <label class="btn btn-outline-dark" for="postevent_no">No</label>
 
-                                <input type="radio" class="btn-check postevent" name="postevent" value="yes" id="postevent_yes" autocomplete="off">
+                                <input type="radio" class="btn-check postevent" name="postevent" value="yes" id="postevent_yes" autocomplete="off" disabled>
                                 <label class="btn btn-outline-dark" for="postevent_yes">Yes</label>
                             </div>
                             </div>
@@ -241,7 +243,7 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="files_url">Link to Related Files (if applicable)</label>
-                                <input type="text" class="form-control" name = "files_url" id="files_url" placeholder="...  ">
+                                <input type="text" class="form-control" name = "files_url" id="files_url" placeholder="...  " disabled>
                             </div>
                         </div>
 
@@ -250,21 +252,21 @@
                         <div class="row form-row">
                             <div class="col">
                                 <label for="details">Details</label>
-                                <textarea type="text" class="form-control" name = "details" id="details" placeholder="..."></textarea>
+                                <textarea type="text" class="form-control" name = "details" id="details" placeholder="..." disabled></textarea>
                             </div>
                         </div>
 
                         <div class="row form-row">
                             <div class="col">
                                 <label for="comments">Comments</label>
-                                <textarea type="text" class="form-control" name = "comments" id="comments" placeholder="..."></textarea>
+                                <textarea type="text" class="form-control" name = "comments" id="comments" placeholder="..." disabled></textarea>
                             </div>
                         </div>
 
                         <div class="row form-row">
                             <div class="col">
                                 <label for="specialRequest">Special Request</label>
-                                <textarea type="text" class="form-control" name = "specialRequest" id="specialRequest" placeholder="..."></textarea>
+                                <textarea type="text" class="form-control" name = "specialRequest" id="specialRequest" placeholder="..." disabled></textarea>
                             </div>
                         </div>
 

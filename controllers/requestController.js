@@ -31,6 +31,7 @@ const requestController = {
                         mUserFlag = true;
                     }
 
+
                     const details = {
                         viewFlag : viewFlag,
                         mReqFlag : mReqFlag,
@@ -72,11 +73,46 @@ const requestController = {
                         mReqFlag = true;
                         mUserFlag = true;
                     }
+                    
+                    request_data = [];
 
+                    db.findMany(PubRequest , {} , {} , function(result){
+                        for (i of result) {
+                            let temp_data = {};
+
+                            temp_data["reqname"] = i.reqname;
+                            temp_data["committee"] = i.committee;
+                            temp_data["activity_name"] = i.activity_name;
+                            temp_data["description"] = i.description;
+                            temp_data["start_date"] = i.start_date;
+                            temp_data["start_time"] = i.start_time;
+                            temp_data["end_date"] = i.end_date;
+                            temp_data["end_time"] = i.end_time;
+                            temp_data["venue"] = i.venue;
+                            temp_data["theme"] = i.theme;
+                            temp_data["pubType"] = i.pubType;
+                            temp_data["posting_date"] = i.posting_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').replace('00:00:00' , ' ');
+                            temp_data["posting_time"] = i.posting_time;
+                            temp_data["postevent"] = i.postevent;
+                            temp_data["links"] = i.links;
+                            temp_data["details"] = i.details;
+                            temp_data["comments"] = i.comments;
+                            temp_data["specialRequest"] = i.specialRequest;
+                            temp_data["pubLink"] = i.pubLink;
+                            temp_data["pubName"] = i.pubName;
+                            temp_data["secName"] = i.secName;
+                            temp_data["caption"] = i.caption;
+                            temp_data["status"] = i.status;
+                            
+                            request_data.push(temp_data);
+                        }
+                    });
+                    
                     const details = {
-                        viewFlag : viewFlag,
-                        mReqFlag : mReqFlag,
-                        mUserFlag : mUserFlag
+                        viewFlag,
+                        mReqFlag, 
+                        mUserFlag,
+                        request_data
                     }
 
                     res.render('manage_requests', details);
@@ -133,56 +169,15 @@ const requestController = {
         }
     },
 
-    loadViewReq : (req , res) => {
+    getPubRequest: (req , res) => {
+        const activity_name = req.query.activity_name;
 
-        console.log("test");
-        // Will Connect to Design When Available
-        if(req.session.role === "Administrator") {
-
-            // This will show all request 
-            db.findMany(PubRequest , {} , {} , function(result){
-                console.log(result);
-                
-                
-                // Will be implemented when front-end is available, will be placed so that admin can choose what people assigned to that committee gonna do the work
-                
-                const query = {
-                    committee : result.committee
-                }
-
-                db.findMany(PubRequest , {} , {} , function(result){
-                    for(let i = 0; i < result.length; i++)
-                    {
-                        //Test Purposes Only
-                        console.log(result[i].committee);
-                        
-                        db.findMany(User , {committee : result[i].committee} , {} , function(result){
-                            console.log(result)
-                        });
-                    }
-                });
-
-                
-                
-
-            });
-            
-
-        } else {
-
-            // This will view only request assigned to you, Will connect to front-end when the 'view whats assigned to me button is up' 
-            const query = {
-                userID : req.session.userID
-            }
-
-            db.findMany(PubRequest , query , {} , function(result){
-                console.log(result);
-            });
-        }
-
-
-
+        db.findOne(PubRequest , {activity_name: activity_name} , {} , function(result) {
+            console.log(result)
+            res.send(result);
+        });
     },
+
     postRequest: (req, res) => {
 
         const reqname = req.body.reqname;
@@ -232,13 +227,11 @@ const requestController = {
             details,
             comments,
             specialRequest,
-            userID : req.session.userID,
-            pubStatus : 'Not Started',
             pubLink: 'N/A',
             caption: 'N/A',
-            captionStatus: 'Not Started',
-            pubUserID: 'Not Assigned',
-            secUserID: 'Not Assigned'
+            status: 'Not Started',
+            pubName: 'Not Assigned',
+            secName: 'Not Assigned'
         }
         
 
@@ -260,7 +253,7 @@ const requestController = {
         console.log("specialRequest: " + specialRequest);
         console.log("Pub Type: " + pubType);
         console.log("Post Event: " + postevent);
-        console.log("User ID: " + details.userID);
+
         
         db.insertOne(PubRequest, pubrequest, function(flag) {
             console.log(flag);

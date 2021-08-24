@@ -138,7 +138,7 @@ $(document).ready(function () {
         //your code here
         const email = $(this).parent().siblings('.emailInfo').text();
         emailUser = email;
-
+        
         $.get('/getUser', {email: email}, function(result){
             userRole = result.role;
             $('#userEmail').text(result.email);

@@ -92,12 +92,7 @@ var PubRequestSchema = new mongoose.Schema({
         required: false
     },
 
-    userID: {
-        type : String,
-        required: true
-    },
-
-    pubStatus: {
+    status: {
         type : String,
         required: true
     },
@@ -107,22 +102,17 @@ var PubRequestSchema = new mongoose.Schema({
         required: true
     },
 
-    captionStatus: {
-        type : String, 
-        required: true
-    },
-
     pubLink: {
         type : String,
         required:true
     },
 
-    pubUserID: {
+    pubName: {
         type : String,
         required:false
     },
 
-    secUserID : {
+    secName : {
         type : String,
         required: false
     }

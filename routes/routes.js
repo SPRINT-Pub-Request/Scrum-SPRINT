@@ -19,8 +19,9 @@ app.get('/failed' , loginController.loginFailed);
 // Request Controllers
 app.post('/add_request', requestController.postRequest);
 app.get('/add_request' ,  requestController.getIndex)
-app.get('/manage_requests' ,  requestController.getManageReq , requestController.loadViewReq);
-app.get('/view_requests' ,  requestController.getViewReq , requestController.loadViewReq);
+app.get('/manage_requests' ,  requestController.getManageReq);
+app.get('/view_requests' ,  requestController.getViewReq);
+app.get('/getPubRequest' , requestController.getPubRequest);
 
 // User Controllers
 app.get('/updateUser' , usersController.updateUser);

@@ -147,14 +147,17 @@ const usersController = {
 
 
         db.findMany(User, {}, {}, function(result){
-            for (let i = 0; i < result.length; i++){
-                for (let j = 0; j < namesCommittee.length; j++){
-                    console.log(result[i].assigned_committee.indexOf(namesCommittee[j]))
-                    if (result[i].assigned_committee.indexOf(namesCommittee[j]) != -1){
-                        committee[j] = true;
+
+            if(result !== null) {
+                for (let i = 0; i < result.length; i++) {
+                    for (let j = 0; j < namesCommittee.length; j++) {
+                        console.log(result[i].assigned_committee.indexOf(namesCommittee[j]))
+                        if (result[i].assigned_committee.indexOf(namesCommittee[j]) != -1)
+                            committee[j] = true;
                     }
                 }
             }
+            
             console.log(committee);
             res.send(committee);
         })
