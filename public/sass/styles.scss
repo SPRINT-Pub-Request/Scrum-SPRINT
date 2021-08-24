@@ -263,6 +263,22 @@ td > .btn-icon{
     opacity: 0.6;
 }
 
+.form-select#status option{
+    
+}
+
+.form-select#status option.not_started{
+    background-color: #e96363;
+}
+
+.form-select#status option.in_progress{
+    background-color: #eeb740;
+}
+
+.form-select#status option.finished{
+    background-color: #a5eb64;
+}
+
 //-------tables
 .container-table{
     align-items: start; 

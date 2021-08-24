@@ -21,7 +21,7 @@
         <h1>REQUEST DATABASE</h1>
         <div class="h-spacer50"></div>
 
-         <div class="container-table">
+        <div class="container-table">
 
             <table id="requeststable" style="width: 100%">
                 <thead>
@@ -37,27 +37,27 @@
                     <tr>
                         <td class="btn-col" scope="row">
                             <i class="bi-plus-square-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
+                            data-bs-toggle="modal" data-bs-target="#requestdetailsModal"></i>
                         </td>
                         <td>SPRINT General Assembly</td>
                         <td>09/21/21 8:00PM</td>
                         <td>Not Started</td>
                         <td class="btn-col">
                             <i class="bi-trash-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#removeuserModal"></i>
+                            data-bs-toggle="modal" data-bs-target="#removerequestModal"></i>
                         </td>
                     </tr>
                     <tr>
                         <td class="btn-col" scope="row">
                             <i class="bi-plus-square-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
+                            data-bs-toggle="modal" data-bs-target="#requestdetailsModal"></i>
                         </td>
                         <td>SPRINT General Assembly</td>
                         <td>09/21/21 8:00PM</td>
                         <td>Not Started</td>
                         <td class="btn-col">
                             <i class="bi-trash-fill btn-icon" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#removeuserModal"></i>
+                            data-bs-toggle="modal" data-bs-target="#removerequestModal"></i>
                         </td>
                     </tr>
                 </tbody>
@@ -65,86 +65,229 @@
 
         </div>
 
+         <!-- REQUEST DETAILS MODAL -->
         
-        <div class="h-spacer50"></div>
+        <div class="modal fade" id="requestdetailsModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Request Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-        <h2>Edit Request Information</h2>
-            <div class="h-spacer50"></div>
-
-            <div>
-            <form method = "post" action = "/add_request">
-                
-                    <input id = "reqname" name = "reqname" type="text" placeholder="requester name">
-
-                    <select id = "committee"name = "committee">
-                        <option value = " ">...</option>
-                        <option value = "activities">Activities</option>
-                        <option value = "finance">Finance</option>
-                        <option value = "hrd">HRD</option>
-                        <option value = "tnd">TND</option>
-                        <option value = "pevp">P-EVP</option>
-                        <option value = "secretariat">Secretariat</option>
-                        <option value = "externals">Externals</option>
-                        <option value = "sociocivic">Socio Civic</option>
-                    </select> <br>
-
-                
-                    <input id = "activity_name" name = "activity_name" type="text" placeholder="activity name">
-                    <input id = "description" name = "description" type="text" placeholder="description"> <br>
-                    
+                <!-- EDIT REQUEST DETAILS -->
+                <div class="modal-body">
                     <div>
-                        Activity time - from 
-                        <input id = "start_date" name = "start_date" type="date" placeholder="Start date"> 
-                        <input id = "start_time" name = "start_time" type="time"> to
-                        <input id = "end_date" name = "end_date" type="date" placeholder="End date"> 
-                        <input id = "end_time" name = "end_time" type="time"> <br>
+                    <form method = "post" action = "/add_request">
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="status">Status</label>
+                                <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select"  id = "status" name = "status">
+                                    <option class="not_started" value = "not_started">Not Started</option>
+                                    <option class="in_progress" value = "in_progress" selected>In Progress</option>
+                                    <option class="finished" value = "finished">Finished</option>
+                                </select>
+                            </div>
 
-                        <input id = "venue" name = "venue" type="text" placeholder="Venue (if online, please put URL)"> <br>
-                        <input id = "theme" name = "theme" type="text" placeholder="theme">
-                    </div>
+                            <div class="col col-9">
+                                <label for="medialink">Media Link</label>
+                                <input type="text" class="form-control" name = "medialink" id="medialink" placeholder="...">
+                            </div>
 
-                
-                    <h4>Publication Type :</h4>
-                        <input type="radio" name="pubType" value="poster"> Single Image/Poster <br>
-                        <input type="radio" name="pubType" value="album"> Album <br>
-                        <input type="radio" name="pubType" value="video"> Video (please specify length and upload the clips) <br>
-                        <input type="radio" name="pubType" value="fb_cover"> FB Event Cover <br>
-                        <input type="radio" name="pubType" value="other"> Other : <input type="text" placeholder="type" /><br>
-                    <br>
+                        </div>
 
-                    Posting Date : <input id = "posting_date" name = "posting_date" type="date"> <input id = "posting_time" name = "posting_time" type="time"> <br>
-
-                    Post-event post (for post-event caption)
-                        <input type="radio" name="postevent" value="yes"> Yes
-                        <input type="radio" name="postevent" value="no"> No <br>
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="caption">Caption</label>
+                                <textarea type="text" class="form-control" name = "description" id="description" placeholder="..."></textarea>
+                            </div>
+                        </div>
                     
-                    <input id = "files_url" name = "files_url" type="url" placeholder="link to related files (if applicable)"> <br><br>
+                        <div class="h-spacer20"><hr></div>
 
-                    <input id = "details" name = "details" type="text" placeholder="details"><br>
-                    <input id = "comments" name = "comments" type="text" placeholder="comments"><br>
-                    <input id = "specialRequest" name = "specialRequest" type="text" placeholder="special request"><br><br>
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="reqname">Name </label>
+                                <input type="text" class="form-control" name = "reqname" id="reqname" placeholder="LAST NAME, First Name">
+                            </div>
+                            
+                            <div class="col">
+                                <label for="committee">
+                                    Committee
+                                </label>
+                                <select style='font-family: "OpenSans", Sans-Serif;' class="form-select" id = "committee" name = "committee">
+                                    <option value = "" style="display: none;">Select Committee</option>
+                                    <option value = "activities">Activities</option>
+                                    <option value = "finance">Finance</option>
+                                    <option value = "hrd">HRD</option>
+                                    <option value = "tnd" selected>TND</option>
+                                    <option value = "pevp">P-EVP</option>
+                                    <option value = "secretariat">Secretariat</option>
+                                    <option value = "externals">Externals</option>
+                                    <option value = "sociocivic">Socio Civic</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="h-spacer20"><hr></div>
+                        
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="activity_name">Activity Name</label>
+                                <input type="text" class="form-control" name = "activity_name" id="activity_name" placeholder="...">
+                            </div>
+                        </div>
+                        
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="activity_name">Description</label>
+                                <textarea type="text" class="form-control" name = "description" id="description" placeholder="..."></textarea>
+                            </div>
+                        </div>
 
-                    Handled by : <input id = "handled_by" type="text" placeholder="...">
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="start_date_form">Start Date
+                                    <span class="error-message" id="date_error"></span>
+                                </label>
+                                <div class="input-group" id="start_date_form">
+                                    <input type="date" class="form-control" name = "start_date" id="start_date">
+                                    <input type="time" class="form-control" name = "start_time" id="start_time" value="11:00">
+                                </div>
+                            </div>
 
-                    Status : 
-                    <select id = "status" name = "status">
-                        <option value = "not_started">Not Started</option>
-                        <option value = "in_progress">In Progress</option>
-                        <option value = "finished">Finished</option>
-                    </select> <br>
+                            <div class="col">
+                                <label for="end_date_form">End Date <span class="asterisk">*</span></label>
+                                <div class="input-group" id="end_date_form">
+                                    <input type="date" class="form-control" name = "end_date" id="end_date">
+                                    <input type="time" class="form-control" name = "end_time" id="end_time" value="14:00">
+                                </div>
+                            </div>
+                        </div>
 
-                    <input id = "medialink" name = "medialink" type="text" placeholder="media link"><br>
-                    <input id = "caption" name = "caption" type="text" placeholder="caption"><br>
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="reqname">Venue <span class="asterisk">*</span></label>
+                                <input type="text" class="form-control" name = "venue" id="venue" placeholder="if online, please put URL">
+                            </div>
+                            <div class="col">
+                                <label for="reqname">Theme</label>
+                                <input type="text" class="form-control" name = "theme" id="theme" placeholder="...">
+                            </div>
+                        </div>
 
-            </form>
+                        <div class="h-spacer20"><hr></div>
+
+                        <label>Type of publication :</label>
+                        <div class="row form-row">
+                            <div class="col col-8 btn-group" role="group">
+
+                                <input type="radio" class="btn-check pubType" name="pubType" value="poster" id="type_poster" autocomplete="off" checked>
+                                <label class="btn btn-outline-dark" for="type_poster">Poster</label>
+
+                                <input type="radio" class="btn-check pubType" name="pubType" value="album" id="type_album" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="type_album">Album</label>
+
+                                <input type="radio" class="btn-check pubType" name="pubType" value="video" id="type_video" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="type_video">Video</label>
+
+                                <input type="radio" class="btn-check pubType" name="pubType" value="fb_cover" id="type_fbcover" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="type_fbcover">FB Cover</label>
+
+                                <input type="radio" class="btn-check pubType" name="pubType" value = "other" id="type_other"  autocomplete="off">
+                                <label class="btn btn-outline-dark" for="type_other">Other</label>
+
+                            </div>
+
+                            <div class="col">
+                                <input type="text" class="form-control" name = "type_other_value" id="type_other_value" placeholder="Other Type*" disabled>
+                            </div>   
+                        </div>
+
+                        <div class="row form-row">
+                            <label for="posting_date_form">Posting Date</label>
+                            <div class="col col-7" id="posting_date_form">
+                                <div class="input-group">
+                                    <input type="date" class="form-control" name = "posting_date" id="posting_date">
+                                    <input type="time" class="form-control" name = "posting_time" id="posting_time" value="11:00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col" id="postevent_form">
+                            Will you be posting a post-event post (for post-event caption)
+                            <div class="btn-group" role="group">
+                                <input type="radio" class="btn-check postevent" name="postevent" value="no" id="postevent_no" autocomplete="off" checked>
+                                <label class="btn btn-outline-dark" for="postevent_no">No</label>
+
+                                <input type="radio" class="btn-check postevent" name="postevent" value="yes" id="postevent_yes" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="postevent_yes">Yes</label>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="files_url">Link to Related Files (if applicable)</label>
+                                <input type="text" class="form-control" name = "files_url" id="files_url" placeholder="...  ">
+                            </div>
+                        </div>
+
+                        <div class="h-spacer20"><hr></div>
+
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="details">Details</label>
+                                <textarea type="text" class="form-control" name = "details" id="details" placeholder="..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="comments">Comments</label>
+                                <textarea type="text" class="form-control" name = "comments" id="comments" placeholder="..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row form-row">
+                            <div class="col">
+                                <label for="specialRequest">Special Request</label>
+                                <textarea type="text" class="form-control" name = "specialRequest" id="specialRequest" placeholder="..."></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                    </div>
+                    
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btn-edit" class="btn btn-edit">Edit</button>
+                    <button type ="submit" id="btn-save" class="btn btn-save" data-bs-dismiss="modal">Save changes</button>
+                </div>
+                </div>
             </div>
+        </div>
 
-            <p id = "error"></p><br>
-            <p id = "errorTime"></p>
-            <button>Save</button>
-            <button>Cancel</button>
-            <button>Delete Request</button>
-    </div>
+        <!-- REMOVE REQUEST WARNING MODAL -->
+        <div class="modal fade" id="removerequestModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <div class="modal-body">
+                    Delete request? This action is irreversible.
+                    <p id = "error">{{error}}</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                    <button id = "btnRemoveRequest" type ="submit" class="btn btn-delete" data-bs-dismiss="modal">Delete</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
