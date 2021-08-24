@@ -139,24 +139,20 @@ const usersController = {
     },
 
     getNoAssigned:(req , res) => {
-
-        console.log("Get No Assigned");
         
         const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
         let committee = [false , false , false , false , false , false , false , false];
 
 
         db.findMany(User, {}, {}, function(result){
-
-            if(result !== null) {
                 for (let i = 0; i < result.length; i++) {
                     for (let j = 0; j < namesCommittee.length; j++) {
-                        console.log(result[i].assigned_committee.indexOf(namesCommittee[j]))
-                        if (result[i].assigned_committee.indexOf(namesCommittee[j]) != -1)
-                            committee[j] = true;
+                        if(result[i].assigned_committee != "")
+                            if (result[i].assigned_committee.indexOf(namesCommittee[j]) != -1)
+                                committee[j] = true;
                     }
                 }
-            }
+            
             
             console.log(committee);
             res.send(committee);
