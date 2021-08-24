@@ -19,7 +19,7 @@ app.get('/failed' , loginController.loginFailed);
 // Request Controllers
 app.post('/add_request', requestController.postRequest);
 app.get('/add_request' ,  requestController.getIndex)
-app.get('/manage_requests' ,  requestController.getManageReq);
+app.get('/manage_requests' ,  requestController.getManageReq , requestController.loadViewReq);
 app.get('/view_requests' ,  requestController.getViewReq , requestController.loadViewReq);
 
 // User Controllers
@@ -29,6 +29,7 @@ app.get('/deleteUser', usersController.deleteUser);
 app.get('/getUser', usersController.getUserInfo);
 app.get('/checkAdmins', usersController.adminsAvailable);
 app.get('/getEmail', usersController.getEmail);
+app.get('/getNoAssigned' , usersController.getNoAssigned);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);

@@ -4,6 +4,21 @@ $(document).ready(function () {
     let emailUser = "";
     let adminResult = false;
     let userRole = "";
+    
+    $.get('/getNoAssigned' , {} , function(result){
+        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+        let committee = [];
+
+        for(i = 0; i < 8; i++) {
+            if(result[i] == false) {
+                committee.push(namesCommittee[i]);
+            }
+        }
+
+        if(committee)
+            alert("There is no Pubs or Secretariat assigned to the following committee: \n" + committee);
+    });
+
 
     $('#users_data').on('click', '.delete', function () {
         //your code here

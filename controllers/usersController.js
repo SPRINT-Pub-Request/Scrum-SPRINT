@@ -128,6 +128,26 @@ const usersController = {
         });
     },
 
+    getNoAssigned:(req , res) => {
+        
+        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+        let committee = [false , false , false , false , false , false , false , false];
+
+
+        for(i = 0; i < 8; i++) {
+            db.findOne(User , {assigned_committee : namesCommittee[i]} , {} , function(result) {
+                console.log(result);
+                if(result.assigned_committee !== null) {
+                    committee[i] = true;
+                }
+            });
+        }
+
+        console.log(committee);
+        res.send(committee);
+
+    },
+
     adminsAvailable: (req, res) => {
         db.findMany(User, {role : "Administrator"}, {}, function(result){   
 
