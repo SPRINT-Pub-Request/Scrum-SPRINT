@@ -11555,10 +11555,23 @@ fieldset:disabled .btn {
 
 @media (max-width: 575.98px) {
   .container-sidebar {
-    min-width: 9%;
+    max-width: 8%;
   }
   .container-form {
+    padding: 2px !important;
     min-width: 80%;
+  }
+  .sidebar-content {
+    padding: 6px !important;
+  }
+  .container-content {
+    padding: 0% !important;
+  }
+  .with-sidebar {
+    margin-left: 8% !important;
+  }
+  .btn-group > label {
+    font-size: 14px;
   }
 }
 
@@ -11639,7 +11652,6 @@ select.error > option {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  overflow: auto;
 }
 
 .container-start {
@@ -11663,7 +11675,7 @@ select.error > option {
 
 .container-content {
   padding: 2%;
-  min-width: 55%;
+  width: auto;
 }
 
 .container-sidebar {
@@ -11678,6 +11690,7 @@ select.error > option {
   height: 100%;
   position: relative;
   padding: 10px;
+  overflow: auto;
 }
 
 .nav-sidebar {
@@ -11743,6 +11756,7 @@ td > .btn-icon {
   background: #fde5c1;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, #fde5c1), color-stop(97%, #ffc6af), to(#ffa987));
   background: linear-gradient(180deg, #fde5c1 80%, #ffc6af 97%, #ffa987 100%);
+  padding: 10px;
   padding-top: 10px;
 }
 

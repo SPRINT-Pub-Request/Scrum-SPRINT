@@ -65,11 +65,28 @@ $dark: #1D1A1A;
 
 @include media-breakpoint-down(sm){
     .container-sidebar{
-        min-width: 9%;
+        max-width: 8%;
     }
 
     .container-form{
+        padding: 2px !important;
         min-width: 80%;
+    }
+
+    .sidebar-content{
+        padding: 6px !important;
+    }
+
+    .container-content{
+        padding: 0% !important;
+    }
+
+    .with-sidebar{
+        margin-left: 8% !important;
+    }
+
+    .btn-group > label{
+        font-size: 14px;
     }
 }
 
@@ -137,7 +154,6 @@ select.error > option{
     padding-top: 5%;
     flex-direction: column;
     align-items: center;
-    overflow: auto;
 }
 
 .container-start{
@@ -155,7 +171,7 @@ select.error > option{
 
 .container-content{
     padding: 2%;
-    min-width: 55%;
+    width: auto;
 }
 
 // ------- Sidebar
@@ -171,6 +187,7 @@ select.error > option{
     height: 100%;
     position: relative;
     padding: 10px;
+    overflow: auto;
 }
 
 .nav-sidebar{
@@ -240,6 +257,7 @@ td > .btn-icon{
     background: #fde5c1;
     background: linear-gradient(180deg, #fde5c1 80%, #ffc6af 97%, #ffa987 100%);
 
+    padding: 10px;
     padding-top: 10px;
 }
 
@@ -263,9 +281,6 @@ td > .btn-icon{
     opacity: 0.6;
 }
 
-.form-select#status option{
-    
-}
 
 .form-select#status option.not_started{
     background-color: #e96363;

@@ -136,7 +136,6 @@ $(document).ready(function(){
 
     $('.pubType').change(function () {
         var selected = $('.pubType:checked').val();
-        console.log(selected);
         
         if(selected == 'video'){
             $("#type-message").css('visibility', 'visible');

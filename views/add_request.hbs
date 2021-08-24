@@ -14,12 +14,12 @@
 <body>
 
     {{> sidebar viewFlag=viewFlag mReqFlag=mReqFlag mUserFlag=mUserFlag}}
-    <div class="container-center with-sidebar" style="padding-top: 2%; !important">
+    <div class="container-center with-sidebar">
         <h1 style="text-align: center;">ADD REQUEST</h1>
 
-    <div class="row container-content">
+    <div class="container-content">
 
-        <div class="col container-form">
+        <div class="container-form">
             <form class="form-group" id = "f1" method = "post" action = "/add_request">
                 
                 <h3>Requester's Information</h3>
@@ -116,13 +116,15 @@
                         <input type="radio" class="btn-check pubType" name="pubType" value = "other" id="type_other"  autocomplete="off">
                         <label class="btn btn-outline-dark" for="type_other">Other</label>
 
-                    </div>
-
-                    <div class="col">
-                        <input type="text" class="form-control" name = "type_other_value" id="type_other_value" placeholder="Other Type*" style="visibility: hidden;" disabled>
                     </div>   
                 </div>
                 <div id="type-message" style="font-size: 12px; visibility: hidden">- please specify length of the video in 'details' and link to the clips</div>
+
+                <div class="row form-row">
+                    <div class="col">
+                        <input type="text" class="form-control" name = "type_other_value" id="type_other_value" placeholder="Please specify other type*" style="visibility: hidden;" disabled>
+                    </div>
+                </div>
 
                 <div class="row form-row">
                     <label for="posting_date_form">Posting Date <span class="asterisk">*</span></label>
