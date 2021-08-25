@@ -76,9 +76,9 @@
                             <div class="col">
                                 <label for="status">Status</label>
                                 <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select"  id = "status" name = "status" disabled>
-                                    <option class="not_started" value = "not_started">Not Started</option>
-                                    <option class="in_progress" value = "in_progress" selected>In Progress</option>
-                                    <option class="finished" value = "finished">Finished</option>
+                                    <option class="not_started" value = "Not Started">Not Started</option>
+                                    <option class="in_progress" value = "In Progress" selected>In Progress</option>
+                                    <option class="finished" value = "Finished">Finished</option>
                                 </select>
                             </div>
 
@@ -100,18 +100,14 @@
                             <div class="col">
                                 <label for="pub">Assigned Pub</label>
                                 <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="assignPub" name="assignPub" disabled>
-                                    <option class="not_started" value="not_started">Not Started</option>
-                                    <option class="in_progress" value="in_progress" selected>In Progress</option>
-                                    <option class="finished" value="finished">Finished</option>
+                                <option value="Not Assigned" class = "notAssign">Not Assigned</option>
                                 </select>
                             </div>
 
                             <div class="col">
                                 <label for="secretariat">Assigned Secretariat</label>
                                 <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select" id="assignSec" name="assignSec" disabled>
-                                    <option class="not_started" value="not_started">Not Started</option>
-                                    <option class="in_progress" value="in_progress" selected>In Progress</option>
-                                    <option class="finished" value="finished">Finished</option>
+                                <option value = "Not Assigned" class = "notAssign">Not Assigned</option>
                                 </select>
                             </div>
                         </div>
@@ -130,14 +126,14 @@
                                 </label>
                                 <select style='font-family: "OpenSans", Sans-Serif;' class="form-select" id = "committee" name = "committee" disabled>
                                     <option value = "" style="display: none;">Select Committee</option>
-                                    <option value = "activities">Activities</option>
-                                    <option value = "finance">Finance</option>
-                                    <option value = "hrd">HRD</option>
-                                    <option value = "tnd" selected>TND</option>
-                                    <option value = "pevp">P-EVP</option>
-                                    <option value = "secretariat">Secretariat</option>
-                                    <option value = "externals">Externals</option>
-                                    <option value = "sociocivic">Socio Civic</option>
+                                    <option value = "Activities">Activities</option>
+                                    <option value = "Finance">Finance</option>
+                                    <option value = "HRD">HRD</option>
+                                    <option value = "TND" selected>TND</option>
+                                    <option value = "P-EVP">P-EVP</option>
+                                    <option value = "Secretariat">Secretariat</option>
+                                    <option value = "Externals">Externals</option>
+                                    <option value = "SocioCivic">Socio Civic</option>
                                 </select>
                             </div>
                         </div>
@@ -185,7 +181,7 @@
                             </div>
                             <div class="col">
                                 <label for="reqname">Theme</label>
-                                <input type="text" class="form-control" name = "theme" id="theme" placeholder="...">
+                                <input type="text" class="form-control" name = "theme" id="theme" placeholder="..." disabled>
                             </div>
                         </div>
 

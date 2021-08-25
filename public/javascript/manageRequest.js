@@ -1,5 +1,10 @@
 $(document).ready(function() {
     let Modal = document.getElementById('requestdetailsModal');
+    
+    Modal.addEventListener('show.bs.modal' , function(event){
+        $('.selectedPub').remove();
+        $('.selectedSec').remove();
+    });
 
     Modal.addEventListener('hide.bs.modal' , function(event) {
         $('#status').prop('disabled', true);
@@ -7,13 +12,46 @@ $(document).ready(function() {
         $('#caption').prop('disabled' , true);
         $('#assignPub').prop('disabled' , true);
         $('#assignSec').prop('disabled', true);
+
     });
 
     $('#btn-edit').on('click' , function() {
+        $('#status').prop('disabled', false);
+        $('#medialink').prop('disabled', false);
+        $('#caption').prop('disabled' , false);
+        $('#assignPub').prop('disabled' , false);
+        $('#assignSec').prop('disabled', false);
+    });
+
+    $('#btn-save').on('click' , function(){
+        
+        const pubChanges = {
+            pubLink : $('#medialink').val(),
+            status : $('#status').val(),
+            pubName : $('#assignPub').val(),
+            secName : $('#assignSec').val(),
+            caption : $('#caption').val(),
+            activity_name : $('#activity_name').val()
+        }
+        
+       
+
+        $.get('/savePubChanges' , pubChanges , function(result) {
+            if(result) {
+                location.reload();
+            }
+            else {
+                alert("An Error Occured, Nothing was Updated \nPlease Try again later");
+                location.reload();
+            }
+        });
+
 
     });
 
+
     $('#request_data').on('click' , '.edit' , function() {
+
         const activity_name = $(this).parent().siblings('.activity_name').text();
         
         $.get('/getPubRequest' , {activity_name : activity_name} , (result) => {
@@ -64,7 +102,54 @@ $(document).ready(function() {
                 $('#postevent_yes').prop('checked' , true);
             else
                 $('#postevent_no').prop('checked' , true);
+            
+            
+            const activity = {
+                committee : result.committee
+            } 
 
+            $.get('/getAssignedSec' , activity , function(res) {
+
+                for(i = 0; i < res.length; i++) {
+                    if(res[i] == result.secName) {
+                        $('#assignSec').append($('<option>', {
+                            value : res[i],
+                            text : res[i],
+                            class : "selectedSec",
+                            selected : true
+                        }));
+                    }
+                    else {
+                        $('#assignSec').append($('<option>', {
+                            value : res[i],
+                            text : res[i],
+                            class : "selectedSec"
+                        }));
+                    }
+                }
+
+            });
+
+            
+            $.get('/getAssignedPub' , activity , function(res) {
+
+                for(i = 0; i < res.length; i++)
+                    if(res[i] == result.pubName) {
+                        $('#assignPub').append($('<option>', {
+                            value : res[i],
+                            text : res[i],
+                            selected : true,
+                            class : "selectedPub"
+                        }));
+                    }
+                    else {
+                        $('#assignPub').append($('<option>', {
+                            value : res[i],
+                            text : res[i],
+                            class : "selectedPub"
+                        }));
+                    }
+            });
 
         });
     });

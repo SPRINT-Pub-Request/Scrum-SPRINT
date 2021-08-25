@@ -22,6 +22,9 @@ app.get('/add_request' ,  requestController.getIndex)
 app.get('/manage_requests' ,  requestController.getManageReq);
 app.get('/view_requests' ,  requestController.getViewReq);
 app.get('/getPubRequest' , requestController.getPubRequest);
+app.get('/savePubChanges' , requestController.savePubChanges);
+app.get('/getAssignedSec' , requestController.getAssignedSec);
+app.get('/getAssignedPub' , requestController.getAssignedPub);
 
 // User Controllers
 app.get('/updateUser' , usersController.updateUser);

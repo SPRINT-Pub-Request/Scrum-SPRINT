@@ -11,7 +11,7 @@ $(document).ready(function () {
 
         for(i = 0; i < 8; i++) {
             if(result[i] == false) {
-                committee.push(namesCommittee[i]);
+                committee.push(namesCommittee[i] + " ");
             }
         }
 

@@ -170,6 +170,80 @@ const requestController = {
         }
     },
 
+    getAssignedPub: (req , res) => {
+        const committee  = req.query.committee;
+
+        db.findMany(User , {assigned_committee : committee} , {} , function(result){
+            pubNames = [];
+
+                for(i of result) {
+                    if(i.role === 'Publicity and Creatives' || i.role === 'Administrator')
+                        pubNames.push(i.name);
+                }
+                
+                if(secNames.length != 0)
+                    res.send(pubNames);
+                else
+                    res.send(false);
+
+        });
+
+    },
+
+    getAssignedSec: (req , res) => {
+        const committee = req.query.committee;
+
+        db.findMany(User, {assigned_committee : committee} , {} , function(result) {
+            secNames = [];
+                
+                for(i of result) {
+                    if(i.role === 'Secretariat' || i.role === 'Administrator')
+                        secNames.push(i.name);
+                }
+
+                if(secNames.length != 0)
+                    res.send(secNames);
+                else
+                    res.send(false);
+        });
+
+    },
+
+    savePubChanges: (req , res) => {
+
+        const newChanges = {
+            status : req.query.status,
+            pubName : req.query.pubName,
+            secName : req.query.secName,
+            caption : req.query.caption,
+            pubLink : req.query.pubLink,
+            activity_name : req.query.activity_name
+        }
+        
+        if(newChanges.pubName === null)
+            newChanges.pubName = "Not Assigned";
+        else if(newChanges.secName === null)
+            newChanges.secName = "Not Assigned";
+
+        db.updateOne(PubRequest , {activity_name : newChanges.activity_name} , {
+            $set : {
+                status: newChanges.status,
+                pubName : newChanges.pubName,
+                secName : newChanges.secName,
+                caption : newChanges.caption,
+                pubLink : newChanges.pubLink 
+            }
+        } , function(result) {
+            if(result) {
+                res.send(result);
+            } else {
+                res.send(false);
+            }
+        });
+
+    },
+
+
     getPubRequest: (req , res) => {
         const activity_name = req.query.activity_name;
 
