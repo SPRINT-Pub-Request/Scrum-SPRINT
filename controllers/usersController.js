@@ -122,11 +122,11 @@ const usersController = {
 
     },
 
-    getEmail: (req , res) => {
+    getName: (req , res) => {
         const userID = req.session.userID;
 
         db.findOne(User , {userID : userID} , {} , function(result){
-            res.send(result.email);
+            res.send(result.name);
         });
     },
 

@@ -1,5 +1,5 @@
 const { DBRef } = require('mongodb');
-
+const alert = require('alert');
 const db = require('../models/db.js')
 const User = require('../models/UserModel.js');
 
@@ -392,10 +392,12 @@ const requestController = {
         db.insertOne(PubRequest, pubrequest, function(flag) {
             console.log(flag);
             if (flag) {
-                res.send('Inputs saved in database');
+                alert('Successfully added request!');
+                res.redirect('/add_request');
             }
             else {
-                res.send('error in database')
+                alert('Error in database, call the devs!');
+                res.redirect('/add_request');
             }
         });
     }

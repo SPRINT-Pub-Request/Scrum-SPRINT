@@ -1,7 +1,7 @@
 $(document).ready(function () {
     
-    $.get('/getEmail' , {} , function(result) {
-        $('#email').text(result);
+    $.get('/getName' , {} , function(result) {
+        $('#name').text(result);
     });
 
     currLoc = $(location).attr('pathname');

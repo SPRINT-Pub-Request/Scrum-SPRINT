@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ProgrammerNammer/Scrum-SPRINT#readme",
   "dependencies": {
+    "alert": "^5.0.10",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",

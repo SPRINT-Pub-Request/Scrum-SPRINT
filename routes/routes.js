@@ -33,7 +33,7 @@ app.get('/manage_users', usersController.getIndex);
 app.get('/deleteUser', usersController.deleteUser);
 app.get('/getUser', usersController.getUserInfo);
 app.get('/checkAdmins', usersController.adminsAvailable);
-app.get('/getEmail', usersController.getEmail);
+app.get('/getName', usersController.getName);
 app.get('/getNoAssigned' , usersController.getNoAssigned);
 app.get('/checkInProgress' , usersController.checkInProgress);
 
