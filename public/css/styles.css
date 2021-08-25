@@ -11754,8 +11754,8 @@ td > .btn-icon {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background: #fde5c1;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(80%, #fde5c1), color-stop(97%, #ffc6af), to(#ffa987));
-  background: linear-gradient(180deg, #fde5c1 80%, #ffc6af 97%, #ffa987 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(85%, #fde5c1), color-stop(97%, #fbd681), to(#f9bc7b));
+  background: linear-gradient(180deg, #fde5c1 85%, #fbd681 97%, #f9bc7b 100%);
   padding: 10px;
   padding-top: 10px;
 }
