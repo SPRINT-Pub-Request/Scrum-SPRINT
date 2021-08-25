@@ -171,34 +171,60 @@ const requestController = {
     },
 
     getAssignedPub: (req , res) => {
-        const committee  = req.query.committee;
 
-        db.findMany(User , {assigned_committee : committee} , {} , function(result){
+        db.findMany(User , {} , {} , function(result){
             pubNames = [];
 
-                for(i of result) {
-                    if(i.role === 'Publicity and Creatives' || i.role === 'Administrator')
-                        pubNames.push(i.name);
-                }
+            const committee  = req.query.committee;
+            
+            arrCommittee = []; 
+
+            for(i of result) {
                 
-                if(secNames.length != 0)
-                    res.send(pubNames);
-                else
-                    res.send(false);
+                arrCommittee = i.assigned_committee.split(" ");
+
+                
+                for(j = 0; j < arrCommittee.length; j++) {
+                    if(arrCommittee[j] === committee) 
+                        if(i.role === 'Publicity and Creatives' || i.role === 'Administrator') {
+                            pubNames.push(i.name);
+                            break;
+                        } 
+                }
+
+            }
+
+            if(pubNames.length != 0)
+                res.send(pubNames);
+            else
+                res.send(false);
 
         });
 
     },
 
     getAssignedSec: (req , res) => {
-        const committee = req.query.committee;
 
-        db.findMany(User, {assigned_committee : committee} , {} , function(result) {
+        db.findMany(User, {} , {} , function(result) {
             secNames = [];
-                
+            const committee = req.query.committee;
+            const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+            
+            arrCommittee = []; 
+
                 for(i of result) {
-                    if(i.role === 'Secretariat' || i.role === 'Administrator')
-                        secNames.push(i.name);
+                    
+                    arrCommittee = i.assigned_committee.split(" ");
+
+                    
+                    for(j = 0; j < arrCommittee.length; j++) {
+                        if(arrCommittee[j] === committee) 
+                            if(i.role === 'Secretariat' || i.role === 'Administrator') {
+                                secNames.push(i.name);
+                                break;
+                            } 
+                    }
+
                 }
 
                 if(secNames.length != 0)
@@ -243,6 +269,39 @@ const requestController = {
 
     },
 
+    checkCommittee: (req , res) => {
+        const email = req.query.email;
+        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+        const assigned_committee = req.query.assigned_committee; 
+
+        newCommittee = [];
+        oldCommittee = [];
+        removedCommittee = [];
+        
+        db.findOne(User , {email : email} , {} , function(result) {
+
+            const userName = result.name;
+
+            for(i = 0; i < namesCommittee.length; i++) {
+                if(assigned_committee.indexOf(namesCommittee[i]) !== -1)
+                    newCommittee.push(namesCommittee[i]);
+            } 
+
+            // Activities , Finance newCommittee
+
+            // Finance 
+
+            for(i = 0; i < newCommittee.length; i++) {
+                if(result.assigned_committee.indexOf(newCommittee[i]) !== -1)
+                    removedCommittee.push(newCommittee[i]);
+            }
+            
+            console.log(removedCommittee);
+
+            res.send(false);
+           
+        });
+    }, 
 
     getPubRequest: (req , res) => {
         const activity_name = req.query.activity_name;

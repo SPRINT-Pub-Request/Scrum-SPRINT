@@ -156,9 +156,8 @@ const usersController = {
                 });
             }
         });
-
-        
     },
+
 
     getNoAssigned:(req , res) => {
         
@@ -169,7 +168,7 @@ const usersController = {
         db.findMany(User, {}, {}, function(result){
                 for (let i = 0; i < result.length; i++) {
                     for (let j = 0; j < namesCommittee.length; j++) {
-                        if(result[i].assigned_committee != "")
+                        if(result[i].assigned_committee != "Not Assigned")
                             if (result[i].assigned_committee.indexOf(namesCommittee[j]) != -1)
                                 committee[j] = true;
                     }

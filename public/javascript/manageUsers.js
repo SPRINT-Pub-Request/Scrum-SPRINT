@@ -100,20 +100,21 @@ $(document).ready(function () {
         const user = {
             email : email,
             assigned_committee : assigned_committee,
-            role : role
+            role : role,
         }
-
-        $.get('/updateUser', user, function(result){
+        
+                $.get('/updateUser', user, function(result) {       
             
-            location.reload();
-            if(result) {
-                $.get('/sendNotif' , user , function(result){
-                    alert(result);
+                location.reload();
+                if(result) {
+                    $.get('/sendNotif' , user , function(ans) {
+                        alert(ans);
+                    });
+                } else {
+                    alert('Updating User Failed, Please Refresh and Try Again!')
+                }
                 });
-            } else {
-                alert('Updating User Failed, Please Refresh and Try Again!')
-            }
-        });
+        //TODO: Will Fix a Bug where Admin can remove you from committee even when you have a in progress work
     });
 
 

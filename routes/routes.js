@@ -25,6 +25,7 @@ app.get('/getPubRequest' , requestController.getPubRequest);
 app.get('/savePubChanges' , requestController.savePubChanges);
 app.get('/getAssignedSec' , requestController.getAssignedSec);
 app.get('/getAssignedPub' , requestController.getAssignedPub);
+app.get('/checkCommittee' , requestController.checkCommittee);
 
 // User Controllers
 app.get('/updateUser' , usersController.updateUser);
