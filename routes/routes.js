@@ -34,6 +34,7 @@ app.get('/getUser', usersController.getUserInfo);
 app.get('/checkAdmins', usersController.adminsAvailable);
 app.get('/getEmail', usersController.getEmail);
 app.get('/getNoAssigned' , usersController.getNoAssigned);
+app.get('/checkInProgress' , usersController.checkInProgress);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);

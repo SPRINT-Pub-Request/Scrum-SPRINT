@@ -138,6 +138,28 @@ const usersController = {
         });
     },
 
+    checkInProgress: (req , res) => {
+        const name = req.query.name;
+        let inProgress = false;
+
+        db.findOne(PubRequest , {pubName : name} , {} , function(result) {
+            if(result) {
+                inProgress = true; 
+                res.send(inProgress);
+            } else {
+                db.findOne(PubRequest , {secName : name} , {} , function(result) {
+                    if(result) {
+                        inProgress = true;
+                        res.send(inProgress);
+                    } else 
+                        res.send(inProgress)
+                });
+            }
+        });
+
+        
+    },
+
     getNoAssigned:(req , res) => {
         
         const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
@@ -153,8 +175,6 @@ const usersController = {
                     }
                 }
             
-            
-            console.log(committee);
             res.send(committee);
         })
 
@@ -162,8 +182,6 @@ const usersController = {
 
     adminsAvailable: (req, res) => {
         db.findMany(User, {role : "Administrator"}, {}, function(result){   
-
-            console.log(result);
             res.send(result);
         });
     }

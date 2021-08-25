@@ -25,15 +25,30 @@ $(document).ready(function () {
         const email = $(this).parent().siblings('.emailInfo').text();
         emailUser = email
 
-        $.get('/checkAdmins', {}, function(result){
-            if (result.length == 1){
+        const user = {
+            name : $(this).parent().siblings('.nameInfo').text()
+        } 
+
+        $.get('/checkInProgress' , user , function(result) {
+            if(result == false) {
+                $.get('/checkAdmins', {}, function(result) {
+                    if (result.length == 1){
+                        $("#removeuserModal").modal('hide');
+                        alert('Only 1 Admin Left! Assign someone as Admin');
+                    }
+                    else {
+                        $("#removeuserModal").modal('show');
+                    }
+                });
+            }
+            else {
                 $("#removeuserModal").modal('hide');
-                alert('Only 1 Admin Left! Assgin someone as Admin');
+                alert("Unable to delete user \nUser current has on progress work.");
             }
-            else{
-                $("#removeuserModal").modal('show');
-            }
+            
         });
+
+       
     });
 
     $('#btnRemoveUser').click(function () {
