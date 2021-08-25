@@ -1,5 +1,9 @@
 $(document).ready(function(){
     
+    $('#submit').on('click' , function(){
+        // well
+        alert("Successfully Added Request!");
+    });
 
     function isFilled(){
 

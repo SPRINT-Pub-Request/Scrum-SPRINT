@@ -6,7 +6,6 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
-const alert = require('alert');
 
 const routes = require('./routes/routes.js');
 const db = require('./models/db.js');
