@@ -78,6 +78,26 @@ $(document).ready(function () {
                 $('#SocioCivic').prop('disabled', false);
                 $('#Pubs').prop('disabled', false);
             }
+            else{
+                $('#Activities').prop('disabled', true);
+                $('#Finance').prop('disabled', true);
+                $('#HRD').prop('disabled', true);
+                $('#Externals').prop('disabled', true);
+                $('#TND').prop('disabled', true);
+                $('#P-EVP').prop('disabled', true);
+                $('#Secretariat').prop('disabled', true);
+                $('#SocioCivic').prop('disabled', true);
+                $('#Pubs').prop('disabled', true);
+    
+                $('#Activities').prop('checked', false);
+                $('#Finance').prop('checked', false);
+                $('#HRD').prop('checked', false);
+                $('#TND').prop('checked', false);
+                $('#P-EVP').prop('checked', false);
+                $('#SocioCivic').prop('checked', false);
+                $('#Pubs').prop('checked', false);
+                $('#Externals').prop('checked', false);
+            }
         });
 
         $.get('/checkAdmins', {}, function(result){
