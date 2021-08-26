@@ -284,43 +284,40 @@ const requestController = {
                         committeeInProgress.push(i.committee);
                 }
 
+                db.findMany(PubRequest , {secName : userName} , {} , function(result) {
+                    console.log( + result);
+                    for(i of result) {
+                        if(i.status === "In Progress")
+                            committeeInProgress.push(i.committee);
+                    }
+
+
+                    let uniqueCommittee = []
+                    for(k = 0; k < committeeInProgress.length; k++) {
+                        if(uniqueCommittee.indexOf(committeeInProgress[k]) === -1) 
+                            uniqueCommittee.push(committeeInProgress[k]);
+                    }
+
+                    console.log(uniqueCommittee); 
+
+
+                    let temp = 0;
+                    for(i = 0; i < uniqueCommittee.length; i++) {
+                        for(j = 0; j < assigned_committee.length; j++) {
+                            if(uniqueCommittee[i] === assigned_committee[j])
+                                temp++;
+                        }
+                    }
+
+                console.log(temp);
+                if(temp === uniqueCommittee.length)
+                    res.send(false);
+                else 
+                    res.send(true);
+
+
+                });
             });
-
-            db.findMany(PubRequest , {secName : userName} , {} , function(result) {
-
-                for(i of result) {
-                    if(i.status === "In Progress")
-                        committeeInProgress.push(i.committee);
-                }
-
-            });
-
-            let uniqueCommittee = []
-            for(k = 0; k < committeeInProgress.length; k++) {
-                if(uniqueCommittee.indexOf(committeeInProgress[k]) === -1) 
-                    uniqueCommittee.push(committeeInProgress[k]);
-            }
-
-            console.log(uniqueCommittee); 
-
-
-            let temp = 0;
-            for(i = 0; i < uniqueCommittee.length; i++) {
-                for(j = 0; j < assigned_committee.length; j++) {
-                    if(uniqueCommittee[i] === assigned_committee[j])
-                        temp++;
-                }
-            }
-
-           console.log(temp);
-           if(temp === uniqueCommittee.length)
-               res.send(false);
-           else 
-               res.send(true);
-
-
-           
-        
         });
     }, 
 
