@@ -188,7 +188,7 @@ $(document).ready(function () {
             }
 
             $('#userEmail').text(result.email);
-            $('#name').text(result.name);
+            $('#userName').text(result.name);
             $('#role').val(result.role);
             const arr_ac = result.assigned_committee.split(" ");   
             
