@@ -280,13 +280,15 @@ const requestController = {
             db.findMany(PubRequest , {pubName :  userName} , {} , function(result) {
 
                 for(i of result) {
-                    committeeInProgress.push(i.committee);
+                    if(i.status === "In Progress")
+                        committeeInProgress.push(i.committee);
                 }
 
                 db.findMany(PubRequest , {secName : userName} , {} , function(result) {
 
                     for(i of result) {
-                        committeeInProgress.push(i.committee);
+                        if(i.status === "In Progress")
+                            committeeInProgress.push(i.committee);
                     }
 
                 });
