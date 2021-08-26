@@ -30,25 +30,25 @@
             <table id="userstable" class="stripe sortable" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="btn-col"></th>
                         <th scope="col">Email</th>
                         <th scope="col">Name</th>
                         <th scope="col">Role</th>
                         <th scope="col">Assigned Committees</th>
+                        <th class="btn-col"></th>
                         <th class="btn-col"></th>
                     </tr>
                 </thead>
                 <tbody id = "users_data">
                     {{#each users_data}}
                     <tr class = "users_info">
-                        <td class="btn-col" scope="row">
-                            <i type = "button" class="bi-plus-square-fill btn-icon edit" 
-                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"></i>
-                        </td>
                         <td class = "emailInfo">{{this.email}}</td>
                         <td class = "nameInfo">{{this.name}}</td>
                         <td>{{this.role}}</td>
                         <td>{{this.assigned_committee}}</td>
+                        <td class="btn-col" scope="row">
+                            <button type = "button" class="edit" 
+                            data-bs-toggle="modal" data-bs-target="#userdetailsModal"> EDIT </button>
+                        </td>
                         <td class="btn-col">
                             <i class="bi-trash-fill btn-icon delete" type="button" 
                             data-bs-toggle="modal"></i>

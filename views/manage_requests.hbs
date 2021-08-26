@@ -26,27 +26,27 @@
             <table id="requeststable" style="width: 100%">
                 <thead>
                     <tr>
-                        <th class="btn-col"></th>
                         <th scope="col">Activity Name</th>
                         <th scope="col">Posting Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Assigned Pubs</th>
                         <th scope="col">Assigned Secretariat</th>
                         <th class="btn-col"></th>
+                        <th class="btn-col"></th>
                     </tr>
                 </thead>
                 <tbody id = "request_data">
                     {{#each request_data}}
                     <tr>
-                        <td class="btn-col" scope="row">
-                            <i class="bi-plus-square-fill btn-icon edit" type="button" 
-                            data-bs-toggle="modal" data-bs-target="#requestdetailsModal"></i>
-                        </td>
                         <td class = "activity_name">{{this.activity_name}}</td>
                         <td>{{this.posting_date}} {{this.posting_time}}</td>
                         <td>{{this.status}}</td>
                         <td>{{this.pubName}}</td>
                         <td>{{this.secName}}</td>
+                        <td class="btn-col" scope="row">
+                            <button type = "button" class="edit" 
+                            data-bs-toggle="modal" data-bs-target="#requestdetailsModal">EDIT</button>
+                        </td>
                         <td class="btn-col">
                             <i class="bi-trash-fill btn-icon" type="button" 
                             data-bs-toggle="modal" data-bs-target="#removerequestModal"></i>
@@ -206,11 +206,13 @@
                                 <input type="radio" class="btn-check pubType" name="pubType" value = "other" id="type_other"  autocomplete="off" disabled>
                                 <label class="btn btn-outline-dark" for="type_other">Other</label>
 
-                            </div>
+                            </div>  
+                        </div>
 
+                        <div class="row form-row">
                             <div class="col">
                                 <input type="text" class="form-control" name = "type_other_value" id="type_other_value" placeholder="Other Type*" disabled>
-                            </div>   
+                            </div> 
                         </div>
 
                         <div class="row form-row">
