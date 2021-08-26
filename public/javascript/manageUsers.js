@@ -81,8 +81,8 @@ $(document).ready(function () {
             else 
                 $('#role').prop('disabled', true);
         });
+
         
-        /*
         $.get('/checkAdmins', {}, function(result){
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
@@ -91,7 +91,7 @@ $(document).ready(function () {
                 $('#role').prop('disabled', true);
             }
         });
-        */
+        
     });
 
     $('#btn-save').click(function(){
