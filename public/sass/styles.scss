@@ -36,6 +36,11 @@ $dark: #1D1A1A;
 }
 
 @include media-breakpoint-down(xl) {
+
+    .container-content{
+        width: auto !important;
+    }
+    
     .container-form{
         min-width: 80%;
     }
@@ -171,7 +176,7 @@ select.error > option{
 
 .container-content{
     padding: 2%;
-    width: auto;
+    width: 50%;
 }
 
 // ------- Sidebar
@@ -187,7 +192,6 @@ select.error > option{
     height: 100%;
     position: relative;
     padding: 10px;
-    overflow: auto;
 }
 
 .nav-sidebar{
@@ -392,6 +396,14 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .
 .modal-footer > .btn-delete{
     background-color: #ad2a2a;
     color: white;
+}
+
+button.edit{
+    font-family: NexaBold;
+    color: white;
+    background-color: black;
+    border: transparent;
+    border-radius: 5px;
 }
 
 .img_btnicon{
