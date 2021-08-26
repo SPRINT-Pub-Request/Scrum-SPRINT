@@ -60,14 +60,10 @@ $(document).ready(function () {
     });
 
     $('#btn-edit').click(function(){
-        const email = $(this).parent().siblings('.emailInfo').text();
-
-         $.get('/getUser', {email: email}, function(result){
-            userRole = result.role;
-
-            if(result.role !== "Requester"){
+        
+         $.get('/getUser', {email: emailUser}, function(result){
+            if(result.role != "Requester") {
                 $('#committee').prop('disabled', false);
-
                 $('#Activities').prop('disabled', false);
                 $('#Finance').prop('disabled', false);
                 $('#HRD').prop('disabled', false);
@@ -78,28 +74,8 @@ $(document).ready(function () {
                 $('#SocioCivic').prop('disabled', false);
                 $('#Pubs').prop('disabled', false);
             }
-            else{
-                $('#Activities').prop('disabled', true);
-                $('#Finance').prop('disabled', true);
-                $('#HRD').prop('disabled', true);
-                $('#Externals').prop('disabled', true);
-                $('#TND').prop('disabled', true);
-                $('#P-EVP').prop('disabled', true);
-                $('#Secretariat').prop('disabled', true);
-                $('#SocioCivic').prop('disabled', true);
-                $('#Pubs').prop('disabled', true);
-    
-                $('#Activities').prop('checked', false);
-                $('#Finance').prop('checked', false);
-                $('#HRD').prop('checked', false);
-                $('#TND').prop('checked', false);
-                $('#P-EVP').prop('checked', false);
-                $('#SocioCivic').prop('checked', false);
-                $('#Pubs').prop('checked', false);
-                $('#Externals').prop('checked', false);
-            }
-        });
-
+         });
+            
         $.get('/checkAdmins', {}, function(result){
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
@@ -193,20 +169,7 @@ $(document).ready(function () {
         $.get('/getUser', {email: email}, function(result){
             userRole = result.role;
 
-            if(result.role !== "Requester"){
-                $('#committee').prop('disabled', true);
-
-                $('#Activities').prop('disabled', true);
-                $('#Finance').prop('disabled', true);
-                $('#HRD').prop('disabled', true);
-                $('#Externals').prop('disabled', true);
-                $('#TND').prop('disabled', true);
-                $('#P-EVP').prop('disabled', true);
-                $('#Secretariat').prop('disabled', true);
-                $('#SocioCivic').prop('disabled', true);
-                $('#Pubs').prop('disabled', true);
-            }
-            else{
+            if(result.role === "Requester"){
                 $('#Activities').prop('disabled', true);
                 $('#Finance').prop('disabled', true);
                 $('#HRD').prop('disabled', true);
