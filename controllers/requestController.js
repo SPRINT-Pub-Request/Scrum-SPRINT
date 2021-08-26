@@ -270,23 +270,24 @@ const requestController = {
 
     checkRole: (req , res) => {
         const email = req.query.email;
-        let hasProgress = false;
 
         db.findOne(User , {email : email} , {} , function(result) {
             const userName = result.name;
+            let inProgress = false;
 
             db.findOne(PubRequest , {pubName : userName} , {} , function(result) {
-                if(result.pubName === userName)
-                    hasProgress = true;
+                if(result.pubName === userName) 
+                    inProgress = true;
                 else {
                     db.findOne(PubRequest, {secName : userName} , {} , function(result) {
-                        IF(result.secName === userName) 
-                            hasProgress = true;
+                        if(result.secName === userName) 
+                            inProgress = true;
+
+                        res.send(inProgress);
                     });
                 }
             });
             
-            return res.send(hasProgress);
         });
     },
 

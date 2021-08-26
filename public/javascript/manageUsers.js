@@ -74,7 +74,15 @@ $(document).ready(function () {
                 $('#SocioCivic').prop('disabled', false);
             }
          });
-            
+        $.get('/checkRole' , {email : emailUser} , function(result) {
+            if(result == false) {
+                $('#role').prop('disabled', false);
+            } 
+            else 
+                $('#role').prop('disabled', true);
+        });
+        
+        /*
         $.get('/checkAdmins', {}, function(result){
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
@@ -83,6 +91,7 @@ $(document).ready(function () {
                 $('#role').prop('disabled', true);
             }
         });
+        */
     });
 
     $('#btn-save').click(function(){
@@ -107,27 +116,21 @@ $(document).ready(function () {
             role : role,
         }
 
-        $.get('/checkRole' , user , function(result) {
-            if(result == false) {
-                $.get('/checkCommittee' , user , function(res) {
-                    if(res == false) {
-                        $.get('/updateUser', user, function(result) {       
-                
-                            location.reload();
-                            if(result) {
-                                $.get('/sendNotif' , user , function(ans) {
-                                    alert(ans);
-                                });
-                            } else {
-                                alert('Updating User Failed, Please Refresh and Try Again!')
-                            }
+        $.get('/checkCommittee' , user , function(res) {
+            if(res == false) {
+                $.get('/updateUser', user, function(result) {       
+        
+                    location.reload();
+                    if(result) {
+                        $.get('/sendNotif' , user , function(ans) {
+                            alert(ans);
                         });
                     } else {
-                        alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
+                        alert('Updating User Failed, Please Refresh and Try Again!')
                     }
                 });
             } else {
-                alert('Role unchanged, User currently has in progress work.')
+                alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
             }
         });
             
