@@ -16,7 +16,7 @@ const loginController = {
     },
 
     googleLogin: (req , res) => {
-
+        
         const { domain } =  req.user._json;
         
         if(domain === "dlsu.edu.ph") {

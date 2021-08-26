@@ -10,17 +10,20 @@ $(document).ready(function () {
 
         for(i = 0; i < 8; i++) {
             if(result[i] == false) {
-                committee.push(namesCommittee[i] + " ");
+                if(committee.length == 0)
+                    committee.push(namesCommittee[i]);
+                else
+                    committee.push(" " + namesCommittee[i]);
             }
         }
 
-        if(committee.length != 0)
-            alert("There is no Pubs or Secretariat assigned to the following committee: \n" + committee + "\n");
+        if(committee.length != 0) 
+            alert("There are no Pubs or Secretariat officers assigned to the following committee: \n" + committee + "\n");  
     });
 
 
     $('#users_data').on('click', '.delete', function () {
-        //your code here
+
         const email = $(this).parent().siblings('.emailInfo').text();
         emailUser = email
 
@@ -46,8 +49,7 @@ $(document).ready(function () {
             }
             
         });
-
-       
+        
     });
 
     $('#btnRemoveUser').click(function () {
@@ -58,6 +60,26 @@ $(document).ready(function () {
     });
 
     $('#btn-edit').click(function(){
+        const email = $(this).parent().siblings('.emailInfo').text();
+
+         $.get('/getUser', {email: email}, function(result){
+            userRole = result.role;
+
+            if(result.role !== "Requester"){
+                $('#committee').prop('disabled', false);
+
+                $('#Activities').prop('disabled', false);
+                $('#Finance').prop('disabled', false);
+                $('#HRD').prop('disabled', false);
+                $('#Externals').prop('disabled', false);
+                $('#TND').prop('disabled', false);
+                $('#P-EVP').prop('disabled', false);
+                $('#Secretariat').prop('disabled', false);
+                $('#SocioCivic').prop('disabled', false);
+                $('#Pubs').prop('disabled', false);
+            }
+        });
+
         $.get('/checkAdmins', {}, function(result){
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
@@ -89,19 +111,26 @@ $(document).ready(function () {
             assigned_committee : assigned_committee,
             role : role,
         }
-        
-                $.get('/updateUser', user, function(result) {       
+            $.get('/checkCommittee' , user , function(res) {
+                if(res == false) {
+                    $.get('/updateUser', user, function(result) {       
             
-                location.reload();
-                if(result) {
-                    $.get('/sendNotif' , user , function(ans) {
-                        alert(ans);
+                        location.reload();
+                        if(result) {
+                            $.get('/sendNotif' , user , function(ans) {
+                                alert(ans);
+                            });
+                        } else {
+                            alert('Updating User Failed, Please Refresh and Try Again!')
+                        }
                     });
                 } else {
-                    alert('Updating User Failed, Please Refresh and Try Again!')
+                    alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
                 }
-                });
-        //TODO: Will Fix a Bug where Admin can remove you from committee even when you have a in progress work
+                
+    
+            });
+    
     });
 
 
@@ -145,17 +174,17 @@ $(document).ready(function () {
             userRole = result.role;
 
             if(result.role !== "Requester"){
-                $('#committee').prop('disabled', false);
+                $('#committee').prop('disabled', true);
 
-                $('#Activities').prop('disabled', false);
-                $('#Finance').prop('disabled', false);
-                $('#HRD').prop('disabled', false);
-                $('#Externals').prop('disabled', false);
-                $('#TND').prop('disabled', false);
-                $('#P-EVP').prop('disabled', false);
-                $('#Secretariat').prop('disabled', false);
-                $('#SocioCivic').prop('disabled', false);
-                $('#Pubs').prop('disabled', false);
+                $('#Activities').prop('disabled', true);
+                $('#Finance').prop('disabled', true);
+                $('#HRD').prop('disabled', true);
+                $('#Externals').prop('disabled', true);
+                $('#TND').prop('disabled', true);
+                $('#P-EVP').prop('disabled', true);
+                $('#Secretariat').prop('disabled', true);
+                $('#SocioCivic').prop('disabled', true);
+                $('#Pubs').prop('disabled', true);
             }
             else{
                 $('#Activities').prop('disabled', true);
@@ -179,7 +208,7 @@ $(document).ready(function () {
             }
 
             $('#userEmail').text(result.email);
-            $('#name').text(result.name);
+            $('#userName').text(result.name);
             $('#role').val(result.role);
             const arr_ac = result.assigned_committee.split(" ");   
             
