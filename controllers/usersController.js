@@ -95,11 +95,13 @@ const usersController = {
             role : role,
             assigned_committee : assigned_committee
         }
+        
 
         db.findOne(User, {email : email}, {}, function(result){
             if (result.userID === req.session.userID){
                 transfer = true;
                 console.log("transfer true!");
+                req.session.role = newUser.role;
             }
 
             db.updateOne(User , { email : email } , {

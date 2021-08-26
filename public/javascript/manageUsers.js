@@ -60,6 +60,26 @@ $(document).ready(function () {
     });
 
     $('#btn-edit').click(function(){
+        const email = $(this).parent().siblings('.emailInfo').text();
+
+         $.get('/getUser', {email: email}, function(result){
+            userRole = result.role;
+
+            if(result.role !== "Requester"){
+                $('#committee').prop('disabled', false);
+
+                $('#Activities').prop('disabled', false);
+                $('#Finance').prop('disabled', false);
+                $('#HRD').prop('disabled', false);
+                $('#Externals').prop('disabled', false);
+                $('#TND').prop('disabled', false);
+                $('#P-EVP').prop('disabled', false);
+                $('#Secretariat').prop('disabled', false);
+                $('#SocioCivic').prop('disabled', false);
+                $('#Pubs').prop('disabled', false);
+            }
+        });
+
         $.get('/checkAdmins', {}, function(result){
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
@@ -154,17 +174,17 @@ $(document).ready(function () {
             userRole = result.role;
 
             if(result.role !== "Requester"){
-                $('#committee').prop('disabled', false);
+                $('#committee').prop('disabled', true);
 
-                $('#Activities').prop('disabled', false);
-                $('#Finance').prop('disabled', false);
-                $('#HRD').prop('disabled', false);
-                $('#Externals').prop('disabled', false);
-                $('#TND').prop('disabled', false);
-                $('#P-EVP').prop('disabled', false);
-                $('#Secretariat').prop('disabled', false);
-                $('#SocioCivic').prop('disabled', false);
-                $('#Pubs').prop('disabled', false);
+                $('#Activities').prop('disabled', true);
+                $('#Finance').prop('disabled', true);
+                $('#HRD').prop('disabled', true);
+                $('#Externals').prop('disabled', true);
+                $('#TND').prop('disabled', true);
+                $('#P-EVP').prop('disabled', true);
+                $('#Secretariat').prop('disabled', true);
+                $('#SocioCivic').prop('disabled', true);
+                $('#Pubs').prop('disabled', true);
             }
             else{
                 $('#Activities').prop('disabled', true);
