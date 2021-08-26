@@ -276,18 +276,18 @@ const requestController = {
             let inProgress = false;
 
             db.findOne(PubRequest , {pubName : userName} , {} , function(result) {
-                if(result.pubName === userName) 
+                if(result) 
                     inProgress = true;
                 else {
                     db.findOne(PubRequest, {secName : userName} , {} , function(result) {
-                        if(result.secName === userName) 
+                        if(result) 
                             inProgress = true;
 
                         res.send(inProgress);
                     });
                 }
             });
-            
+
         });
     },
 
