@@ -207,7 +207,7 @@ const requestController = {
         db.findMany(User, {} , {} , function(result) {
             secNames = [];
             const committee = req.query.committee;
-            const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+            const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
             
             arrCommittee = []; 
 
@@ -268,6 +268,28 @@ const requestController = {
 
     },
 
+    checkRole: (req , res) => {
+        const email = req.query.email;
+        let hasProgress = false;
+
+        db.findOne(User , {email : email} , {} , function(result) {
+            const userName = result.name;
+
+            db.findOne(PubRequest , {pubName : userName} , {} , function(result) {
+                if(result.pubName === userName)
+                    hasProgress = true;
+                else {
+                    db.findOne(PubRequest, {secName : userName} , {} , function(result) {
+                        IF(result.secName === userName) 
+                            hasProgress = true;
+                    });
+                }
+            });
+            
+            return res.send(hasProgress);
+        });
+    },
+
     checkCommittee: (req , res) => {
         const email = req.query.email;
         const assigned_committee = req.query.assigned_committee.split(" "); 
@@ -285,21 +307,16 @@ const requestController = {
                 }
 
                 db.findMany(PubRequest , {secName : userName} , {} , function(result) {
-                    console.log( + result);
                     for(i of result) {
                         if(i.status === "In Progress")
                             committeeInProgress.push(i.committee);
                     }
-
 
                     let uniqueCommittee = []
                     for(k = 0; k < committeeInProgress.length; k++) {
                         if(uniqueCommittee.indexOf(committeeInProgress[k]) === -1) 
                             uniqueCommittee.push(committeeInProgress[k]);
                     }
-
-                    console.log(uniqueCommittee); 
-
 
                     let temp = 0;
                     for(i = 0; i < uniqueCommittee.length; i++) {
@@ -309,12 +326,10 @@ const requestController = {
                         }
                     }
 
-                console.log(temp);
-                if(temp === uniqueCommittee.length)
-                    res.send(false);
-                else 
-                    res.send(true);
-
+                    if(temp === uniqueCommittee.length)
+                        res.send(false);
+                    else 
+                        res.send(true);
 
                 });
             });
