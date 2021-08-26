@@ -10,17 +10,20 @@ $(document).ready(function () {
 
         for(i = 0; i < 8; i++) {
             if(result[i] == false) {
-                committee.push(namesCommittee[i] + " ");
+                if(committee.length == 0)
+                    committee.push(namesCommittee[i]);
+                else
+                    committee.push(" " + namesCommittee[i]);
             }
         }
 
-        if(committee.length != 0)
-            alert("There is no Pubs or Secretariat assigned to the following committee: \n" + committee + "\n");
+        if(committee.length != 0) 
+            alert("There are no Pubs or Secretariat officers assigned to the following committee: \n" + committee + "\n");  
     });
 
 
     $('#users_data').on('click', '.delete', function () {
-        //your code here
+
         const email = $(this).parent().siblings('.emailInfo').text();
         emailUser = email
 
@@ -46,8 +49,7 @@ $(document).ready(function () {
             }
             
         });
-
-       
+        
     });
 
     $('#btnRemoveUser').click(function () {

@@ -11,7 +11,7 @@ $(document).ready(function () {
         $('#add_request#view_request').removeClass('nav-active');
         $('#manage_users').removeClass('nav-active');
         $('#manage_request').removeClass('nav-active');
-    } else if(currLoc == "/view_request") {
+    } else if(currLoc == "/view_requests") {
         $('#view_request').addClass('nav-active')
         $('#add_request').removeClass('nav-active');
         $('#manage_users').removeClass('nav-active');
