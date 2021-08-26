@@ -89,19 +89,26 @@ $(document).ready(function () {
             assigned_committee : assigned_committee,
             role : role,
         }
-        
-                $.get('/updateUser', user, function(result) {       
+            $.get('/checkCommittee' , user , function(res) {
+                if(res == false) {
+                    $.get('/updateUser', user, function(result) {       
             
-                location.reload();
-                if(result) {
-                    $.get('/sendNotif' , user , function(ans) {
-                        alert(ans);
+                        location.reload();
+                        if(result) {
+                            $.get('/sendNotif' , user , function(ans) {
+                                alert(ans);
+                            });
+                        } else {
+                            alert('Updating User Failed, Please Refresh and Try Again!')
+                        }
                     });
                 } else {
-                    alert('Updating User Failed, Please Refresh and Try Again!')
+                    alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
                 }
-                });
-        //TODO: Will Fix a Bug where Admin can remove you from committee even when you have a in progress work
+                
+    
+            });
+    
     });
 
 

@@ -270,34 +270,48 @@ const requestController = {
 
     checkCommittee: (req , res) => {
         const email = req.query.email;
-        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
-        const assigned_committee = req.query.assigned_committee; 
+        const assigned_committee = req.query.assigned_committee.split(" "); 
 
-        newCommittee = [];
-        oldCommittee = [];
-        removedCommittee = [];
+        committeeInProgress = [];
+        
         
         db.findOne(User , {email : email} , {} , function(result) {
 
             const userName = result.name;
 
-            for(i = 0; i < namesCommittee.length; i++) {
-                if(assigned_committee.indexOf(namesCommittee[i]) !== -1)
-                    newCommittee.push(namesCommittee[i]);
-            } 
+            db.findMany(PubRequest , {pubName :  userName} , {} , function(result) {
 
-            // Activities , Finance newCommittee
+                for(i of result) {
+                    committeeInProgress.push(i.committee);
+                }
 
-            // Finance 
+                db.findMany(PubRequest , {secName : userName} , {} , function(result) {
 
-            for(i = 0; i < newCommittee.length; i++) {
-                if(result.assigned_committee.indexOf(newCommittee[i]) !== -1)
-                    removedCommittee.push(newCommittee[i]);
-            }
-            
-            console.log(removedCommittee);
+                    for(i of result) {
+                        committeeInProgress.push(i.committee);
+                    }
 
-            res.send(false);
+                });
+
+                console.log(committeeInProgress); 
+
+
+                let temp = 0;
+                for(i = 0; i < committeeInProgress.length; i++) {
+                    for(j = 0; j < assigned_committee.length; j++) {
+                        if(committeeInProgress[i] === assigned_committee[j])
+                            temp++;
+                    }
+                }
+
+                console.log(temp);
+                if(temp === committeeInProgress.length)
+                    res.send(false);
+                else 
+                    res.send(true);
+
+
+            });
            
         });
     }, 
