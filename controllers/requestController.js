@@ -271,12 +271,10 @@ const requestController = {
     checkCommittee: (req , res) => {
         const email = req.query.email;
         const assigned_committee = req.query.assigned_committee.split(" "); 
-
-        committeeInProgress = [];
         
         
         db.findOne(User , {email : email} , {} , function(result) {
-
+            let committeeInProgress = [];
             const userName = result.name;
 
             db.findMany(PubRequest , {pubName :  userName} , {} , function(result) {
@@ -293,19 +291,25 @@ const requestController = {
 
                 });
 
-                console.log(committeeInProgress); 
+                let uniqueCommittee = []
+                for(k = 0; k < committeeInProgress.length; k++) {
+                    if(uniqueCommittee.indexOf(committeeInProgress[k]) === -1) 
+                        uniqueCommittee.push(committeeInProgress[k]);
+                }
+
+                console.log(uniqueCommittee); 
 
 
                 let temp = 0;
-                for(i = 0; i < committeeInProgress.length; i++) {
+                for(i = 0; i < uniqueCommittee.length; i++) {
                     for(j = 0; j < assigned_committee.length; j++) {
-                        if(committeeInProgress[i] === assigned_committee[j])
+                        if(uniqueCommittee[i] === assigned_committee[j])
                             temp++;
                     }
                 }
 
                 console.log(temp);
-                if(temp === committeeInProgress.length)
+                if(temp === uniqueCommittee.length)
                     res.send(false);
                 else 
                     res.send(true);
