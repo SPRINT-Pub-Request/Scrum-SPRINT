@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     let emailUser = "";
@@ -61,21 +60,31 @@ $(document).ready(function () {
 
     $('#btn-edit').click(function(){
         
-         $.get('/getUser', {email: emailUser}, function(result){
-            if(result.role != "Requester") {
-                $('#committee').prop('disabled', false);
-                $('#Activities').prop('disabled', false);
-                $('#Finance').prop('disabled', false);
-                $('#HRD').prop('disabled', false);
-                $('#Externals').prop('disabled', false);
-                $('#TND').prop('disabled', false);
-                $('#P-EVP').prop('disabled', false);
-                $('#Secretariat').prop('disabled', false);
-                $('#SocioCivic').prop('disabled', false);
-                $('#Secretariat').prop('disabled', false);
-            }
-         });
-            
+        const email = $("#userEmail").text();
+
+        $.get('/getUser', {email: email}, function(result){
+           if(result.role != "Requester") {
+               $('#committee').prop('disabled', false);
+               $('#Activities').prop('disabled', false);
+               $('#Finance').prop('disabled', false);
+               $('#HRD').prop('disabled', false);
+               $('#Externals').prop('disabled', false);
+               $('#TND').prop('disabled', false);
+               $('#P-EVP').prop('disabled', false);
+               $('#Secretariat').prop('disabled', false);
+               $('#SocioCivic').prop('disabled', false);
+           }
+        });
+
+        $.get('/checkRole' , {email : email} , function(result) {
+            if(result == false) {
+                $('#role').prop('disabled', false);
+            } 
+            else 
+                $('#role').prop('disabled', true);
+        });
+
+        
         $.get('/checkAdmins', {}, function(result){
             if (result.length > 1 || userRole !== "Administrator"){
                 $('#role').prop('disabled', false);
@@ -84,6 +93,7 @@ $(document).ready(function () {
                 $('#role').prop('disabled', true);
             }
         });
+        
     });
 
     $('#btn-save').click(function(){
@@ -107,25 +117,25 @@ $(document).ready(function () {
             assigned_committee : assigned_committee,
             role : role,
         }
-            $.get('/checkCommittee' , user , function(res) {
-                if(res == false) {
-                    $.get('/updateUser', user, function(result) {       
+
+        $.get('/checkCommittee' , user , function(res) {
+            if(res == false) {
+                $.get('/updateUser', user, function(result) {       
+        
+                    location.reload();
+                    if(result) {
+                        $.get('/sendNotif' , user , function(ans) {
+                            alert(ans);
+                        });
+                    } else {
+                        alert('Updating User Failed, Please Refresh and Try Again!')
+                    }
+                });
+            } else {
+                alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
+            }
+        });
             
-                        location.reload();
-                        if(result) {
-                            $.get('/sendNotif' , user , function(ans) {
-                                alert(ans);
-                            });
-                        } else {
-                            alert('Updating User Failed, Please Refresh and Try Again!')
-                        }
-                    });
-                } else {
-                    alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
-                }
-                
-    
-            });
     
     });
 
@@ -178,7 +188,10 @@ $(document).ready(function () {
                 $('#P-EVP').prop('disabled', true);
                 $('#Secretariat').prop('disabled', true);
                 $('#SocioCivic').prop('disabled', true);
+<<<<<<< HEAD
                 $('#Secretariat').prop('disabled', true);
+=======
+>>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
     
                 $('#Activities').prop('checked', false);
                 $('#Finance').prop('checked', false);
@@ -186,7 +199,10 @@ $(document).ready(function () {
                 $('#TND').prop('checked', false);
                 $('#P-EVP').prop('checked', false);
                 $('#SocioCivic').prop('checked', false);
+<<<<<<< HEAD
                 $('#Secretariat').prop('checked', false);
+=======
+>>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
                 $('#Externals').prop('checked', false);
             }
 
@@ -215,7 +231,10 @@ $(document).ready(function () {
             $('#P-EVP').prop('disabled', true);
             $('#Secretariat').prop('disabled', true);
             $('#SocioCivic').prop('disabled', true);
+<<<<<<< HEAD
             $('#Secretariat').prop('disabled', true);
+=======
+>>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
 
             $('#Activities').prop('checked', false);
             $('#Finance').prop('checked', false);
@@ -223,7 +242,10 @@ $(document).ready(function () {
             $('#TND').prop('checked', false);
             $('#P-EVP').prop('checked', false);
             $('#SocioCivic').prop('checked', false);
+<<<<<<< HEAD
             $('#Secretariat').prop('checked', false);
+=======
+>>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
             $('#Externals').prop('checked', false);
         }
         else{
@@ -235,7 +257,10 @@ $(document).ready(function () {
             $('#P-EVP').prop('disabled', false);
             $('#Secretariat').prop('disabled', false);
             $('#SocioCivic').prop('disabled', false);
+<<<<<<< HEAD
             $('#Secretariat').prop('disabled', false);
+=======
+>>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
         }
     })
 });

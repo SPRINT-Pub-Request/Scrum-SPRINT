@@ -11530,9 +11530,6 @@ fieldset:disabled .btn {
 }
 
 @media (max-width: 1199.98px) {
-  .container-content {
-    width: auto !important;
-  }
   .container-form {
     min-width: 80%;
   }
@@ -11551,6 +11548,9 @@ fieldset:disabled .btn {
   .sidebar-logo, .btn-icon-text {
     display: none;
   }
+  .container-content {
+    width: 90% !important;
+  }
   .container-form {
     min-width: 90%;
   }
@@ -11565,9 +11565,10 @@ fieldset:disabled .btn {
     min-width: 80%;
   }
   .sidebar-content {
-    padding: 6px !important;
+    padding: 3px !important;
   }
   .container-content {
+    width: 97% !important;
     padding: 0% !important;
   }
   .with-sidebar {

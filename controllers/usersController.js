@@ -163,7 +163,7 @@ const usersController = {
 
     getNoAssigned:(req , res) => {
         
-        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
         let committee = [false , false , false , false , false , false , false , false];
 
 
@@ -175,7 +175,7 @@ const usersController = {
                                 committee[j] = true;
                     }
                 }
-            
+
             res.send(committee);
         })
 

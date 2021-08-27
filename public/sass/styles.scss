@@ -38,7 +38,7 @@ $dark: #1D1A1A;
 @include media-breakpoint-down(xl) {
 
     .container-content{
-        width: auto !important;
+        //width: auto !important;
     }
     
     .container-form{
@@ -63,6 +63,10 @@ $dark: #1D1A1A;
         display: none;
     }
 
+    .container-content{
+        width: 90% !important;
+    }
+
     .container-form{
         min-width: 90%;
     }
@@ -79,10 +83,11 @@ $dark: #1D1A1A;
     }
 
     .sidebar-content{
-        padding: 6px !important;
+        padding: 3px !important;
     }
 
     .container-content{
+        width: 97% !important;
         padding: 0% !important;
     }
 

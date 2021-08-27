@@ -207,7 +207,7 @@ const requestController = {
         db.findMany(User, {} , {} , function(result) {
             secNames = [];
             const committee = req.query.committee;
-            const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+            const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
             
             arrCommittee = []; 
 
@@ -268,51 +268,76 @@ const requestController = {
 
     },
 
+    checkRole: (req , res) => {
+        const email = req.query.email;
+        
+        console.log(email);
+        db.findOne(User , {email : email} , {} , function(result) {
+            const userName = result.name;
+            let inProgress = false;
+
+            db.findMany(PubRequest , {pubName : userName} , {} , function(result) {
+                if(result) 
+                    for(i of result)
+                        if(i.status === "In Progress")
+                            inProgress = true;
+                
+                    db.findMany(PubRequest, {secName : userName} , {} , function(result) {
+                        if(result) 
+                            for(i of result)
+                                if(i.status === "In Progress")
+                                    inProgress = true;
+
+                        res.send(inProgress);
+                    });
+            });
+
+        });
+    },
+
     checkCommittee: (req , res) => {
         const email = req.query.email;
         const assigned_committee = req.query.assigned_committee.split(" "); 
-
-        committeeInProgress = [];
         
         
         db.findOne(User , {email : email} , {} , function(result) {
-
+            let committeeInProgress = [];
             const userName = result.name;
 
             db.findMany(PubRequest , {pubName :  userName} , {} , function(result) {
 
                 for(i of result) {
-                    committeeInProgress.push(i.committee);
+                    if(i.status === "In Progress")
+                        committeeInProgress.push(i.committee);
                 }
 
                 db.findMany(PubRequest , {secName : userName} , {} , function(result) {
-
                     for(i of result) {
-                        committeeInProgress.push(i.committee);
+                        if(i.status === "In Progress")
+                            committeeInProgress.push(i.committee);
                     }
+                    
+                    let uniqueCommittee = []
+                    for(k = 0; k < committeeInProgress.length; k++) {
+                        if(uniqueCommittee.indexOf(committeeInProgress[k]) === -1) 
+                            uniqueCommittee.push(committeeInProgress[k]);
+                    }
+
+                    let temp = 0;
+                    for(i = 0; i < uniqueCommittee.length; i++) {
+                        for(j = 0; j < assigned_committee.length; j++) {
+                            if(uniqueCommittee[i] === assigned_committee[j])
+                                temp++;
+                        }
+                    }
+
+                    if(temp === uniqueCommittee.length)
+                        res.send(false);
+                    else 
+                        res.send(true);
 
                 });
-
-                console.log(committeeInProgress); 
-
-
-                let temp = 0;
-                for(i = 0; i < committeeInProgress.length; i++) {
-                    for(j = 0; j < assigned_committee.length; j++) {
-                        if(committeeInProgress[i] === assigned_committee[j])
-                            temp++;
-                    }
-                }
-
-                console.log(temp);
-                if(temp === committeeInProgress.length)
-                    res.send(false);
-                else 
-                    res.send(true);
-
-
             });
-           
         });
     }, 
 
