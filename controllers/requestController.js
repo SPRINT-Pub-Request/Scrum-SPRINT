@@ -270,18 +270,23 @@ const requestController = {
 
     checkRole: (req , res) => {
         const email = req.query.email;
-
+        
+        console.log(email);
         db.findOne(User , {email : email} , {} , function(result) {
             const userName = result.name;
             let inProgress = false;
 
-            db.findOne(PubRequest , {pubName : userName} , {} , function(result) {
+            db.findMany(PubRequest , {pubName : userName} , {} , function(result) {
                 if(result) 
-                    inProgress = true;
-                
-                    db.findOne(PubRequest, {secName : userName} , {} , function(result) {
-                        if(result) 
+                    for(i of result)
+                        if(i.status === "In Progress")
                             inProgress = true;
+                
+                    db.findMany(PubRequest, {secName : userName} , {} , function(result) {
+                        if(result) 
+                            for(i of result)
+                                if(i.status === "In Progress")
+                                    inProgress = true;
 
                         res.send(inProgress);
                     });
@@ -311,7 +316,7 @@ const requestController = {
                         if(i.status === "In Progress")
                             committeeInProgress.push(i.committee);
                     }
-
+                    
                     let uniqueCommittee = []
                     for(k = 0; k < committeeInProgress.length; k++) {
                         if(uniqueCommittee.indexOf(committeeInProgress[k]) === -1) 

@@ -175,7 +175,7 @@ const usersController = {
                                 committee[j] = true;
                     }
                 }
-            
+
             res.send(committee);
         })
 
