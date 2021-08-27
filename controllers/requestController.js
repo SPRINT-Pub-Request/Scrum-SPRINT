@@ -278,14 +278,13 @@ const requestController = {
             db.findOne(PubRequest , {pubName : userName} , {} , function(result) {
                 if(result) 
                     inProgress = true;
-                else {
+                
                     db.findOne(PubRequest, {secName : userName} , {} , function(result) {
                         if(result) 
                             inProgress = true;
 
                         res.send(inProgress);
                     });
-                }
             });
 
         });
