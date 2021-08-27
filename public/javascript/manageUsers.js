@@ -5,7 +5,7 @@ $(document).ready(function () {
     let userRole = "";
     
     $.get('/getNoAssigned' , {} , function(result){
-        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Pubs"];
+        const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
         let committee = [];
 
         for(i = 0; i < 8; i++) {
@@ -72,7 +72,7 @@ $(document).ready(function () {
                 $('#P-EVP').prop('disabled', false);
                 $('#Secretariat').prop('disabled', false);
                 $('#SocioCivic').prop('disabled', false);
-                $('#Pubs').prop('disabled', false);
+                $('#Secretariat').prop('disabled', false);
             }
          });
             
@@ -88,7 +88,7 @@ $(document).ready(function () {
 
     $('#btn-save').click(function(){
         
-        const committees = ["Activities", "Finance","HRD","Externals","TND","P-EVP","SocioCivic", "Pubs"]
+        const committees = ["Activities", "Finance","HRD","Externals","TND","P-EVP","SocioCivic", "Secretariat"]
         const email = $('#userEmail').text();
         const role = $('#role').val();
         let assigned_committee = "";
@@ -149,7 +149,7 @@ $(document).ready(function () {
         $('#P-EVP').prop('disabled', true);
         $('#Secretariat').prop('disabled', true);
         $('#SocioCivic').prop('disabled', true);
-        $('#Pubs').prop('disabled', true);
+        $('#Secretariat').prop('disabled', true);
 
         $('#Activities').prop('checked', false);
         $('#Finance').prop('checked', false);
@@ -157,7 +157,7 @@ $(document).ready(function () {
         $('#TND').prop('checked', false);
         $('#P-EVP').prop('checked', false);
         $('#SocioCivic').prop('checked', false);
-        $('#Pubs').prop('checked', false);
+        $('#Secretariat').prop('checked', false);
         $('#Externals').prop('checked', false);
     });
 
@@ -178,7 +178,7 @@ $(document).ready(function () {
                 $('#P-EVP').prop('disabled', true);
                 $('#Secretariat').prop('disabled', true);
                 $('#SocioCivic').prop('disabled', true);
-                $('#Pubs').prop('disabled', true);
+                $('#Secretariat').prop('disabled', true);
     
                 $('#Activities').prop('checked', false);
                 $('#Finance').prop('checked', false);
@@ -186,7 +186,7 @@ $(document).ready(function () {
                 $('#TND').prop('checked', false);
                 $('#P-EVP').prop('checked', false);
                 $('#SocioCivic').prop('checked', false);
-                $('#Pubs').prop('checked', false);
+                $('#Secretariat').prop('checked', false);
                 $('#Externals').prop('checked', false);
             }
 
@@ -215,7 +215,7 @@ $(document).ready(function () {
             $('#P-EVP').prop('disabled', true);
             $('#Secretariat').prop('disabled', true);
             $('#SocioCivic').prop('disabled', true);
-            $('#Pubs').prop('disabled', true);
+            $('#Secretariat').prop('disabled', true);
 
             $('#Activities').prop('checked', false);
             $('#Finance').prop('checked', false);
@@ -223,7 +223,7 @@ $(document).ready(function () {
             $('#TND').prop('checked', false);
             $('#P-EVP').prop('checked', false);
             $('#SocioCivic').prop('checked', false);
-            $('#Pubs').prop('checked', false);
+            $('#Secretariat').prop('checked', false);
             $('#Externals').prop('checked', false);
         }
         else{
@@ -235,7 +235,7 @@ $(document).ready(function () {
             $('#P-EVP').prop('disabled', false);
             $('#Secretariat').prop('disabled', false);
             $('#SocioCivic').prop('disabled', false);
-            $('#Pubs').prop('disabled', false);
+            $('#Secretariat').prop('disabled', false);
         }
     })
 });
