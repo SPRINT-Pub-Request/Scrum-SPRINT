@@ -148,6 +148,9 @@ $(document).ready(function () {
     
     Modal.addEventListener('hidden.bs.modal', function (event) {
         //Modal on Close event handler
+
+        $('#userEmail').text("Loading...");
+            $('#userName').text("Loading...");
         $('#committee').prop('disabled', true);
         $('#role').prop('disabled', true);
 
