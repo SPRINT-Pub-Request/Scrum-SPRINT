@@ -188,21 +188,14 @@ $(document).ready(function () {
                 $('#P-EVP').prop('disabled', true);
                 $('#Secretariat').prop('disabled', true);
                 $('#SocioCivic').prop('disabled', true);
-<<<<<<< HEAD
                 $('#Secretariat').prop('disabled', true);
-=======
->>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
-    
                 $('#Activities').prop('checked', false);
                 $('#Finance').prop('checked', false);
                 $('#HRD').prop('checked', false);
                 $('#TND').prop('checked', false);
                 $('#P-EVP').prop('checked', false);
                 $('#SocioCivic').prop('checked', false);
-<<<<<<< HEAD
                 $('#Secretariat').prop('checked', false);
-=======
->>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
                 $('#Externals').prop('checked', false);
             }
 
@@ -231,21 +224,14 @@ $(document).ready(function () {
             $('#P-EVP').prop('disabled', true);
             $('#Secretariat').prop('disabled', true);
             $('#SocioCivic').prop('disabled', true);
-<<<<<<< HEAD
             $('#Secretariat').prop('disabled', true);
-=======
->>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
-
             $('#Activities').prop('checked', false);
             $('#Finance').prop('checked', false);
             $('#HRD').prop('checked', false);
             $('#TND').prop('checked', false);
             $('#P-EVP').prop('checked', false);
             $('#SocioCivic').prop('checked', false);
-<<<<<<< HEAD
             $('#Secretariat').prop('checked', false);
-=======
->>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
             $('#Externals').prop('checked', false);
         }
         else{
@@ -257,10 +243,9 @@ $(document).ready(function () {
             $('#P-EVP').prop('disabled', false);
             $('#Secretariat').prop('disabled', false);
             $('#SocioCivic').prop('disabled', false);
-<<<<<<< HEAD
+
             $('#Secretariat').prop('disabled', false);
-=======
->>>>>>> 7dbf05e2c027761a9248ed550d7db1abc0c16634
+
         }
     })
 });
