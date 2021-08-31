@@ -59,6 +59,36 @@
                 </tbody>
             </table>
 
+            <div class="h-spacer50"></div>
+            <h2>ADD USER</h2>
+            <div class="h-spacer20"></div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="add_email">Email</label>
+                    <input type="text" class="form-control" name = "add_email" id="add_email" placeholder="user@dlsu.edu.ph">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="add_role">Role</label><br>
+                    <select class="form-select" style='font-family: "OpenSans", Sans-Serif;' name = "add_role" id = "add_role">
+                        <option value = "Requester">Requester</option>
+                        <option value = "Publicity and Creatives">Publicity and Creatives</option>
+                        <option value = "Secretariat">Secretariat</option>
+                        <option style="color: #a53333" value = "Administrator">Administrator</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <br>
+                    <input id = "add_user" class="btn btn-dark btn-lg" name = "add_user" type = "submit" value = "ADD" 
+                    style="font-size: 14px;" disabled>
+                </div>
+                
+            </div><br>
+
+            <div class="h-spacer20"></div>
+
         </div>
 
         <!-- USER DETAILS MODAL -->

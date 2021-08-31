@@ -251,4 +251,13 @@ $(document).ready(function () {
 
         }
     })
+
+    $('#add_email').keyup(function () {
+        const value = $('#add_email').val();
+        
+        //TODO: check if email is valid dlsu email
+        if(value != '')
+            $('#add_user').prop('disabled', false);
+        else $('#add_user').prop('disabled', true);
+    });
 });

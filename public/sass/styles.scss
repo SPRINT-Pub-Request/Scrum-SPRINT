@@ -36,10 +36,6 @@ $dark: #1D1A1A;
 }
 
 @include media-breakpoint-down(xl) {
-
-    .container-content{
-        //width: auto !important;
-    }
     
     .container-form{
         min-width: 80%;
@@ -105,11 +101,11 @@ html, body{
     height: 100%;
 }
 
-h1{
+h1,h2{
     font-family: NexaBold;
 }
 
-h2,h3,h4,
+h3,h4,
 .btn.btn-dark, .btn-delete{
     font-family: OpenSans-Bold;
 }
