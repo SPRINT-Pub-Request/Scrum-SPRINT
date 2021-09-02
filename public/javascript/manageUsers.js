@@ -254,10 +254,35 @@ $(document).ready(function () {
 
     $('#add_email').keyup(function () {
         const value = $('#add_email').val();
-        
+        const email = value.split("@");
+
         //TODO: check if email is valid dlsu email
-        if(value != '')
+        if(email[1] === "dlsu.edu.ph"){
             $('#add_user').prop('disabled', false);
-        else $('#add_user').prop('disabled', true);
+        }
+
+        else {
+            $('#add_user').prop('disabled', true);
+        }
+    });
+
+    $('#add_user').click(function () {
+        const email = $('#add_email').val();
+        const role = $('#add_role').val();
+
+        user = {
+            email : email,
+            role : role
+        };
+
+        $.get('/addUser', user, function(result){
+            if (result){
+                alert("User added!");
+                location.reload();
+            }
+            else{
+                alert("Add User Failed");
+            }
+        });
     });
 });

@@ -24,22 +24,43 @@ const loginController = {
             req.session.httpCode = 200;
             
             const user = {
-                userID : req.user.id,
+                email : req.user.email,
             };
 
-            projection = 'userID';
-
-            db.findOne(User, user, projection, function(result) {
+            db.findOne(User, user, {}, function(result) {
                 if(result != null) {
+                    console.log(result);
+                    //If user got added by administrator, and first time logging in
+                    if (result.name === "Not Signed In Yet"){
+                        console.log("1");
 
-                    db.findOne(User , user , {} , function(result) {
+                        newUser = {
+                            userID : req.user.id,
+                            name : req.user.displayName
+                        }
+
                         req.session.role = result.role;
                         req.session.userID = req.user.id;
                         req.session.httpCode = 200;
+                        db.updateOne(User, user, newUser, function(result){
+                            res.redirect('/add_request');
+                        });
+                    }
+                    
+                    //User is already in db and already logged in before
+                    else{
+                        console.log("2");
+                        req.session.role = result.role;
+                        req.session.userID = req.user.id;
+                        req.session.httpCode = 200;
+
+                        console.log(req.session.role)
                         res.redirect('/add_request');
-                    });
+                    }
 
                 } else {
+                    console.log("3");
+                    //New user logging in
                     //change role to test views in sidebar, or change value in mongoDB
                     const userAdd = {
                         userID : req.user.id,

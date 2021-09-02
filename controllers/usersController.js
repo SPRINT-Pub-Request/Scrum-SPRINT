@@ -185,6 +185,25 @@ const usersController = {
         db.findMany(User, {role : "Administrator"}, {}, function(result){   
             res.send(result);
         });
+    },
+
+    addUser : (req, res) => {
+        email = req.query.email;
+        role = req.query.role;
+
+        user = {
+            userID : "",
+            name : "Not Signed In Yet",
+            email : email,
+            role : role,
+            assigned_committee: ""
+        }
+
+        console.log(user);
+
+        db.insertOne(User, user, function(flag) {
+            res.send(flag);
+        });
     }
 }
 
