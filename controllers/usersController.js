@@ -134,7 +134,7 @@ const usersController = {
 
     getUserInfo: (req , res) => {
         const email = req.query.email;
-        
+        console.log()
         db.findOne(User ,  {email : email}, {} , function(result) {
             res.send(result);
         });
