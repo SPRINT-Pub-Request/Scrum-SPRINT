@@ -145,12 +145,12 @@ const usersController = {
         let inProgress = false;
 
         db.findOne(PubRequest , {pubName : name} , {} , function(result) {
-            if(result) {
+            if(result.status == "In Progress") {
                 inProgress = true; 
                 res.send(inProgress);
             } else {
                 db.findOne(PubRequest , {secName : name} , {} , function(result) {
-                    if(result) {
+                    if(result.status == "In Progress") {
                         inProgress = true;
                         res.send(inProgress);
                     } else 

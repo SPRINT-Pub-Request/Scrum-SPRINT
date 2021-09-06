@@ -69,7 +69,7 @@ const mailController = {
                     });
                 });
             } 
-            else {
+            else if(result.secName != "Not Assigned") {
                 db.findOne(User , {name : result.secName} , {} , function(user) {
 
                     const options = {
