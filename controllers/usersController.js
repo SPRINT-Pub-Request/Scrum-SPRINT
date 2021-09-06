@@ -162,21 +162,32 @@ const usersController = {
     checkInProgress: (req , res) => {
         const name = req.query.name;
         let inProgress = false;
+        
+        try {
 
-        db.findOne(PubRequest , {pubName : name} , {} , function(result) {
-            if(result.status == "In Progress") {
-                inProgress = true; 
-                res.send(inProgress);
-            } else {
-                db.findOne(PubRequest , {secName : name} , {} , function(result) {
-                    if(result.status == "In Progress") {
-                        inProgress = true;
-                        res.send(inProgress);
-                    } else 
-                        res.send(inProgress)
-                });
-            }
-        });
+           if(name != "Not Signed In Yet") {
+               db.findOne(PubRequest , {pubName : name} , {} , function(result) {
+                   if(result.status == "In Progress") {
+                       inProgress = true; 
+                       res.send(inProgress);
+                   } else {
+                       db.findOne(PubRequest , {secName : name} , {} , function(result) {
+                           if(result.status == "In Progress") {
+                               inProgress = true;
+                               res.send(inProgress);
+                           } else 
+                               res.send(inProgress)
+                       });
+                   }
+               });
+           }
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+    
+        
     },
 
 
@@ -185,8 +196,8 @@ const usersController = {
         const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
         let committee = [false , false , false , false , false , false , false , false];
 
-
-        db.findMany(User, {}, {}, function(result){
+        try {
+            db.findMany(User, {}, {}, function(result){
                 for (let i = 0; i < result.length; i++) {
                     for (let j = 0; j < namesCommittee.length; j++) {
                         if(result[i].assigned_committee != "Not Assigned")
@@ -195,8 +206,13 @@ const usersController = {
                     }
                 }
 
-            res.send(committee);
-        })
+                res.send(committee);
+            })
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+        
 
     },
 
