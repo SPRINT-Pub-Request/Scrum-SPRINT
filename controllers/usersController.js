@@ -160,29 +160,33 @@ const usersController = {
     },
 
     checkInProgress: (req , res) => {
-        const name = req.query.name;
-        let inProgress = false;
         
         try {
 
-           if(name != "Not Signed In Yet") {
-               db.findOne(PubRequest , {pubName : name} , {} , function(result) {
-                   if(result.status == "In Progress") {
-                       inProgress = true; 
-                       res.send(inProgress);
-                   } else {
-                       db.findOne(PubRequest , {secName : name} , {} , function(result) {
-                           if(result.status == "In Progress") {
-                               inProgress = true;
-                               res.send(inProgress);
-                           } else 
-                               res.send(inProgress)
-                       });
-                   }
-               });
-           } else {
-               res.send(inProgress);
-           }
+            const name = req.query.name;
+            let inProgress = false;
+
+            if(name !== "Not Signed In Yet") {
+                db.findOne(PubRequest , {pubName : name} , {} , function(result) {
+                    if(result) {
+                        if(result.status === "In Progress") {
+                            inProgress = true; 
+                            res.send(inProgress);
+                        } else {
+                            db.findOne(PubRequest , {secName : name} , {} , function(result) {
+                                if(result.status === "In Progress") {
+                                    inProgress = true;
+                                    res.send(inProgress);
+                                } else 
+                                    res.send(inProgress)
+                            });
+                        }
+                    }
+
+                });
+            } else {
+                res.send(inProgress);
+            }
 
         } catch(err) {
             console.log(err);
