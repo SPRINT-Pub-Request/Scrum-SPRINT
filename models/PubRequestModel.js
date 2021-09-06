@@ -1,6 +1,11 @@
 var mongoose = require('mongoose');
 
 var PubRequestSchema = new mongoose.Schema({
+    request_id: {
+        type : String,
+        required:true
+    },
+
     reqname: {
         type : String,
         required: true

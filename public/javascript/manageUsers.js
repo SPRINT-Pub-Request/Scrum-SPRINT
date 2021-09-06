@@ -59,7 +59,11 @@ $(document).ready(function () {
     });
 
     $('#btnRemoveUser').click(function () {
-        $.get('/deleteUser', {email: emailUser}, function(result){
+        const email = emailUser;
+        $.get('/deleteUser', {email: email}, function(result){
+            if(result)
+                alert("Successfully Removed User");
+                
             location.reload();
         });
     });

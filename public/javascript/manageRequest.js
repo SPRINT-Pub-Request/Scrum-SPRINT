@@ -24,10 +24,10 @@ $(document).ready(function() {
     });
 
     $('#request_data').on('click' , '#btn_delete' , function() {
-        const activity_name = $(this).parent().siblings('.activity_name').text();
+        const request_id = $(this).parent().siblings('.activity_id').text();
         
         $('#btnRemoveRequest').on('click' , function() {
-            $.get('/deleteRequest' , {activity_name : activity_name} , function(result) {
+            $.get('/deleteRequest' , {request_id} , function(result) {
                 if(result) { 
                     alert("Successfully Deleted Request");
                     location.reload();
@@ -47,12 +47,15 @@ $(document).ready(function() {
             pubName : $('#assignPub').val(),
             secName : $('#assignSec').val(),
             caption : $('#caption').val(),
-            activity_name : $('#activity_name').val()
+            request_id: $('.activity_id').text()
         }
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
-                location.reload();
+                $.get('/sendNewAssign', pubChanges , function(result) {
+                    alert(result);
+                    location.reload();
+                });
             }
             else {
                 alert("An Error Occured, Nothing was Updated \nPlease Try again later");
@@ -66,11 +69,11 @@ $(document).ready(function() {
 
     $('#request_data').on('click' , '.edit' , function() {
 
-        const activity_name = $(this).parent().siblings('.activity_name').text();
-        
-        $.get('/getPubRequest' , {activity_name : activity_name} , (result) => {
+        const request_id = $(this).parent().siblings('.activity_id').text();
+    
+        $.get('/getPubRequest' , {request_id}, (result) => {
 
-            
+
             $('#medialink').val(result.pubLink);
             $('#status').val(result.status);
             $('#caption').val(result.caption);
@@ -122,6 +125,7 @@ $(document).ready(function() {
                 committee : result.committee
             } 
 
+            
             $.get('/getAssignedSec' , activity , function(res) {
 
                 for(i = 0; i < res.length; i++) {
@@ -133,7 +137,7 @@ $(document).ready(function() {
                             selected : true
                         }));
                     }
-                    else {
+                    else if(res[i] != "Not Signed In Yet"){
                         $('#assignSec').append($('<option>', {
                             value : res[i],
                             text : res[i],
@@ -144,7 +148,7 @@ $(document).ready(function() {
 
             });
 
-            
+
             $.get('/getAssignedPub' , activity , function(res) {
 
                 for(i = 0; i < res.length; i++)
@@ -156,7 +160,7 @@ $(document).ready(function() {
                             class : "selectedPub"
                         }));
                     }
-                    else {
+                    else if(res[i] != "Not Signed In Yet"){
                         $('#assignPub').append($('<option>', {
                             value : res[i],
                             text : res[i],
@@ -164,6 +168,7 @@ $(document).ready(function() {
                         }));
                     }
             });
+            
 
         });
     });

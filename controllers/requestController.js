@@ -1,4 +1,4 @@
-const { DBRef } = require('mongodb');
+const mongodb = require('mongodb');
 const db = require('../models/db.js')
 const User = require('../models/UserModel.js');
 
@@ -78,7 +78,7 @@ const requestController = {
                     db.findMany(PubRequest , {} , {} , function(result){
                         for (i of result) {
                             let temp_data = {};
-
+                            temp_data["request_id"] = i.request_id;
                             temp_data["reqname"] = i.reqname;
                             temp_data["committee"] = i.committee;
                             temp_data["activity_name"] = i.activity_name;
@@ -170,36 +170,40 @@ const requestController = {
     },
 
     getAssignedPub: (req , res) => {
+    
+        try {
+            db.findMany(User , {} , {} , function(result){
+                pubNames = [];
 
-        db.findMany(User , {} , {} , function(result){
-            pubNames = [];
-
-            const committee  = req.query.committee;
-            
-            arrCommittee = []; 
-
-            for(i of result) {
+                const committee  = req.query.committee;
                 
-                arrCommittee = i.assigned_committee.split(" ");
+                arrCommittee = []; 
 
-                
-                for(j = 0; j < arrCommittee.length; j++) {
-                    if(arrCommittee[j] === committee) 
-                        if(i.role === 'Publicity and Creatives' || i.role === 'Administrator') {
-                            pubNames.push(i.name);
-                            break;
-                        } 
+                for(i of result) {
+                    
+                    arrCommittee = i.assigned_committee.split(" ");
+
+                    
+                    for(j = 0; j < arrCommittee.length; j++) {
+                        if(arrCommittee[j] === committee) 
+                            if(i.role === 'Publicity and Creatives' || i.role === 'Administrator') {
+                                pubNames.push(i.name);
+                                break;
+                            } 
+                    }
+
                 }
 
-            }
+                if(pubNames.length != 0)
+                    res.send(pubNames);
+                else
+                    res.send(false);
 
-            if(pubNames.length != 0)
-                res.send(pubNames);
-            else
-                res.send(false);
-
-        });
-
+            });
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
     },
 
     getAssignedSec: (req , res) => {
@@ -208,9 +212,9 @@ const requestController = {
             
             db.findMany(User, {} , {} , function(result) {
                 secNames = [];
+
                 const committee = req.query.committee;
-                const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
-                
+
                 arrCommittee = []; 
 
                     for(i of result) {
@@ -249,15 +253,15 @@ const requestController = {
                 secName : req.query.secName,
                 caption : req.query.caption,
                 pubLink : req.query.pubLink,
-                activity_name : req.query.activity_name
+                request_id: req.query.request_id
             }
-            
+
             if(newChanges.pubName === null)
                 newChanges.pubName = "Not Assigned";
             else if(newChanges.secName === null)
                 newChanges.secName = "Not Assigned";
 
-            db.updateOne(PubRequest , {activity_name : newChanges.activity_name} , {
+            db.updateOne(PubRequest , {request_id : newChanges.request_id} , {
                 $set : {
                     status: newChanges.status,
                     pubName : newChanges.pubName,
@@ -267,7 +271,7 @@ const requestController = {
                 }
             } , function(result) {
                 if(result) {
-                    res.send(result);
+                    res.send(true);
                 } else {
                     res.send(false);
                 }
@@ -361,9 +365,9 @@ const requestController = {
     }, 
 
     getPubRequest: (req , res) => {
-        const activity_name = req.query.activity_name;
+        const request_id = req.query.request_id;
 
-        db.findOne(PubRequest , {activity_name: activity_name} , {} , function(result) {
+        db.findOne(PubRequest , {request_id : request_id} , {} , function(result) {
             console.log(result)
             res.send(result);
         });
@@ -372,9 +376,9 @@ const requestController = {
     deleteRequest: (req , res) => {
 
         try {
-            const activity_name = req.query.activity_name;
+            const request_id = req.query.request_id;
 
-            db.deleteOne(PubRequest , {activity_name: activity_name}  , function(result) {
+            db.deleteOne(PubRequest , {request_id : request_id}  , function(result) {
                 res.send(result);
             });
         } catch(err) {
@@ -388,79 +392,85 @@ const requestController = {
 
         try {
 
-            const reqname = req.body.reqname;
-            const committee = req.body.committee;
-            const activity_name = req.body.activity_name;
-            const description = req.body.description;
-            const start_date = req.body.start_date;
-            const start_time = req.body.start_time;
-            const end_date = req.body.end_date;
-            const end_time = req.body.end_time;
-            const venue = req.body.venue;
-            const theme = req.body.theme;
-            const posting_date = req.body.posting_date;
-            const posting_time = req.body.posting_time;
-            const postevent = req.body.postevent;
-            const links = req.body.files_url;
-            const details = req.body.details;
-            const comments = req.body.comments;
-            const specialRequest = req.body.specialRequest;
+            db.findMany(PubRequest , {} , {} , function(result) {
+                const reqname = req.body.reqname;
+                const committee = req.body.committee;
+                const activity_name = req.body.activity_name;
+                const description = req.body.description;
+                const start_date = req.body.start_date;
+                const start_time = req.body.start_time;
+                const end_date = req.body.end_date;
+                const end_time = req.body.end_time;
+                const venue = req.body.venue;
+                const theme = req.body.theme;
+                const posting_date = req.body.posting_date;
+                const posting_time = req.body.posting_time;
+                const postevent = req.body.postevent;
+                const links = req.body.files_url;
+                const details = req.body.details;
+                const comments = req.body.comments;
+                const specialRequest = req.body.specialRequest;
+                const request_id = result.length + 1;
 
-            let pubType = req.body.pubType;
-            
-            if(pubType == 'other') {
-                pubType = req.body.Other;
-            }
-            
-            const pubrequest = {
-                reqname, 
-                committee,
-                activity_name,
-                description,
-                start_date,
-                start_time,
-                end_date,
-                end_time,
-                venue,
-                theme,
-                pubType,
-                posting_date,
-                posting_time,
-                postevent,
-                links,
-                details,
-                comments,
-                specialRequest,
-                pubLink: 'N/A',
-                caption: 'N/A',
-                status: 'Not Started',
-                pubName: 'Not Assigned',
-                secName: 'Not Assigned'
-            }
+                let pubType = req.body.pubType;
+                
+                if(pubType == 'other') {
+                    pubType = req.body.Other;
+                }
+                
+                const pubrequest = {
+                    request_id,
+                    reqname, 
+                    committee,
+                    activity_name,
+                    description,
+                    start_date,
+                    start_time,
+                    end_date,
+                    end_time,
+                    venue,
+                    theme,
+                    pubType,
+                    posting_date,
+                    posting_time,
+                    postevent,
+                    links,
+                    details,
+                    comments,
+                    specialRequest,
+                    pubLink: 'N/A',
+                    caption: 'N/A',
+                    status: 'Not Started',
+                    pubName: 'Not Assigned',
+                    secName: 'Not Assigned'
+                }
 
-            console.log("reqname: " + reqname);
-            console.log("committee: " + committee);
-            console.log("activty_name: " + activity_name);
-            console.log("description: " + description);
-            console.log("start_date: " + start_date);
-            console.log("start_time " + start_time);
-            console.log("end_date: " + end_date);
-            console.log("end_time: " + end_time);
-            console.log("venue: " + venue);
-            console.log("theme: " + theme);
-            console.log("posting_date: " + posting_date);
-            console.log("posting_time: " + posting_time);
-            console.log("details: " + details);
-            console.log("comments: " + comments);
-            console.log("specialRequest: " + specialRequest);
-            console.log("Pub Type: " + pubType);
-            console.log("Post Event: " + postevent);
-            
-            db.insertOne(PubRequest, pubrequest, function(flag) {
-                console.log(flag);
-                res.send(flag);
+                console.log("request_id: " + request_id);
+                console.log("reqname: " + reqname);
+                console.log("committee: " + committee);
+                console.log("activty_name: " + activity_name);
+                console.log("description: " + description);
+                console.log("start_date: " + start_date);
+                console.log("start_time " + start_time);
+                console.log("end_date: " + end_date);
+                console.log("end_time: " + end_time);
+                console.log("venue: " + venue);
+                console.log("theme: " + theme);
+                console.log("posting_date: " + posting_date);
+                console.log("posting_time: " + posting_time);
+                console.log("details: " + details);
+                console.log("comments: " + comments);
+                console.log("specialRequest: " + specialRequest);
+                console.log("Pub Type: " + pubType);
+                console.log("Post Event: " + postevent);
+                
+                db.insertOne(PubRequest, pubrequest, function(flag) {
+                    console.log(flag);
+                    res.send(flag);
+                });
             });
-
+                
+            
         } catch(err) {
             console.log(err);
             res.redirect('/');

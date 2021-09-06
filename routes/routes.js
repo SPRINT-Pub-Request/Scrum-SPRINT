@@ -45,5 +45,6 @@ app.get('/view_requests', viewRequestController.getIndex);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);
+app.get('/sendNewAssign' , mailController.sendNewAssign);
 
 module.exports = app;

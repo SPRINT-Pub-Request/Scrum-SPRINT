@@ -57,71 +57,90 @@ const usersController = {
         }
     },
 
-    deleteUser: (req, res) => {        
-        const email = req.query.email;
+    deleteUser: (req, res) => {
+        
+        try {
+            const email = req.query.email;
 
-        let details = {
-            flag : false
+            let details = {
+                flag : false
+            }
+            
+            db.findOne(User ,  {email:email}, {} , function(result) {
+
+                if (req.session.userID == result.userID){
+                    req.session.destroy(err => {
+                        if(err) {
+                            return res.redirect('/');
+                    }});
+                
+                    res.clearCookie(sessionName);
+                    db.deleteOne(User, {email : email}, function(result){
+                        if(result)
+                            details.flag= true;
+                        res.send(details);
+                    });
+                } else {
+                    db.deleteOne(User, {email : email}, function(result){
+                        if(result)
+                            details.flag= true;
+                        res.send(details);
+                    });
+                }
+
+            });
+        } catch(err) {
+            console.log(err);
+            res.redirect('/logout');
         }
         
-        db.findOne(User ,  {email:email}, {} , function(result) {
-
-            if (req.session.userID == result.userID){
-                req.session.destroy(err => {
-                    if(err) {
-                        return res.redirect('/');
-                }});
-            
-                res.clearCookie(sessionName);
-                res.redirect('/');
-            }
-
-            db.deleteOne(User, {email : email}, function(result){
-                if(result)
-                    details.flag= true;
-                res.send(details);
-            });
-        });
     },
 
     updateUser: (req , res) => {
-        let transfer = false;
-        const email = req.query.email;
-        const role = req.query.role;
-        const assigned_committee = req.query.assigned_committee;
 
-        newUser ={
-            email : email,
-            role : role,
-            assigned_committee : assigned_committee
+        try {
+            let transfer = false;
+            const email = req.query.email;
+            const role = req.query.role;
+            const assigned_committee = req.query.assigned_committee;
+
+            newUser ={
+                email : email,
+                role : role,
+                assigned_committee : assigned_committee
+            }
+            
+
+            db.findOne(User, {email : email}, {}, function(result){
+                if (result.userID === req.session.userID){
+                    transfer = true;
+                    console.log("transfer true!");
+                    req.session.role = newUser.role;
+                }
+
+                db.updateOne(User , { email : email } , {
+                    $set : {
+                        role : newUser.role,
+                        assigned_committee : newUser.assigned_committee
+                    }
+                } , function(result) {
+                    if(result) {
+                        if(transfer){
+                            req.session.role = newUser.role;
+                        }
+                        res.send(result);
+                    } else {
+                        res.send(result);
+                    }
+        
+                });
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
         }
         
-
-        db.findOne(User, {email : email}, {}, function(result){
-            if (result.userID === req.session.userID){
-                transfer = true;
-                console.log("transfer true!");
-                req.session.role = newUser.role;
-            }
-
-            db.updateOne(User , { email : email } , {
-                $set : {
-                    role : newUser.role,
-                    assigned_committee : newUser.assigned_committee
-                }
-            } , function(result) {
-                if(result) {
-                    if(transfer){
-                        req.session.role = newUser.role;
-                    }
-                    res.send(result);
-                } else {
-                    res.send(result);
-                }
-    
-            });
-        });
-
     },
 
     getName: (req , res) => {
@@ -141,23 +160,41 @@ const usersController = {
     },
 
     checkInProgress: (req , res) => {
-        const name = req.query.name;
-        let inProgress = false;
+        
+        try {
 
-        db.findOne(PubRequest , {pubName : name} , {} , function(result) {
-            if(result) {
-                inProgress = true; 
-                res.send(inProgress);
-            } else {
-                db.findOne(PubRequest , {secName : name} , {} , function(result) {
-                    if(result) {
-                        inProgress = true;
-                        res.send(inProgress);
+            const name = req.query.name;
+            let inProgress = false;
+
+            if(name !== "Not Signed In Yet") {
+                db.findOne(PubRequest , {pubName : name} , {} , function(result) {
+                    if(result !== null) {
+                        if(result.status === "In Progress") {
+                            inProgress = true; 
+                            res.send(inProgress);
+                        } else {
+                            db.findOne(PubRequest , {secName : name} , {} , function(result) {
+                                if(result.status === "In Progress") {
+                                    inProgress = true;
+                                    res.send(inProgress);
+                                } else 
+                                    res.send(inProgress)
+                            });
+                        }
                     } else 
-                        res.send(inProgress)
+                        res.send(inProgress);
+                        
                 });
+            } else {
+                res.send(inProgress);
             }
-        });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+    
+        
     },
 
 
@@ -166,8 +203,8 @@ const usersController = {
         const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
         let committee = [false , false , false , false , false , false , false , false];
 
-
-        db.findMany(User, {}, {}, function(result){
+        try {
+            db.findMany(User, {}, {}, function(result){
                 for (let i = 0; i < result.length; i++) {
                     for (let j = 0; j < namesCommittee.length; j++) {
                         if(result[i].assigned_committee != "Not Assigned")
@@ -176,15 +213,29 @@ const usersController = {
                     }
                 }
 
-            res.send(committee);
-        })
+                res.send(committee);
+            })
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+        
 
     },
 
     adminsAvailable: (req, res) => {
-        db.findMany(User, {role : "Administrator"}, {}, function(result){   
-            res.send(result);
-        });
+        
+        const email = req.query.email;
+        console.log('Admins Available');
+        try {
+            db.findMany(User, {role : "Administrator"}, {}, function(result){   
+                res.send(result);     
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
     },
 
     addUser : (req, res) => {
