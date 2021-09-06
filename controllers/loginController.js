@@ -72,7 +72,7 @@ const loginController = {
                             name : req.user.displayName,
                             email : req.user.email,
                             committee : "None",
-                            role : "Administrator",
+                            role : "Requester",
                             assigned_committee: ""
                         };
                         
