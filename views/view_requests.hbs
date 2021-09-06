@@ -13,7 +13,7 @@
 </head>
 <body>
     
-    {{> sidebar }}
+    {{> sidebar viewFlag=viewFlag mReqFlag=mReqFlag mUserFlag=mUserFlag}}
 
     <div class="container-start with-sidebar" style="padding-left: 100px; padding-right: 100px; overflow: auto;">
 
@@ -35,16 +35,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{#each request_data}}
                     <tr>
-                        <th scope="row">1</th>
-                        <td>SPRINT General Assembly</td>
-                        <td>09/21/21 8:00PM</td>
-                        <td>Not Started</td>
+                        <th scope="row">id</th>
+                        <td>{{this.activity_name}}</td>
+                        <td>{{this.posting_date}} {{this.posting_time}}</td>
+                        <td>{{this.status}}</td>
                         <td>---</td>
                         <td>---</td>
                     </tr>
-
-                    
+                    {{/each}}    
                 </tbody>
             </table>
         </div>
