@@ -180,6 +180,8 @@ const usersController = {
                        });
                    }
                });
+           } else {
+               res.send(inProgress);
            }
 
         } catch(err) {
@@ -217,8 +219,19 @@ const usersController = {
     },
 
     adminsAvailable: (req, res) => {
+        
         db.findMany(User, {role : "Administrator"}, {}, function(result){   
-            res.send(result);
+            if(result.length === 1) {
+                db.findMany(User , {name : "Not Signed In Yet"} , {} , function(result) {
+                    if(result.length != 0)
+                        res.send(true);
+                    else 
+                        res.send(false)
+                });
+            } else {
+                res.send(false);
+            }
+
         });
     },
 
