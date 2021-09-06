@@ -78,6 +78,12 @@ const usersController = {
                         details.flag= true;
                     res.send(details);
                 });
+            } else {
+                db.deleteOne(User, {email : email}, function(result){
+                    if(result)
+                        details.flag= true;
+                    res.send(details);
+                });
             }
 
         });
