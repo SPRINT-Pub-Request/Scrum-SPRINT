@@ -19,8 +19,44 @@ $(document).ready(function(){
     });
 
     $('#submit').on('click' , function(){
-        // well
-        alert("Successfully Added Request!");
+        
+        if($('#postevent_no').prop('checked')) 
+            post_event = "no";
+        else 
+            post_event = "yes";
+
+        const pubRequest = {
+            reqname : $('#reqname').val(),
+            committee : $('#committee').val(),
+            activity_name : $('#activity_name').val(),
+            description : $('#description').val(),
+            start_date : $('#start_date').val(),
+            start_time : $('#start_time').val().toString(),
+            end_date : $('#end_date').val(),
+            end_time : $('#end_time').val().toString(),
+            venue : $('#venue').val(),
+            theme : $('#theme').val(),
+            pubType : $('.pubType:checked').val(),
+            posting_date : $('#posting_date').val(),
+            posting_time : $('#posting_time').val().toString(),
+            postevent : post_event,
+            links : $('#files_url').val(),
+            details : $('#details').val(),
+            comments : $('#comments').val(),
+            specialRequest : $('#specialRequest').val(),
+            other : $('#type_other_value').val()
+        }
+        
+        $.post('/add_request' , pubRequest , function(result) {
+            if(result) {
+                alert("Successfully Added Request!");
+                location.reload();
+            }
+            else {
+                alert("Request Failed! Try again!");
+                location.reload();
+            }
+        });
     });
 
     function isFilled(){

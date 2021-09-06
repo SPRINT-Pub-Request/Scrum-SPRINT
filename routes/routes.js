@@ -27,6 +27,7 @@ app.get('/getAssignedSec' , requestController.getAssignedSec);
 app.get('/getAssignedPub' , requestController.getAssignedPub);
 app.get('/checkCommittee' , requestController.checkCommittee);
 app.get('/checkRole' , requestController.checkRole);
+app.get('/deleteRequest' , requestController.deleteRequest);
 
 // User Controllers
 app.get('/updateUser' , usersController.updateUser);

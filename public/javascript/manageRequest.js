@@ -23,7 +23,23 @@ $(document).ready(function() {
         $('#assignSec').prop('disabled', false);
     });
 
-    $('#btn-save').on('click' , function(){
+    $('#request_data').on('click' , '#btn_delete' , function() {
+        const activity_name = $(this).parent().siblings('.activity_name').text();
+        
+        $('#btnRemoveRequest').on('click' , function() {
+            $.get('/deleteRequest' , {activity_name : activity_name} , function(result) {
+                if(result) { 
+                    alert("Successfully Deleted Request");
+                    location.reload();
+                } else 
+                    alert("An Error Occured, Please Try deleting again later");
+                    location.reload();
+            });
+        
+        });
+    });
+
+    $('#btn-save').on('click' , function() {
         
         const pubChanges = {
             pubLink : $('#medialink').val(),
@@ -33,8 +49,6 @@ $(document).ready(function() {
             caption : $('#caption').val(),
             activity_name : $('#activity_name').val()
         }
-        
-       
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {

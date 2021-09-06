@@ -21,7 +21,7 @@
     <div class="container-content">
 
         <div class="container-form">
-            <form class="form-group" id = "f1" method = "post" action = "/add_request">
+            
                 
                 <h3>Requester's Information</h3>
                 <div class="row form-row">
@@ -140,7 +140,7 @@
                 <div class="row form-row">
                     <div class="col" id="postevent_form">
                         Will you be posting a post-event post (for post-event caption) <span class="asterisk">*</span>
-                        <div class="btn-group" role="group">
+                        <div class="btn-group" role="group" id = "posteventGroup">
                             <input type="radio" class="btn-check postevent" name="postevent" value="no" id="postevent_no" autocomplete="off" checked>
                             <label class="btn btn-outline-dark" for="postevent_no">No</label>
 
@@ -182,7 +182,7 @@
                 <p id = "errorTime"></p>
                 <p id = "radioerror"></p>
 
-            </form>
+
         </div>
         
     </div>
