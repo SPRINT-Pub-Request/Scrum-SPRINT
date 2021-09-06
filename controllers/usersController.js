@@ -220,19 +220,27 @@ const usersController = {
 
     adminsAvailable: (req, res) => {
         
-        db.findMany(User, {role : "Administrator"}, {}, function(result){   
-            if(result.length === 1) {
-                db.findMany(User , {name : "Not Signed In Yet"} , {} , function(result) {
-                    if(result.length != 0)
-                        res.send(true);
-                    else 
-                        res.send(false)
-                });
-            } else {
-                res.send(false);
-            }
+        const email = req.query.email;
+        
+        try {
+            db.findMany(User, {role : "Administrator"}, {}, function(result){   
+                if(result.length === 1) {
+                    db.findOne(User , {email : email} , {} , function(result) {
+                        if(result.role !== "Administrator")
+                            res.send(false);
+                        else
+                            res.send(true)
+                    });
+                } else {
+                    res.send(false);
+                }
+                
+            });
 
-        });
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
     },
 
     addUser : (req, res) => {
