@@ -57,76 +57,90 @@ const usersController = {
         }
     },
 
-    deleteUser: (req, res) => {        
-        const email = req.query.email;
+    deleteUser: (req, res) => {
+        
+        try {
+            const email = req.query.email;
 
-        let details = {
-            flag : false
+            let details = {
+                flag : false
+            }
+            
+            db.findOne(User ,  {email:email}, {} , function(result) {
+
+                if (req.session.userID == result.userID){
+                    req.session.destroy(err => {
+                        if(err) {
+                            return res.redirect('/');
+                    }});
+                
+                    res.clearCookie(sessionName);
+                    db.deleteOne(User, {email : email}, function(result){
+                        if(result)
+                            details.flag= true;
+                        res.send(details);
+                    });
+                } else {
+                    db.deleteOne(User, {email : email}, function(result){
+                        if(result)
+                            details.flag= true;
+                        res.send(details);
+                    });
+                }
+
+            });
+        } catch(err) {
+            console.log(err);
+            res.redirect('/logout');
         }
         
-        db.findOne(User ,  {email:email}, {} , function(result) {
-
-            if (req.session.userID == result.userID){
-                req.session.destroy(err => {
-                    if(err) {
-                        return res.redirect('/');
-                }});
-            
-                res.clearCookie(sessionName);
-                db.deleteOne(User, {email : email}, function(result){
-                    if(result)
-                        details.flag= true;
-                    res.send(details);
-                });
-            } else {
-                db.deleteOne(User, {email : email}, function(result){
-                    if(result)
-                        details.flag= true;
-                    res.send(details);
-                });
-            }
-
-        });
     },
 
     updateUser: (req , res) => {
-        let transfer = false;
-        const email = req.query.email;
-        const role = req.query.role;
-        const assigned_committee = req.query.assigned_committee;
 
-        newUser ={
-            email : email,
-            role : role,
-            assigned_committee : assigned_committee
+        try {
+            let transfer = false;
+            const email = req.query.email;
+            const role = req.query.role;
+            const assigned_committee = req.query.assigned_committee;
+
+            newUser ={
+                email : email,
+                role : role,
+                assigned_committee : assigned_committee
+            }
+            
+
+            db.findOne(User, {email : email}, {}, function(result){
+                if (result.userID === req.session.userID){
+                    transfer = true;
+                    console.log("transfer true!");
+                    req.session.role = newUser.role;
+                }
+
+                db.updateOne(User , { email : email } , {
+                    $set : {
+                        role : newUser.role,
+                        assigned_committee : newUser.assigned_committee
+                    }
+                } , function(result) {
+                    if(result) {
+                        if(transfer){
+                            req.session.role = newUser.role;
+                        }
+                        res.send(result);
+                    } else {
+                        res.send(result);
+                    }
+        
+                });
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
         }
         
-
-        db.findOne(User, {email : email}, {}, function(result){
-            if (result.userID === req.session.userID){
-                transfer = true;
-                console.log("transfer true!");
-                req.session.role = newUser.role;
-            }
-
-            db.updateOne(User , { email : email } , {
-                $set : {
-                    role : newUser.role,
-                    assigned_committee : newUser.assigned_committee
-                }
-            } , function(result) {
-                if(result) {
-                    if(transfer){
-                        req.session.role = newUser.role;
-                    }
-                    res.send(result);
-                } else {
-                    res.send(result);
-                }
-    
-            });
-        });
-
     },
 
     getName: (req , res) => {
