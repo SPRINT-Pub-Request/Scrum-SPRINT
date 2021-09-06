@@ -45,7 +45,54 @@ const mailController = {
 
     sendNewAssign: (req , res) => {
         
-        // Will be used in future US
+        const request_id = req.query.request_id;
+
+        db.findOne(PubRequest , {request_id : request_id} , {} , function(result) {
+            if(result.pubName != "Not Assigned") {
+                db.findOne(User , {name : result.pubName} , {} , function(user) {
+
+                    const options = {
+                        from : process.env.MAIL_AUTHEMAIL,
+                        to : user.email,
+                        subject : "Request Changes",
+                        text : "Good day " + user.name + "!\nThis is to notify you that you might have been assigned to a request or there are changes to the request \n\nActivity Name: " + result.activity_name + "\nStatus : "  + result.status +  "\nAssigned Pubs: " + result.pubName + "\nAssigned Secretariat: " + result.secName + "\nCaption: " + result.caption + "\npubLink : " + result.pubLink 
+                    }
+
+                    transporter.sendMail(options, (err , info) => {
+                        if(err) {
+                            console.log(err);
+                            res.send('Fail to Notify User! Please Refresh and Try again');
+                        }
+                        
+                        console.log("Server has sent mail, Info: " + info.response);
+                        res.send('Successfully Assigned and Notified User!');
+                    });
+                });
+            } 
+            else {
+                db.findOne(User , {name : result.secName} , {} , function(user) {
+
+                    const options = {
+                        from : process.env.MAIL_AUTHEMAIL,
+                        to : user.email,
+                        subject : "Request Changes",
+                        text : "Good day " + user.name + "!\nThis is to notify you that you might have been assigned to a request or there are changes to the request \n\nActivity Name: " + result.activity_name + "\nStatus : "  + result.status +  "\nAssigned Pubs: " + result.pubName + "\nAssigned Secretariat: " + result.secName + "\nCaption: " + result.caption + "\npubLink : " + result.pubLink 
+                    }
+
+                    transporter.sendMail(options, (err , info) => {
+                        if(err) {
+                            console.log(err);
+                            res.send('Fail to Notify User! Please Refresh and Try again');
+                        }
+                        
+                        console.log("Server has sent mail, Info: " + info.response);
+                        res.send('Successfully Assigned and Notified User!');
+                    });
+                });
+            }
+
+
+        });
     }
 
 

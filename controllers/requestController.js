@@ -170,36 +170,40 @@ const requestController = {
     },
 
     getAssignedPub: (req , res) => {
+    
+        try {
+            db.findMany(User , {} , {} , function(result){
+                pubNames = [];
 
-        db.findMany(User , {} , {} , function(result){
-            pubNames = [];
-
-            const committee  = req.query.committee;
-            
-            arrCommittee = []; 
-
-            for(i of result) {
+                const committee  = req.query.committee;
                 
-                arrCommittee = i.assigned_committee.split(" ");
+                arrCommittee = []; 
 
-                
-                for(j = 0; j < arrCommittee.length; j++) {
-                    if(arrCommittee[j] === committee) 
-                        if(i.role === 'Publicity and Creatives' || i.role === 'Administrator') {
-                            pubNames.push(i.name);
-                            break;
-                        } 
+                for(i of result) {
+                    
+                    arrCommittee = i.assigned_committee.split(" ");
+
+                    
+                    for(j = 0; j < arrCommittee.length; j++) {
+                        if(arrCommittee[j] === committee) 
+                            if(i.role === 'Publicity and Creatives' || i.role === 'Administrator') {
+                                pubNames.push(i.name);
+                                break;
+                            } 
+                    }
+
                 }
 
-            }
+                if(pubNames.length != 0)
+                    res.send(pubNames);
+                else
+                    res.send(false);
 
-            if(pubNames.length != 0)
-                res.send(pubNames);
-            else
-                res.send(false);
-
-        });
-
+            });
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
     },
 
     getAssignedSec: (req , res) => {
@@ -208,9 +212,9 @@ const requestController = {
             
             db.findMany(User, {} , {} , function(result) {
                 secNames = [];
+
                 const committee = req.query.committee;
-                const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
-                
+
                 arrCommittee = []; 
 
                     for(i of result) {
@@ -249,15 +253,15 @@ const requestController = {
                 secName : req.query.secName,
                 caption : req.query.caption,
                 pubLink : req.query.pubLink,
-                activity_name : req.query.activity_name
+                request_id: req.query.request_id
             }
-            
+
             if(newChanges.pubName === null)
                 newChanges.pubName = "Not Assigned";
             else if(newChanges.secName === null)
                 newChanges.secName = "Not Assigned";
 
-            db.updateOne(PubRequest , {activity_name : newChanges.activity_name} , {
+            db.updateOne(PubRequest , {request_id : newChanges.request_id} , {
                 $set : {
                     status: newChanges.status,
                     pubName : newChanges.pubName,

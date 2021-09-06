@@ -47,12 +47,15 @@ $(document).ready(function() {
             pubName : $('#assignPub').val(),
             secName : $('#assignSec').val(),
             caption : $('#caption').val(),
-            activity_name : $('#activity_name').val()
+            request_id: $('.activity_id').text()
         }
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
-                location.reload();
+                $.get('/sendNewAssign', pubChanges , function(result) {
+                    alert(result);
+                    location.reload();
+                });
             }
             else {
                 alert("An Error Occured, Nothing was Updated \nPlease Try again later");
@@ -67,7 +70,7 @@ $(document).ready(function() {
     $('#request_data').on('click' , '.edit' , function() {
 
         const request_id = $(this).parent().siblings('.activity_id').text();
-        
+    
         $.get('/getPubRequest' , {request_id}, (result) => {
 
 
