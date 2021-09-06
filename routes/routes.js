@@ -6,6 +6,7 @@ const loginController = require('../controllers/loginController.js');
 const usersController = require('../controllers/usersController.js');
 const passportSetup = require('../controllers/passportSetup.js');
 const mailController = require('../controllers/mailController.js');
+const viewRequestController = require('../controllers/viewRequestController.js');
 
 const app = express();
 
@@ -20,7 +21,6 @@ app.get('/failed' , loginController.loginFailed);
 app.post('/add_request', requestController.postRequest);
 app.get('/add_request' ,  requestController.getIndex)
 app.get('/manage_requests' ,  requestController.getManageReq);
-app.get('/view_requests' ,  requestController.getViewReq);
 app.get('/getPubRequest' , requestController.getPubRequest);
 app.get('/savePubChanges' , requestController.savePubChanges);
 app.get('/getAssignedSec' , requestController.getAssignedSec);
@@ -39,6 +39,9 @@ app.get('/getName', usersController.getName);
 app.get('/getNoAssigned' , usersController.getNoAssigned);
 app.get('/checkInProgress' , usersController.checkInProgress);
 app.get('/addUser', usersController.addUser);
+
+//View Request Controllers
+app.get('/view_requests', viewRequestController.getIndex);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);
