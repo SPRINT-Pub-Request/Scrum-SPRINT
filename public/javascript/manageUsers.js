@@ -54,6 +54,9 @@ $(document).ready(function () {
     $('#btnRemoveUser').click(function () {
         const email = emailUser;
         $.get('/deleteUser', {email: email}, function(result){
+            if(result)
+                alert("Successfully Removed User");
+                
             location.reload();
         });
     });

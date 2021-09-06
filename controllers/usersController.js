@@ -73,14 +73,13 @@ const usersController = {
                 }});
             
                 res.clearCookie(sessionName);
-                res.redirect('/');
+                db.deleteOne(User, {email : email}, function(result){
+                    if(result)
+                        details.flag= true;
+                    res.send(details);
+                });
             }
 
-            db.deleteOne(User, {email : email}, function(result){
-                if(result)
-                    details.flag= true;
-                res.send(details);
-            });
         });
     },
 
