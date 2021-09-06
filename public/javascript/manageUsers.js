@@ -23,8 +23,9 @@ $(document).ready(function () {
 
     $('#users_data').on('click', '.delete', function () {
 
-        const email = $(this).parent().siblings('.emailInfo').text();
-        emailUser = email
+        emailUser = $(this).parent().siblings('.emailInfo').text();
+
+        const role = $(this).parent().siblings('.roleInfo').text();
 
         const user = {
             name : $(this).parent().siblings('.nameInfo').text()
@@ -32,15 +33,21 @@ $(document).ready(function () {
 
         $.get('/checkInProgress' , user , function(result) {
             if(result == false) {
-                $.get('/checkAdmins', {}, function(result) {
-                    if (result.length == 1){
-                        $("#removeuserModal").modal('hide');
-                        alert('Only 1 Admin Left! Assign someone as Admin');
-                    }
-                    else {
-                        $("#removeuserModal").modal('show');
-                    }
-                });
+
+                if(role === 'Administrator'){
+                    $.get('/checkAdmins', {email: emailUser}, function(result) {
+                        if (result.length == 1){
+                            $("#removeuserModal").modal('hide');
+                            alert('Only 1 Admin Left! Assign someone as Admin');
+                        }
+                        else {
+                            $("#removeuserModal").modal('show');
+                        }
+                    });
+                }
+                else{
+                    $("#removeuserModal").modal('show');
+                }
             }
             else {
                 $("#removeuserModal").modal('hide');
@@ -52,8 +59,7 @@ $(document).ready(function () {
     });
 
     $('#btnRemoveUser').click(function () {
-        const email = emailUser;
-        $.get('/deleteUser', {email: email}, function(result){
+        $.get('/deleteUser', {email: emailUser}, function(result){
             location.reload();
         });
     });
@@ -257,8 +263,15 @@ $(document).ready(function () {
         const email = value.split("@");
 
         //TODO: check if email is valid dlsu email
-        if(email[1] === "dlsu.edu.ph"){
-            $('#add_user').prop('disabled', false);
+        if(email[1] === "dlsu.edu.ph" && email[0].trim() !== ""){
+            $.get('/getUser', {email : value}, function(result){
+                if(result) {
+                    $('#add_user').prop('disabled', true);
+                }
+                else{
+                    $('#add_user').prop('disabled', false);
+                }
+             });
         }
 
         else {

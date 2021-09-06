@@ -188,21 +188,31 @@ const usersController = {
     },
 
     addUser : (req, res) => {
-        email = req.query.email;
-        role = req.query.role;
 
-        user = {
-            userID : "",
-            name : "Not Signed In Yet",
-            email : email,
-            role : role,
-            assigned_committee: ""
-        }
 
-        console.log(user);
+        const email = req.query.email;
+        const role = req.query.role;
 
-        db.insertOne(User, user, function(flag) {
-            res.send(flag);
+        db.findOne(User ,  {email : email}, {} , function(result) {
+            if(result){
+                console.log('User exists');
+                res.send(null)
+            }
+            else{
+                user = {
+                    userID : "",
+                    name : "Not Signed In Yet",
+                    email : email,
+                    role : role,
+                    assigned_committee: ""
+                }
+        
+                console.log(user);
+        
+                db.insertOne(User, user, function(flag) {
+                    res.send(flag);
+                });
+            }
         });
     }
 }
