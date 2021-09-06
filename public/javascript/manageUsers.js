@@ -33,7 +33,6 @@ $(document).ready(function () {
         $.get('/checkInProgress' , user , function(result) {
             if(result == false) {
                 $.get('/checkAdmins', {}, function(res) {
-                    alert(res);
                     if (res == false){
                         $("#removeuserModal").modal('hide');
                         alert('Only 1 Admin Left! Assign someone as Admin');
