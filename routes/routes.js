@@ -42,5 +42,6 @@ app.get('/addUser', usersController.addUser);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);
+app.get('/sendNewAssign' , mailController.sendNewAssign);
 
 module.exports = app;

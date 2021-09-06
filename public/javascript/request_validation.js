@@ -47,6 +47,7 @@ $(document).ready(function(){
             other : $('#type_other_value').val()
         }
         
+        
         $.post('/add_request' , pubRequest , function(result) {
             if(result) {
                 alert("Successfully Added Request!");
@@ -57,6 +58,8 @@ $(document).ready(function(){
                 location.reload();
             }
         });
+
+
     });
 
     function isFilled(){
