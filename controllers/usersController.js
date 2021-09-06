@@ -168,7 +168,7 @@ const usersController = {
 
             if(name !== "Not Signed In Yet") {
                 db.findOne(PubRequest , {pubName : name} , {} , function(result) {
-                    if(result) {
+                    if(result !== null) {
                         if(result.status === "In Progress") {
                             inProgress = true; 
                             res.send(inProgress);
@@ -181,8 +181,9 @@ const usersController = {
                                     res.send(inProgress)
                             });
                         }
-                    }
-
+                    } else 
+                        res.send(inProgress);
+                        
                 });
             } else {
                 res.send(inProgress);

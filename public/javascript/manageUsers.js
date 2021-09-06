@@ -32,8 +32,8 @@ $(document).ready(function () {
 
         $.get('/checkInProgress' , user , function(result) {
             if(result == false) {
-                $.get('/checkAdmins', { email }, function(res) {
-                    if (res){
+                $.get('/checkAdmins',{ email }, function(res) {
+                    if (res.length == 1){
                         $("#removeuserModal").modal('hide');
                         alert('Only 1 Admin Left! Assign someone as Admin');
                     }
