@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var SettingsSchema = new mongoose.Schema({
 
     id_given: {
-        type : Number ,
+        type : String ,
         required:true
     }
 

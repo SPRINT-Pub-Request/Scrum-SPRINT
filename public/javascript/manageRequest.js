@@ -35,7 +35,7 @@ $(document).ready(function() {
                     alert("An Error Occured, Please Try deleting again later");
                     location.reload();
             });
-        
+                    
         });
     });
 
@@ -47,13 +47,16 @@ $(document).ready(function() {
             pubName : $('#assignPub').val(),
             secName : $('#assignSec').val(),
             caption : $('#caption').val(),
-            request_id: $('.activity_id').text()
+            request_id: $('#req_id').val()
         }
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
                 $.get('/sendNewAssign', pubChanges , function(result) {
-                    alert(result);
+                    if(result == false)
+                        alert("Successfully Updated Changes!")
+                    else
+                        alert(result);
                     location.reload();
                 });
             }
@@ -80,6 +83,7 @@ $(document).ready(function() {
             $('#assignPub').val(result.pubName);
             $('#assignSec').val(result.secName);
 
+            $('#req_id').val(result.request_id);
             $('#reqname').val(result.reqname);
             $('#committee').val(result.committee);
             $('#activity_name').val(result.activity_name);

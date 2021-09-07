@@ -253,9 +253,9 @@ const requestController = {
                 secName : req.query.secName,
                 caption : req.query.caption,
                 pubLink : req.query.pubLink,
-                request_id: req.query.request_id
+                request_id: req.query.request_id.toString()
             }
-
+            
             if(newChanges.pubName === null)
                 newChanges.pubName = "Not Assigned";
             else if(newChanges.secName === null)
@@ -410,11 +410,11 @@ const requestController = {
                 const details = req.body.details;
                 const comments = req.body.comments;
                 const specialRequest = req.body.specialRequest;
-                const request_id = (result.id_given + 1).toString();
+                const request_id = (parseInt(result.id_given) + 1).toString();
                 
                 db.updateOne(Settings , {} , {
                     $set : {
-                        id_given : request_id 
+                        id_given : request_id
                     }
                 } , function(result) {});
                 

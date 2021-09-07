@@ -50,13 +50,13 @@ const mailController = {
     sendNewAssign: (req , res) => {
         
         try {
-            const request_id = req.query.request_id;
-
+            const request_id = req.query.request_id.toString();
+            console.log(request_id);
             db.findOne(PubRequest , {request_id : request_id} , {} , function(result) {
                 if(result !== null) {
                     if(result.pubName !== "Not Assigned") {
                         db.findOne(User , {name : result.pubName} , {} , function(user) {
-
+                            
                             const options = {
                                 from : process.env.MAIL_AUTHEMAIL,
                                 to : user.email,
@@ -75,7 +75,7 @@ const mailController = {
                             });
                         });
                     } 
-                    else if(result.secName != "Not Assigned") {
+                    else if(result.secName !== "Not Assigned") {
                         db.findOne(User , {name : result.secName} , {} , function(user) {
 
                             const options = {
@@ -95,7 +95,9 @@ const mailController = {
                                 res.send('Successfully Assigned and Notified User!');
                             });
                         });
-                    }
+                    } else 
+                        res.send(false);
+                    
                 } else 
                     res.send('Fail to Notify User! Please Refresh and Try again');
 
