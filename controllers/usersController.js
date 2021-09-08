@@ -164,29 +164,30 @@ const usersController = {
         try {
 
             const name = req.query.name;
-            let inProgress = false;
 
             if(name !== "Not Signed In Yet") {
                 db.findOne(PubRequest , {pubName : name} , {} , function(result) {
                     if(result !== null) {
                         if(result.status === "In Progress") {
-                            inProgress = true; 
-                            res.send(inProgress);
+                            res.send(true);
                         } else {
-                            db.findOne(PubRequest , {secName : name} , {} , function(result) {
-                                if(result.status === "In Progress") {
-                                    inProgress = true;
-                                    res.send(inProgress);
+                            db.findOne(PubRequest , {secName : name} , {} , function(flag) {
+                                if(flag !== null) {
+                                    if(flag.status === "In Progress") {
+                                        res.send(true);
+                                    } else {
+                                        res.send(false);
+                                    }
                                 } else 
-                                    res.send(inProgress)
+                                    res.send(false);
                             });
                         }
                     } else 
-                        res.send(inProgress);
+                        res.send(false);
                         
                 });
             } else {
-                res.send(inProgress);
+                res.send(false);
             }
 
         } catch(err) {
