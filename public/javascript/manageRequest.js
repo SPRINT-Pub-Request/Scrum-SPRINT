@@ -1,4 +1,11 @@
 $(document).ready(function() {
+    
+    $.get('/getRole' , {} , function(result) {
+        if(result === "Secretariat") 
+            $('.bi-trash-fill').remove();
+    });
+
+
     let Modal = document.getElementById('requestdetailsModal');
     
     Modal.addEventListener('show.bs.modal' , function(event){

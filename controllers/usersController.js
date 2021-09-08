@@ -227,9 +227,9 @@ const usersController = {
     adminsAvailable: (req, res) => {
         
         const email = req.query.email;
-        console.log('Admins Available');
         try {
-            db.findMany(User, {role : "Administrator"}, {}, function(result){   
+            db.findMany(User, {role : "Administrator"}, {}, function(result) {   
+                console.log('Admins Available');
                 res.send(result);     
             });
 
@@ -237,6 +237,22 @@ const usersController = {
             console.log(err);
             res.redirect('/');
         }
+    },
+
+    getRole: (req , res) => {
+
+        const userID = req.session.userID;
+
+        try {
+            db.findOne(User , {userID : userID} , {} , function(result) {
+                res.send(result.role);
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+
     },
 
     addUser : (req, res) => {
