@@ -164,29 +164,30 @@ const usersController = {
         try {
 
             const name = req.query.name;
-            let inProgress = false;
 
             if(name !== "Not Signed In Yet") {
-                db.findOne(PubRequest , {pubName : name} , {} , function(result) {
+                db.findOne(PubRequest , {pubName : name , status : "In Progress"} , {} , function(result) {
                     if(result !== null) {
                         if(result.status === "In Progress") {
-                            inProgress = true; 
-                            res.send(inProgress);
+                            res.send(true);
                         } else {
-                            db.findOne(PubRequest , {secName : name} , {} , function(result) {
-                                if(result.status === "In Progress") {
-                                    inProgress = true;
-                                    res.send(inProgress);
+                            db.findOne(PubRequest , {secName : name , status : "In Progress"} , {} , function(flag) {
+                                if(flag !== null) {
+                                    if(flag.status === "In Progress") {
+                                        res.send(true);
+                                    } else {
+                                        res.send(false);
+                                    }
                                 } else 
-                                    res.send(inProgress)
+                                    res.send(false);
                             });
                         }
                     } else 
-                        res.send(inProgress);
+                        res.send(false);
                         
                 });
             } else {
-                res.send(inProgress);
+                res.send(false);
             }
 
         } catch(err) {
@@ -226,9 +227,9 @@ const usersController = {
     adminsAvailable: (req, res) => {
         
         const email = req.query.email;
-        console.log('Admins Available');
         try {
-            db.findMany(User, {role : "Administrator"}, {}, function(result){   
+            db.findMany(User, {role : "Administrator"}, {}, function(result) {   
+                console.log('Admins Available');
                 res.send(result);     
             });
 
@@ -236,6 +237,22 @@ const usersController = {
             console.log(err);
             res.redirect('/');
         }
+    },
+
+    getRole: (req , res) => {
+
+        const userID = req.session.userID;
+
+        try {
+            db.findOne(User , {userID : userID} , {} , function(result) {
+                res.send(result.role);
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+
     },
 
     addUser : (req, res) => {

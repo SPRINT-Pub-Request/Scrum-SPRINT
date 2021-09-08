@@ -32,9 +32,9 @@ $(document).ready(function () {
         } 
 
         $.get('/checkInProgress' , user , function(result) {
-            if(result == false) {
+            if(result === false) {
 
-                if(role === 'Administrator'){
+                if(role === 'Administrator'){   
                     $.get('/checkAdmins', {email: emailUser}, function(result) {
                         if (result.length == 1){
                             $("#removeuserModal").modal('hide');

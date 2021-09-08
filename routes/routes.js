@@ -39,6 +39,7 @@ app.get('/getName', usersController.getName);
 app.get('/getNoAssigned' , usersController.getNoAssigned);
 app.get('/checkInProgress' , usersController.checkInProgress);
 app.get('/addUser', usersController.addUser);
+app.get('/getRole' , usersController.getRole);
 
 //View Request Controllers
 app.get('/view_requests', viewRequestController.getIndex);

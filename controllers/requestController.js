@@ -1,7 +1,7 @@
 const mongodb = require('mongodb');
 const db = require('../models/db.js')
 const User = require('../models/UserModel.js');
-
+const Settings = require('../models/Settings.js');
 const PubRequest = require('../models/PubRequestModel.js');
 
 const requestController = {
@@ -253,9 +253,9 @@ const requestController = {
                 secName : req.query.secName,
                 caption : req.query.caption,
                 pubLink : req.query.pubLink,
-                request_id: req.query.request_id
+                request_id: req.query.request_id.toString()
             }
-
+            
             if(newChanges.pubName === null)
                 newChanges.pubName = "Not Assigned";
             else if(newChanges.secName === null)
@@ -392,7 +392,7 @@ const requestController = {
 
         try {
 
-            db.findMany(PubRequest , {} , {} , function(result) {
+            db.findOne(Settings , {} , {} , function(result) {
                 const reqname = req.body.reqname;
                 const committee = req.body.committee;
                 const activity_name = req.body.activity_name;
@@ -410,8 +410,14 @@ const requestController = {
                 const details = req.body.details;
                 const comments = req.body.comments;
                 const specialRequest = req.body.specialRequest;
-                const request_id = result.length + 1;
-
+                const request_id = (parseInt(result.id_given) + 1).toString();
+                
+                db.updateOne(Settings , {} , {
+                    $set : {
+                        id_given : request_id
+                    }
+                } , function(result) {});
+                
                 let pubType = req.body.pubType;
                 
                 if(pubType == 'other') {
