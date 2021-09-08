@@ -166,12 +166,12 @@ const usersController = {
             const name = req.query.name;
 
             if(name !== "Not Signed In Yet") {
-                db.findOne(PubRequest , {pubName : name} , {} , function(result) {
+                db.findOne(PubRequest , {pubName : name , status : "In Progress"} , {} , function(result) {
                     if(result !== null) {
                         if(result.status === "In Progress") {
                             res.send(true);
                         } else {
-                            db.findOne(PubRequest , {secName : name} , {} , function(flag) {
+                            db.findOne(PubRequest , {secName : name , status : "In Progress"} , {} , function(flag) {
                                 if(flag !== null) {
                                     if(flag.status === "In Progress") {
                                         res.send(true);
