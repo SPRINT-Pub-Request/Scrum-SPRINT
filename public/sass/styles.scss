@@ -50,9 +50,36 @@ $dark: #1D1A1A;
     }
 }
 
+@include media-breakpoint-down(lg) {
+    .container-table.container-requests{
+        padding-left: 4px !important; 
+        padding-right:4px !important; 
+    }
+
+    .request-header{
+        justify-content: space-between;
+    }
+
+    .activity-header {
+        order: 3 !important;
+        min-width: 100%;
+    }
+    .request.btn-expand-info {
+        order: 2 !important;
+    }
+}
+
 @include media-breakpoint-down(md) {
     .h2,h3,h4 {
         font-size: small;
+    }
+
+    .request-field-content{
+        flex: revert !important;
+    }
+
+    .caption-cut{
+        max-width: 40ch !important;
     }
 
     .sidebar-logo,.btn-icon-text{
@@ -69,6 +96,27 @@ $dark: #1D1A1A;
 }
 
 @include media-breakpoint-down(sm){
+    .request-item, .request.status-select, .request.btn-expand-info{
+        font-size: smaller !important;
+    }
+    
+    .request-row{
+        font-size: 12px !important;
+    }
+
+    .activity-name{
+        font-size: 14px !important;
+    }
+
+    .request-field-label{
+        max-width: 90px !important;
+        min-width: 60px !important;
+    }
+
+    .caption-cut{
+        max-width: 25ch !important;
+    }
+
     .container-sidebar{
         max-width: 8%;
     }
@@ -101,7 +149,7 @@ html, body{
     height: 100%;
 }
 
-h1,h2{
+h1,h2,h5{
     font-family: NexaBold;
 }
 
@@ -140,10 +188,6 @@ body{
 
 select.error > option{
     background-color: #f3f3f3;
-}
-
-.bordered{
-    border: 2px solid #00ff6a;
 }
 
 .container-primary{
@@ -287,16 +331,16 @@ td > .btn-icon{
 }
 
 
-.form-select#status option.not_started{
-    background-color: #e96363;
+.form-select#status option.not_started, .request#status option.not_started{
+    background-color: #c94628;
 }
 
-.form-select#status option.in_progress{
-    background-color: #eeb740;
+.form-select#status option.in_progress, .request#status option.in_progress{
+    background-color: #dd975e;
 }
 
-.form-select#status option.finished{
-    background-color: #a5eb64;
+.form-select#status option.finished, .request#status option.finished{
+    background-color: #509375;
 }
 
 //-------tables
@@ -407,10 +451,97 @@ button.edit{
     border-radius: 5px;
 }
 
+//VIEW REQUESTS
+.request-item{
+    background-color: #fde5c1; 
+    border: solid 2px #5a3535; 
+    border-radius: 4px; 
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+.request-header{
+    align-items: flex-start; 
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.request-row{
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.request-row.darkened{
+    margin-left: -8px; 
+    margin-right: -8px; 
+    padding-left: 8px; 
+    padding-right: 8px; 
+    background-color: #f0d5ad;
+}
+
+.request-field-label{
+    width: 120px;
+    font-family: OpenSans-Bold;
+    display: inline-block;
+}
+
+.request-field-content{
+    flex: 1;
+    display: inline-block;
+}
+
+.activity-name{
+    font-family: OpenSans-Bold;
+    font-size: 18px;
+    margin-right: 8px;
+}
+
+.request#status{
+    margin-right: 8px; 
+    font-size: 14px; 
+    order: 1;
+}
+
+.btn-edit, .btn-expand-info > button{
+    background-color: transparent; 
+    border: transparent;
+}
+
+.btn-expand-info{
+    order: 3; 
+    height: 25px;
+    font-size: 14px;
+}
+
+.expand-icon::before{
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.caption-cut{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85ch;
+}
+
+hr.request{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .img_btnicon{
     width: 20px;
     height: 20px;
     margin-bottom: 2px;
+}
+
+.hidden{
+    display: none;
 }
 
 .h-spacer20{
@@ -428,4 +559,8 @@ hr {
     border-top: 1px solid rgb(44, 44, 44);
     margin: 1em 0;
     padding: 0;
+}
+
+.bordered{
+    border: 2px solid #00ff6a;
 }
