@@ -68,43 +68,43 @@ $(document).ready(function () {
         });
     });
 
-    $('#btn-edit').click(function(){
+    // $('#btn-edit').click(function(){
         
-        const email = $("#userEmail").text();
+    //     const email = $("#userEmail").text();
 
-        $.get('/getUser', {email: email}, function(result){
-           if(result.role != "Requester") {
-               $('#committee').prop('disabled', false);
-               $('#Activities').prop('disabled', false);
-               $('#Finance').prop('disabled', false);
-               $('#HRD').prop('disabled', false);
-               $('#Externals').prop('disabled', false);
-               $('#TND').prop('disabled', false);
-               $('#P-EVP').prop('disabled', false);
-               $('#Secretariat').prop('disabled', false);
-               $('#SocioCivic').prop('disabled', false);
-           }
-        });
+    //     $.get('/getUser', {email: email}, function(result){
+    //        if(result.role != "Requester") {
+    //            $('#committee').prop('disabled', false);
+    //            $('#Activities').prop('disabled', false);
+    //            $('#Finance').prop('disabled', false);
+    //            $('#HRD').prop('disabled', false);
+    //            $('#Externals').prop('disabled', false);
+    //            $('#TND').prop('disabled', false);
+    //            $('#P-EVP').prop('disabled', false);
+    //            $('#Secretariat').prop('disabled', false);
+    //            $('#SocioCivic').prop('disabled', false);
+    //        }
+    //     });
 
-        $.get('/checkRole' , {email : email} , function(result) {
-            if(result == false) {
-                $('#role').prop('disabled', false);
-            } 
-            else 
-                $('#role').prop('disabled', true);
-        });
+    //     $.get('/checkRole' , {email : email} , function(result) {
+    //         if(result == false) {
+    //             $('#role').prop('disabled', false);
+    //         } 
+    //         else 
+    //             $('#role').prop('disabled', true);
+    //     });
 
         
-        $.get('/checkAdmins', {}, function(result){
-            if (result.length > 1 || userRole !== "Administrator"){
-                $('#role').prop('disabled', false);
-            }
-            else{
-                $('#role').prop('disabled', true);
-            }
-        });
+    //     $.get('/checkAdmins', {}, function(result){
+    //         if (result.length > 1 || userRole !== "Administrator"){
+    //             $('#role').prop('disabled', false);
+    //         }
+    //         else{
+    //             $('#role').prop('disabled', true);
+    //         }
+    //     });
         
-    });
+    // });
 
     $('#btn-save').click(function(){
         
@@ -160,19 +160,7 @@ $(document).ready(function () {
         //Modal on Close event handler
 
         $('#userEmail').text("Loading...");
-            $('#userName').text("Loading...");
-        $('#committee').prop('disabled', true);
-        $('#role').prop('disabled', true);
-
-        $('#Activities').prop('disabled', true);
-        $('#Finance').prop('disabled', true);
-        $('#HRD').prop('disabled', true);
-        $('#Externals').prop('disabled', true);
-        $('#TND').prop('disabled', true);
-        $('#P-EVP').prop('disabled', true);
-        $('#Secretariat').prop('disabled', true);
-        $('#SocioCivic').prop('disabled', true);
-        $('#Secretariat').prop('disabled', true);
+        $('#userName').text("Loading...");
 
         $('#Activities').prop('checked', false);
         $('#Finance').prop('checked', false);

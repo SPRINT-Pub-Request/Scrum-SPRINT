@@ -67,11 +67,24 @@ $dark: #1D1A1A;
     .request.btn-expand-info {
         order: 2 !important;
     }
+
+    .container-content{
+        width: 70% !important;
+    }
 }
 
 @include media-breakpoint-down(md) {
-    .h2,h3,h4 {
+    .h2,h3,h4,.btn, .form-select,
+    .inline-warning,table,.form,
+    ::-webkit-input-placeholder,
+    ::-moz-placeholder {
         font-size: small;
+    }
+
+    .inline-warning > div{
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+        border-left: none !important;
     }
 
     .request-field-content{
@@ -538,6 +551,34 @@ hr.request{
     width: 20px;
     height: 20px;
     margin-bottom: 2px;
+}
+
+.inline-warning{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    padding: 5px 15px 5px 15px;
+    background-color: #c84e4e;
+    border-radius: 5px;
+
+    color: white;
+    font-family: OpenSans-Bold;
+}
+
+.inline-warning > span, .inline-warning > div{
+    display: inline-block;
+}
+
+.inline-warning > span{
+    padding-right: 5px;
+    font-size: 18px;
+}
+
+.inline-warning > div{
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid white;
 }
 
 .hidden{

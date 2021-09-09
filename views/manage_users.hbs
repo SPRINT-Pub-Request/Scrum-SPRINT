@@ -21,11 +21,16 @@
     <div class="container-start with-sidebar" style="padding-left: 100px; padding-right: 100px; overflow: auto;">
 
         <h1>USER DATABASE</h1>
-        <div class="h-spacer50"></div>
+        <div class="h-spacer20"></div>
 
         <div class="container-table">
-        
-            <div class="spacer"></div>
+            
+            <!-- add class "hidden" if warning is not applicable-->
+            <div class="inline-warning" style="margin-bottom: 20px;"> 
+                <span>WARNING</span>  
+                <div>There are no Pubs or Secretariat officers assigned to the following committees: <br> 
+                Activities, Finance, HRD, Externals, TND, P-EVP, Secretariat</div>
+            </div>
             
             <table id="userstable" class="stripe sortable" style="width: 100%">
                 <thead>
@@ -58,13 +63,14 @@
                     {{/each}}
                 </tbody>
             </table>
+            <div class="h-spacer20"></div>
 
+            <hr>
 
-            <div class="h-spacer50"></div>
             <h2>ADD USER</h2>
             <div class="h-spacer20"></div>
 
-            <div class="row">
+            <div class="row form">
                 <div class="col-md-3">
                     <label for="add_email">Email</label>
                     <input type="text" class="form-control" name = "add_email" id="add_email" placeholder="user@dlsu.edu.ph">
@@ -119,7 +125,7 @@
                     <div class="row modal-row">
                         <div class="col">
                             <label for="role">Role</label><br>
-                            <select class="form-select" style='font-family: "OpenSans", Sans-Serif;' name = "role" id = "role" disabled>
+                            <select class="form-select" style='font-family: "OpenSans", Sans-Serif;' name = "role" id = "role">
                                 <option value = "Requester">Requester</option>
                                 <option value = "Publicity and Creatives">Publicity and Creatives</option>
                                 <option value = "Secretariat">Secretariat</option>
@@ -135,32 +141,32 @@
                     <div id="assigned_comm">
                     <div class="row modal-row">
                         <div class="col btn-group">
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Activities" id="Activities" disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Activities" id="Activities">
                             <label class="btn btn-outline-dark" for="Activities">Activities</label>
 
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Finance" id="Finance"disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Finance" id="Finance">
                             <label class="btn btn-outline-dark" for="Finance">Finance</label>
 
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="HRD" id="HRD" disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="HRD" id="HRD">
                             <label class="btn btn-outline-dark" for="HRD">HRD</label>
 
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Externals" id="Externals"disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Externals" id="Externals">
                             <label class="btn btn-outline-dark" for="Externals">Externals</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col btn-group">
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="TND" id="TND" disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="TND" id="TND">
                             <label class="btn btn-outline-dark" for="TND">TND</label>
 
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="P-EVP" id="P-EVP" disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="P-EVP" id="P-EVP">
                             <label class="btn btn-outline-dark" for="P-EVP">P-EVP</label>
 
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="SocioCivic" id="SocioCivic" disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="SocioCivic" id="SocioCivic">
                             <label class="btn btn-outline-dark" for="SocioCivic">Socio Civic</label>
 
-                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Secretariat" id="Secretariat" disabled>
+                            <input name ="assigned_comm" type="checkbox" class="btn-check assigned_comm" value="Secretariat" id="Secretariat">
                             <label class="btn btn-outline-dark" for="Secretariat">Secretariat</label>
                         </div>
                     </div>
@@ -169,9 +175,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-                    <button type="button" id="btn-edit" class="btn btn-edit">Edit</button>
-                    <button type ="submit" id="btn-save" class="btn btn-save" data-bs-dismiss="modal">Save changes</button>
+                    <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
+                    <button type ="submit" id="btn-save" class="btn btn-save" data-bs-dismiss="modal">Save Changes</button>
                 </div>
                 </div>
             </div>
