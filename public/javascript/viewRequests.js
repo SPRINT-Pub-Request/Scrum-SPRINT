@@ -1,44 +1,104 @@
+let editor;
+
 $(document).ready(function() {
 
+    let idModalAccess = "";
+    let mediaEdit;
+    let captionEdit;
+
+    $('.status').each(function(){
+        var status = $(this).val();
+        
+        switch(status){
+            case "Not Started" :
+                $(this).css("background-color", "#c94628");
+                break;
+
+            case "In Progress" : 
+                $(this).css("background-color", "#dd975e");
+                break;
+
+            case "Finished" : 
+                $(this).css("background-color", "#509375");
+                break;
+        }
+
+    });
+
     var toggleOn = function() { 
-        $('#extra-info').removeClass('hidden');
-        $('#caption').removeClass('caption-cut');
-        $('.expand-icon#down').addClass('hidden');
-        $('.expand-icon#up').removeClass('hidden');
+        headerDiv = $(this).parent().parent();
+
+        headerDiv.siblings('.extra-info').removeClass('hidden');
+        headerDiv.siblings('.caption').children('.request-field-content').removeClass('caption-cut');
+        $(this).find('.expand-icon#down').addClass('hidden');
+        $(this).find('.expand-icon#up').removeClass('hidden');
     }
     var toggleOff = function() { 
-        $('#extra-info').addClass('hidden');
-        $('#caption').addClass('caption-cut');
-        $('.expand-icon#up').addClass('hidden');
-        $('.expand-icon#down').removeClass('hidden');
+        headerDiv = $(this).parent().parent();
+
+        headerDiv.siblings('.extra-info').addClass('hidden');
+        headerDiv.siblings('.caption').children('.request-field-content').addClass('caption-cut');
+        $(this).find('.expand-icon#up').addClass('hidden');
+        $(this).find('.expand-icon#down').removeClass('hidden');
     }
 
     $('.btn-expand-info').infotoggle(toggleOn, toggleOff);
 
-    $('#edit-caption').on('click', function(){
-        
+    $('.edit-captionbtn').on('click', function(){
     });
 
-    $('#status').on('change', function(){
-        var status = $('#status').val();
+    $(".editMediaBox").on('click', '.edit-media', function(){
+        idModalAccess = $(this).parent().parent().siblings(".request_id_hidden").text();
+        mediaEdit = $(this).siblings(".media_link_href");
+    });
 
-        console.log(status);
-        
-        switch(status){
-            case "Not Started" :
-                $('#status').css("background-color", "#c94628");
-                break;
-
-            case "In Progress" : 
-                $('#status').css("background-color", "#dd975e");
-                break;
-
-            case "Finished" : 
-                $('#status').css("background-color", "#509375");
-                break;
+    $("#edit-media-input").keyup(function(){
+        const link = $("#edit-media-input").val();
+        if (link.substring(0,8) === "https://"){
+            $("#btnSaveMedia").prop("disabled", false);
+        }
+        else{
+            $("#btnSaveMedia").prop("disabled", true);
         }
     });
 
+    $("#btnSaveMedia").click(function(){
+        const link = $("#edit-media-input").val();
+        mediaEdit.attr("href", link);
+        $.get('/updatePubLink', {request_id : idModalAccess, pubLink : link}, function(result){});
+    });
+
+    $(".editCaptionBox").on('click', '.edit-captionbtn', function(){
+        idModalAccess = $(this).parent().parent().siblings('.row').children().children().siblings('.request_id_hidden').text();
+        captionEdit = $(this).parent().siblings('.caption-cut');
+    });
+    
+    $("#btnSaveCaption").click(function(){
+        const caption = $("textarea#edit-caption-input").html(myEditor.getData()).text();
+        captionEdit.html(caption);
+        $.get('/updateCaption', {request_id : idModalAccess, caption : caption}, function(result){});
+    });
+
+    $('.status').on('change', function(){
+        var status = $(this).val();
+        var request_id = $(this).siblings('.request_id_hidden').text();
+        
+        switch(status){
+            case "Not Started" :
+                $(this).css("background-color", "#c94628");
+                break;
+
+            case "In Progress" : 
+                $(this).css("background-color", "#dd975e");
+                break;
+
+            case "Finished" : 
+                $(this).css("background-color", "#509375");
+                break;
+        }
+        
+        $.get('/updateStatus', {request_id : request_id, status : status}, function(result){});
+    });
 });
 
 $.fn.infotoggle = function(a, b) {

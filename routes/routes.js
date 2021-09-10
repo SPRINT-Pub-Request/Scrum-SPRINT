@@ -43,6 +43,9 @@ app.get('/getRole' , usersController.getRole);
 
 //View Request Controllers
 app.get('/view_requests', viewRequestController.getIndex);
+app.get('/updateStatus', viewRequestController.updateStatus);
+app.get('/updatePubLink', viewRequestController.updatePubLink);
+app.get('/updateCaption', viewRequestController.updateCaption);
 
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);

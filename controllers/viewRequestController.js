@@ -44,6 +44,8 @@ const viewRequestController = {
 
                                 temp_data["submitted_date"] = i.submitted_date;
 
+                                temp_data["request_id"] = i.request_id;
+
                                 temp_data["reqname"] = i.reqname;
                                 temp_data["committee"] = i.committee;
                                 temp_data["activity_name"] = i.activity_name;
@@ -68,6 +70,11 @@ const viewRequestController = {
                                 temp_data["caption"] = i.caption;
                                 temp_data["status"] = i.status;
 
+
+                                //const tempCaption = i.caption;
+                                //const parser = new DOMParser();
+                                //temp_data["caption"] = parser.parseFromString(tempCaption, 'text/html');
+
                                 if (temp_data['comments'] === ''){
                                     temp_data['commnets'] = 'None';
                                 }
@@ -75,6 +82,21 @@ const viewRequestController = {
                                 if (temp_data['specialRequest'] === ''){
                                     temp_data['specialRequest'] = 'None';
                                 }
+                                
+                                temp_data['nsFlag'] = false;
+                                temp_data['ipFlag'] = false;
+                                temp_data['fFlag'] = false;
+
+                                if( temp_data['status'] === "Not Started"){
+                                    temp_data['nsFlag'] = true;
+                                }
+                                else if( temp_data['status'] === "In Progress"){
+                                    temp_data['ipFlag'] = true;
+                                }
+                                else if( temp_data['status'] === "Finished"){
+                                    temp_data['fFlag'] = true;
+                                }
+                                
                                 
                                 request_data.push(temp_data);
 
@@ -99,6 +121,33 @@ const viewRequestController = {
         } else {
             res.redirect('/');
         }
+    },
+
+    updateStatus: (req , res) => {
+        changes = {
+            status : req.query.status
+        }
+        db.updateOne(PubRequest, {request_id: req.query.request_id}, changes, function(result){
+            res.send(result);
+        });
+    },
+
+    updatePubLink: (req , res) => {
+        changes = {
+            pubLink : req.query.pubLink
+        }
+        db.updateOne(PubRequest, {request_id: req.query.request_id}, changes, function(result){
+            res.send(result);
+        });
+    },
+
+    updateCaption: (req , res) => {
+        changes = {
+            caption : req.query.caption
+        }
+        db.updateOne(PubRequest, {request_id: req.query.request_id}, changes, function(result){
+            res.send(result);
+        });
     }
 }
 

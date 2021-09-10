@@ -27,7 +27,7 @@
             <div class="sort-row">
                 Filter by Status : 
                 <select id="filter-status" class="request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
-                    <option selected style="display: none"></option>
+                    <option style="display: none"></option>
                     <option value = "Not Started">Not Started</option>
                     <option value = "In Progress">In Progress</option>
                     <option value = "Finished">Finished</option>
@@ -47,34 +47,49 @@
             {{#each request_data }}
             <div class="request-item">
                 <div class="row">
-                <div class="col request-header">
+                    <div class="col request-header">
+                        <p class = "request_id_hidden" hidden>{{this.request_id}}</p>
 
-                    <select id="status" class="request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
-                        <option class="not_started" value = "Not Started" selected>Not Started</option>
-                        <option class="in_progress" value = "In Progress">In Progress</option>
-                        <option class="finished" value = "Finished">Finished</option>
-                    </select>
+                        <select class="status request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;' value = "Finished">
+                            {{#if this.nsFlag}}
+                            <option class = ".nsSelect" value = "Not Started" selected>Not Started</option>
+                            {{else}}
+                            <option class = ".nsSelect" value = "Not Started">Not Started</option>
+                            {{/if}}
 
-                    <div class="request activity-header" style="flex: 1; order: 2;">
-                        <span class="activity-name">{{this.activity_name}}</span>
-                        
-                        <div style="display: inline-block">
-                            [<button id="edit-media" class="request btn-edit" data-bs-toggle="modal" data-bs-target="#editMediaModal">
-                                <img style="width: 15px" src="img/edit.png">
+                            {{#if this.ipFlag}}
+                            <option value = "In Progress" selected>In Progress</option>
+                            {{else}}s
+                            <option value = "In Progress">In Progress</option>
+                            {{/if}}
+
+                            {{#if this.fFlag}}
+                            <option value = "Finished" selected>Finished</option>
+                            {{else}}
+                            <option value = "Finished">Finished</option>
+                            {{/if}}
+                        </select>
+
+                        <div class="request activity-header" style="flex: 1; order: 2;">
+                            <span class="activity-name">{{this.activity_name}}</span>
+                            
+                            <div class = "editMediaBox" style="display: inline-block">
+                                [<button class="request btn-edit edit-media" data-bs-toggle="modal" data-bs-target="#editMediaModal">
+                                    <img style="width: 15px" src="img/edit.png">
+                                </button>
+                                <a class = "media_link_href" <!--href="https://www.google.com"-->>Media Link</a> | 
+                                <a class = "related_files_href" href="google.com">Related Files</a> 
+                                ]
+                            </div>
+                        </div>
+
+                        <div class="request btn-expand-info">
+                            <button>
+                                <i id="down" class="expand-icon bi bi-caret-down-fill"></i>
+                                <i id="up" class="expand-icon bi bi-caret-up-fill hidden"></i>
                             </button>
-                            <a href="google.com">Media Link</a> | 
-                            <a href="google.com">Related Files</a> 
-                            ]
                         </div>
                     </div>
-
-                    <div class="request btn-expand-info">
-                        <button>
-                            <i id="down" class="expand-icon bi bi-caret-down-fill"></i>
-                            <i id="up" class="expand-icon bi bi-caret-up-fill hidden"></i>
-                        </button>
-                    </div>
-                </div>
                 </div>
 
                 <hr class="request">
@@ -89,20 +104,20 @@
                     <div class="request-field-content">{{this.posting_date}}</div>   
                 </div>
 
-                <div class="request-row">
+                <div class="request-row caption editCaptionBox">
                     <span class="request-field-label">
-                        <button id="edit-caption" class="request btn-edit" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
+                        <button id="edit-caption" class="request btn-edit edit-captionbtn" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
                         style="background-color: transparent; border: transparent;">
                             <img style="width: 15px" src="img/edit.png">
                         </button>
                         Caption :
                     </span>
-                    <div id="caption" class="request-field-content caption-cut">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <div class="request-field-content caption-cut">
+                        {{{this.caption}}}
                     </div>   
                 </div>
 
-                <div id="extra-info" class="hidden">
+                <div class="extra-info hidden">
                     
                     <hr class="request">
 
@@ -163,8 +178,6 @@
             </div>
             {{/each}}
 
-        
-
         </div>
     </div>
 
@@ -174,13 +187,13 @@
             <div class="modal-content">
             <div class="modal-body">
                 <div class="form-row">
-                    <input id="edit-media-input" type="text" class="form-control" placeholder="Enter link to publication media here.">
+                    <input id="edit-media-input" type="text" class="form-control" placeholder="Enter link to publication media here. (Format : https://www.google.com)">
                 </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                <button id = "btnSaveCaption" type ="submit" class="btn btn-save" data-bs-dismiss="modal">Save</button>
+                <button id = "btnSaveMedia" type ="submit" class="btn btn-save" data-bs-dismiss="modal" disabled>Save</button>
             </div>
             </div>
         </div>
@@ -192,7 +205,6 @@
             <div class="modal-body">
                 <div class="form-row">
                     <textarea id="edit-caption-input">
-                        &lt;p&gt;Enter publication caption here.&lt;/p&gt;
                     </textarea>
                 </div>
             </div>
@@ -204,13 +216,22 @@
             </div>
         </div>
     </div>
-
+    
     <script>
+        let myEditor;
+
         ClassicEditor
-            .create( document.querySelector( '#edit-caption-input' ) )
+            .create( document.querySelector( '#edit-caption-input' )).
+            then(editor => {
+                myEditor = editor;
+            })
             .catch( error => {
                 console.error( error );
-            } );
+            });
+
+        function getTextCK (){
+            return myEditor.getData();
+        }
     </script>
 
 </body>
