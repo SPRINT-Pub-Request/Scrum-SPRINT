@@ -47,7 +47,7 @@
                 <div class="row">
                 <div class="col request-header">
 
-                    <select id="status" class="request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
+                    <select class="status request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
                         <option class="not_started" value = "Not Started">Not Started</option>
                         <option class="in_progress" value = "In Progress" selected>In Progress</option>
                         <option class="finished" value = "Finished">Finished</option>
@@ -87,7 +87,7 @@
                     <div class="request-field-content">MMM dd, yyyy</div>   
                 </div>
 
-                <div class="request-row">
+                <div class="request-row caption">
                     <span class="request-field-label">
                         <button id="edit-caption" class="request btn-edit" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
                         style="background-color: transparent; border: transparent;">
@@ -95,12 +95,12 @@
                         </button>
                         Caption :
                     </span>
-                    <div id="caption" class="request-field-content caption-cut">
+                    <div class="request-field-content caption-cut">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </div>   
                 </div>
 
-                <div id="extra-info" class="hidden">
+                <div class="extra-info hidden">
                     
                     <hr class="request">
 
@@ -161,6 +161,124 @@
                 </div>
             </div>
             <!-- { { /each } } -->
+
+            <div class="request-item">
+                <div class="row">
+                <div class="col request-header">
+
+                    <select class="status request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
+                        <option class="not_started" value = "Not Started">Not Started</option>
+                        <option class="in_progress" value = "In Progress" selected>In Progress</option>
+                        <option class="finished" value = "Finished">Finished</option>
+                    </select>
+
+                    <div class="request activity-header" style="flex: 1; order: 2;">
+                        <span class="activity-name"> Activity Name</span>
+                        
+                        <div style="display: inline-block">
+                            [<button id="edit-media" class="request btn-edit" data-bs-toggle="modal" data-bs-target="#editMediaModal">
+                                <img style="width: 15px" src="img/edit.png">
+                            </button>
+                            <a href="google.com">Media Link</a> | 
+                            <a href="google.com">Related Files</a> 
+                            ]
+                        </div>
+                    </div>
+
+                    <div class="request btn-expand-info">
+                        <button>
+                            <i id="down" class="expand-icon bi bi-caret-down-fill"></i>
+                            <i id="up" class="expand-icon bi bi-caret-up-fill hidden"></i>
+                        </button>
+                    </div>
+                </div>
+                </div>
+
+                <hr class="request">
+
+                <div class="request-row">
+                    <span class="request-field-label">Submitted :</span>
+                    <div class="request-field-content">MMM dd, yyyy</div>   
+                </div>
+
+                <div class="request-row">
+                    <span class="request-field-label">Posting Date :</span>
+                    <div class="request-field-content">MMM dd, yyyy</div>   
+                </div>
+
+                <div class="request-row caption">
+                    <span class="request-field-label">
+                        <button id="edit-caption" class="request btn-edit" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
+                        style="background-color: transparent; border: transparent;">
+                            <img style="width: 15px" src="img/edit.png">
+                        </button>
+                        Caption :
+                    </span>
+                    <div class="request-field-content caption-cut">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </div>   
+                </div>
+
+                <div class="extra-info hidden">
+                    
+                    <hr class="request">
+
+                    <div class="request-row">
+                        <span class="request-field-label">Requester:</span>
+                        <div class="request-field-content">Name (Committee)</div>   
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Pub Type:</span>
+                        <div class="request-field-content">Poster</div>   
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Post-event:</span>
+                        <div class="request-field-content">Yes</div>   
+                    </div>
+
+                    <div class="request-row darkened">
+                         <span class="request-field-label">Description :</span>
+                         <div class="request-field-content">
+                             Esque elit ullamcorper dignissim. Nunc vel risus commodo viverra maecenas accumsan lacus. Amet dictum sit amet justo donec enim diam. Vitae nunc sed velit dignissim sodales. Aenean pharetra magna ac placerat. Cursus vitae congue mauris rhoncus aenean.
+                         </div>
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Theme :</span>
+                        <div class="request-field-content">Nunc vel risus</div>   
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Venue :</span>
+                        <div class="request-field-content" style="word-break: break-all;">https://zoom.us/j/XXXXXXXXXX?pwd=OD2KGadf4gf)2348htrs97</div>   
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Activity Time :</span>
+                        <div class="request-field-content">From mm/dd/yyyy 00:00 AM<br>to mm/dd/yyyy 00:00 AM </div>   
+                    </div>
+
+                    <div class="request-row darkened">
+                        <span class="request-field-label">Additional Details :</span>
+                        <div class="request-field-content">
+                            Nunc vel risus commodo viverra maecenas accumsan lacus vel. Maecenas accumsan lacus vel facilisis volutpat est velit egestas dui. Aliquet nibh praesent tristique magna sit amet purus gravida quis. Nisi quis eleifend quam adipiscing vitae proin sagittis.
+                        </div>   
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Comments :</span>
+                        <div class="request-field-content">None</div>   
+                    </div>
+
+                    <div class="request-row">
+                        <span class="request-field-label">Special Request :</span>
+                        <div class="request-field-content">None</div>   
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     </div>

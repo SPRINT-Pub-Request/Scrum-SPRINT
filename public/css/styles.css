@@ -11837,15 +11837,15 @@ td > .btn-icon {
   opacity: 0.6;
 }
 
-.form-select#status option.not_started, .request#status option.not_started {
+.form-select#status option.not_started, .request.status option.not_started {
   background-color: #c94628;
 }
 
-.form-select#status option.in_progress, .request#status option.in_progress {
+.form-select#status option.in_progress, .request.status option.in_progress {
   background-color: #dd975e;
 }
 
-.form-select#status option.finished, .request#status option.finished {
+.form-select#status option.finished, .request.status option.finished {
   background-color: #509375;
 }
 
@@ -12022,7 +12022,7 @@ button.edit {
   margin-right: 8px;
 }
 
-.request#status {
+.request.status {
   margin-right: 8px;
   font-size: 14px;
   -webkit-box-ordinal-group: 2;

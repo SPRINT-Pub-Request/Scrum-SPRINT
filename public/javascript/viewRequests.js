@@ -1,16 +1,20 @@
 $(document).ready(function() {
 
     var toggleOn = function() { 
-        $('#extra-info').removeClass('hidden');
-        $('#caption').removeClass('caption-cut');
-        $('.expand-icon#down').addClass('hidden');
-        $('.expand-icon#up').removeClass('hidden');
+        headerDiv = $(this).parent().parent();
+
+        headerDiv.siblings('.extra-info').removeClass('hidden');
+        headerDiv.siblings('.caption').children('.request-field-content').removeClass('caption-cut');
+        $(this).find('.expand-icon#down').addClass('hidden');
+        $(this).find('.expand-icon#up').removeClass('hidden');
     }
     var toggleOff = function() { 
-        $('#extra-info').addClass('hidden');
-        $('#caption').addClass('caption-cut');
-        $('.expand-icon#up').addClass('hidden');
-        $('.expand-icon#down').removeClass('hidden');
+        headerDiv = $(this).parent().parent();
+
+        headerDiv.siblings('.extra-info').addClass('hidden');
+        headerDiv.siblings('.caption').children('.request-field-content').addClass('caption-cut');
+        $(this).find('.expand-icon#up').addClass('hidden');
+        $(this).find('.expand-icon#down').removeClass('hidden');
     }
 
     $('.btn-expand-info').infotoggle(toggleOn, toggleOff);
@@ -19,22 +23,20 @@ $(document).ready(function() {
         
     });
 
-    $('#status').on('change', function(){
-        var status = $('#status').val();
-
-        console.log(status);
+    $('.status').on('change', function(){
+        var status = $(this).val();
         
         switch(status){
             case "Not Started" :
-                $('#status').css("background-color", "#c94628");
+                $(this).css("background-color", "#c94628");
                 break;
 
             case "In Progress" : 
-                $('#status').css("background-color", "#dd975e");
+                $(this).css("background-color", "#dd975e");
                 break;
 
             case "Finished" : 
-                $('#status').css("background-color", "#509375");
+                $(this).css("background-color", "#509375");
                 break;
         }
     });
