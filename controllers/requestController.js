@@ -37,6 +37,10 @@ const requestController = {
                         mUserFlag : mUserFlag
                     }
 
+                    /*db.insertOne(Settings, {id_given : '1'}, function(flag) {
+                        res.render('add_request', details);
+                    });*/
+
                     res.render('add_request', details);
                 } else {
                     res.redirect('/');
@@ -423,6 +427,11 @@ const requestController = {
                 if(pubType == 'other') {
                     pubType = req.body.Other;
                 }
+
+                const today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                const yyyy = today.getFullYear();
                 
                 const pubrequest = {
                     request_id,
@@ -448,9 +457,11 @@ const requestController = {
                     caption: 'N/A',
                     status: 'Not Started',
                     pubName: 'Not Assigned',
-                    secName: 'Not Assigned'
+                    secName: 'Not Assigned',
+                    submitted_date : yyyy + "-" + mm + "-" + dd,
                 }
 
+                console.log("submitted date: "+ pubrequest.submitted_date);
                 console.log("request_id: " + request_id);
                 console.log("reqname: " + reqname);
                 console.log("committee: " + committee);
@@ -476,7 +487,6 @@ const requestController = {
                 });
             });
                 
-            
         } catch(err) {
             console.log(err);
             res.redirect('/');

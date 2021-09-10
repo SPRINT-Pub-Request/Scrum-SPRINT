@@ -42,13 +42,15 @@ const viewRequestController = {
                                 if(temp_ac.includes(i.committee)){
                                 let temp_data = {};
 
+                                temp_data["submitted_date"] = i.submitted_date;
+
                                 temp_data["reqname"] = i.reqname;
                                 temp_data["committee"] = i.committee;
                                 temp_data["activity_name"] = i.activity_name;
                                 temp_data["description"] = i.description;
-                                temp_data["start_date"] = i.start_date;
+                                temp_data["start_date"] = i.start_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').replace('00:00:00' , ' ');;
                                 temp_data["start_time"] = i.start_time;
-                                temp_data["end_date"] = i.end_date;
+                                temp_data["end_date"] = i.end_date.toISOString().replace(/T/, ' ').replace(/\..+/, '').replace('00:00:00' , ' ');;
                                 temp_data["end_time"] = i.end_time;
                                 temp_data["venue"] = i.venue;
                                 temp_data["theme"] = i.theme;
@@ -65,8 +67,17 @@ const viewRequestController = {
                                 temp_data["secName"] = i.secName;
                                 temp_data["caption"] = i.caption;
                                 temp_data["status"] = i.status;
+
+                                if (temp_data['comments'] === ''){
+                                    temp_data['commnets'] = 'None';
+                                }
+
+                                if (temp_data['specialRequest'] === ''){
+                                    temp_data['specialRequest'] = 'None';
+                                }
                                 
                                 request_data.push(temp_data);
+
                             }
                         }
 
