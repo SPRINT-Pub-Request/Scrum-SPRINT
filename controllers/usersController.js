@@ -227,9 +227,22 @@ const usersController = {
     adminsAvailable: (req, res) => {
         
         try {
-            db.findMany(User, {role : "Administrator"}, {}, function(result) {   
-                console.log('Admins Available');
-                res.send(result);     
+            db.findMany(User, {role : "Administrator"}, {}, function(result) { 
+                
+                let total = 0;
+
+                for(i = 0; i < result.length; i++) {
+                    if(result[i].name !== "Not Signed In Yet") 
+                        total++;
+                }
+
+
+                if(total > 1) {
+                    res.send(true);
+                    console.log('Admins Available');
+                } else {
+                    res.send(false);
+                }
             });
 
         } catch(err) {

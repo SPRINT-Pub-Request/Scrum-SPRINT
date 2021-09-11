@@ -195,10 +195,10 @@ $(document).ready(function () {
            }
            
             $.get('/checkInProgress' , {name} , function(result) {
-                if(result == false) { // No InProgress work
+                if(result == false) {
                     if(role === "Administrator") {
                         $.get('/checkAdmins', {}, function(result){
-                            if (result.length == 1) {
+                            if (result == false && name !== "Not Signed In Yet") {
                                 $('#role').prop('disabled', true);
                             }
                             else{
