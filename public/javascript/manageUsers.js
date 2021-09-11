@@ -159,7 +159,6 @@ $(document).ready(function () {
         const role = $(this).parent().siblings('.roleInfo').text();
         userRole = role;
         const name = $(this).parent().siblings('.nameInfo').text();
-
         $.get('/getUser', {email: email}, function(result){
             userRole = result.role;
 
@@ -194,10 +193,10 @@ $(document).ready(function () {
                 $('#Secretariat').prop('disabled', false);
                 $('#SocioCivic').prop('disabled', false);
            }
-
+           
             $.get('/checkInProgress' , {name} , function(result) {
                 if(result == false) { // No InProgress work
-                    if(role === Administrator) {
+                    if(role === "Administrator") {
                         $.get('/checkAdmins', {}, function(result){
                             if (result.length == 1) {
                                 $('#role').prop('disabled', true);
