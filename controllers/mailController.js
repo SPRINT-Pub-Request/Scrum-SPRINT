@@ -50,58 +50,50 @@ const mailController = {
     sendNewAssign: (req , res) => {
         
         try {
-            const request_id = req.query.request_id.toString();
-            console.log(request_id);
-            db.findOne(PubRequest , {request_id : request_id} , {} , function(result) {
-                if(result !== null) {
-                    if(result.pubName !== "Not Assigned") {
-                        db.findOne(User , {name : result.pubName} , {} , function(user) {
-                            
-                            const options = {
-                                from : process.env.MAIL_AUTHEMAIL,
-                                to : user.email,
-                                subject : "Request Changes",
-                                text : "Good day " + user.name + "!\nThis is to notify you that you might have been assigned to a request or there are changes to the request \n\nActivity Name: " + result.activity_name + "\nStatus : "  + result.status +  "\nAssigned Pubs: " + result.pubName + "\nAssigned Secretariat: " + result.secName + "\nCaption: " + result.caption + "\npubLink : " + result.pubLink 
-                            }
 
-                            transporter.sendMail(options, (err , info) => {
-                                if(err) {
-                                    console.log(err);
-                                    res.send('Fail to Notify User! Please Refresh and Try again');
+            const committee = req.query.committee;
+            let users = [];
+
+            db.findMany(User , {} , {} , function(flag) {
+                if(flag) {
+                    for(j = 0; j < flag.length; j++) {
+
+                        if(flag[j].assigned_committee !== "") {
+                            const userCommittee = flag[j].assigned_committee.split(" ");
+
+                            for(i = 0; i < userCommittee.length; i++) {
+                                if(userCommittee[i] === committee) {
+                                    users.push(flag[j].email);
+                                    break;
                                 }
-                                
-                                console.log("Server has sent mail, Info: " + info.response);
-                                res.send('Successfully Assigned and Notified User!');
-                            });
-                        });
-                    } 
-                    else if(result.secName !== "Not Assigned") {
-                        db.findOne(User , {name : result.secName} , {} , function(user) {
-
-                            const options = {
-                                from : process.env.MAIL_AUTHEMAIL,
-                                to : user.email,
-                                subject : "Request Changes",
-                                text : "Good day " + user.name + "!\nThis is to notify you that you might have been assigned to a request or there are changes to the request \n\nActivity Name: " + result.activity_name + "\nStatus : "  + result.status +  "\nAssigned Pubs: " + result.pubName + "\nAssigned Secretariat: " + result.secName + "\nCaption: " + result.caption + "\npubLink : " + result.pubLink 
                             }
+                        }
 
-                            transporter.sendMail(options, (err , info) => {
-                                if(err) {
-                                    console.log(err);
-                                    res.send('Fail to Notify User! Please Refresh and Try again');
-                                }
-                                
-                                console.log("Server has sent mail, Info: " + info.response);
-                                res.send('Successfully Assigned and Notified User!');
-                            });
-                        });
-                    } else 
-                        res.send(false);
-                    
-                } else 
-                    res.send('Fail to Notify User! Please Refresh and Try again');
+                    }
 
+                    const options = {
+                        from : process.env.MAIL_AUTHEMAIL,
+                        to : users,
+                        subject : "Request Added to your Assigned Committee",
+                        text : "Good day " + flag.name + "!\nThis is to notify you there is a new request in your assigned committee \n\n"
+                    }
+
+                    transporter.sendMail(options, (err , info) => {
+                        if(err) {
+                            console.log(err);
+                            res.send(false);
+                        }
+                                        
+                        console.log("Server has sent all mail, Info: " + info.response);
+                        res.send(true);
+                    });
+
+                } else {
+                    res.send(false);
+                }
             });
+
+            
         } catch(err) {
             console.log(err);
             res.redirect('/');

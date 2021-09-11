@@ -226,7 +226,6 @@ const usersController = {
 
     adminsAvailable: (req, res) => {
         
-        const email = req.query.email;
         try {
             db.findMany(User, {role : "Administrator"}, {}, function(result) {   
                 console.log('Admins Available');
