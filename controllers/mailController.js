@@ -53,6 +53,7 @@ const mailController = {
 
             const committee = req.query.committee;
             let users = [];
+            let usersName = [];
 
             db.findMany(User , {} , {} , function(flag) {
                 if(flag) {
@@ -64,6 +65,7 @@ const mailController = {
                             for(i = 0; i < userCommittee.length; i++) {
                                 if(userCommittee[i] === committee) {
                                     users.push(flag[j].email);
+                                    usersName.push(flag[j].name);
                                     break;
                                 }
                             }
@@ -75,7 +77,7 @@ const mailController = {
                         from : process.env.MAIL_AUTHEMAIL,
                         to : users,
                         subject : "Request Added to your Assigned Committee",
-                        text : "Good day " + flag.name + "!\nThis is to notify you there is a new request in your assigned committee \n\n"
+                        text : "Good day " + usersName.name + "!\nThis is to notify you there is a new request in your assigned committee \n\n"
                     }
 
                     transporter.sendMail(options, (err , info) => {
