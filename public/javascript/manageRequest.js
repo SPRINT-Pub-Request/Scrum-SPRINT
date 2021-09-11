@@ -59,13 +59,8 @@ $(document).ready(function() {
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
-                $.get('/sendNewAssign', pubChanges , function(result) {
-                    if(result == false)
-                        alert("Successfully Updated Changes!")
-                    else
-                        alert(result);
-                    location.reload();
-                });
+                alert("Successfully Updated Changes!")
+                location.reload();
             }
             else {
                 alert("An Error Occured, Nothing was Updated \nPlease Try again later");
