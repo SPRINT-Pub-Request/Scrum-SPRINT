@@ -5,6 +5,7 @@ $(document).ready(function() {
     let idModalAccess = "";
     let mediaEdit;
     let captionEdit;
+    let filter = "all";
 
     $('.status').each(function(){
         var status = $(this).val();
@@ -82,7 +83,6 @@ $(document).ready(function() {
     $('.status').on('change', function(){
         var status = $(this).val();
         var request_id = $(this).siblings('.request_id_hidden').text();
-        
         switch(status){
             case "Not Started" :
                 $(this).css("background-color", "#c94628");
@@ -96,9 +96,35 @@ $(document).ready(function() {
                 $(this).css("background-color", "#509375");
                 break;
         }
-        
-        $.get('/updateStatus', {request_id : request_id, status : status}, function(result){});
+        $.get('/updateStatus', {request_id : request_id, status : status}, function(result){
+            filterByStatus(filter);
+        });
     });
+
+    $("#filter-status").change(function(){
+        filter = $("#filter-status").val();
+        
+        filterByStatus(filter);
+    });
+
+    function filterByStatus (status){
+        $('.request-item').each(function(){
+            if (status != "all"){
+                const filter = $(this).children().children().children().siblings(".status").val();
+
+                if(filter !== status){
+                    $(this).hide();
+                }
+                else{
+                    $(this).show();
+                }
+            }
+            else{
+                $(this).show();
+            }
+
+        });
+    }
 });
 
 $.fn.infotoggle = function(a, b) {
