@@ -35,10 +35,10 @@
                 Sort by Date : 
                 <select id="filter-date" class="request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
                     <option selected style="display: none"></option>
-                    <option value = "Date Submitted">Date Submitted (asc.)</option>
-                    <option value = "Posting Date">Posting Date (asc.)</option>
-                    <option value = "Date Submitted">Date Submitted (desc.)</option>
-                    <option value = "Posting Date">Posting Date (desc.)</option>
+                    <option value = "Date Submitted (asc.)">Date Submitted (asc.)</option>
+                    <option value = "Posting Date (asc.)">Posting Date (asc.)</option>
+                    <option value = "Date Submitted (desc.)">Date Submitted (desc.)</option>
+                    <option value = "Posting Date (desc.)">Posting Date (desc.)</option>
                 </select>
             </div>
             
@@ -96,12 +96,12 @@
 
                     <div class="request-row">
                         <span class="request-field-label">Submitted :</span>
-                        <div class="request-field-content">{{this.submitted_date}}</div>   
+                        <div class="request-field-content submitted_date_sort">{{this.submitted_date}}</div>   
                     </div>
 
                     <div class="request-row">
                         <span class="request-field-label">Posting Date :</span>
-                        <div class="request-field-content">{{this.posting_date}}</div>   
+                        <div class="request-field-content posting_date_sort">{{this.posting_date}}</div>   
                     </div>
 
                     <div class="request-row caption editCaptionBox">
@@ -237,6 +237,13 @@
 
         function getTextCK (){
             return myEditor.getData();
+        }
+
+        function CKupdate(){
+            for ( instance in CKEDITOR.instances ){
+                CKEDITOR.instances[instance].updateElement();
+                CKEDITOR.instances[instance].setData('');
+            }
         }
     </script>
 

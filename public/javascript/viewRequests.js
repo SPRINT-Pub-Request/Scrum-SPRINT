@@ -72,12 +72,22 @@ $(document).ready(function() {
     $(".editCaptionBox").on('click', '.edit-captionbtn', function(){
         idModalAccess = $(this).parent().parent().siblings('.row').children().children().siblings('.request_id_hidden').text();
         captionEdit = $(this).parent().siblings('.caption-cut');
+        const caption = captionEdit.html();
+        $("textarea#edit-caption-input").html(myEditor.data.set(caption));
     });
     
     $("#btnSaveCaption").click(function(){
         const caption = $("textarea#edit-caption-input").html(myEditor.getData()).text();
+
         captionEdit.html(caption);
-        $.get('/updateCaption', {request_id : idModalAccess, caption : caption}, function(result){});
+        $.get('/updateCaption', {request_id : idModalAccess, caption : caption}, function(result){
+            if(result){
+                captionEdit.html(caption);
+            }
+            else{
+                alert("Fail");
+            }
+        });
     });
 
     $('.status').on('change', function(){
@@ -125,6 +135,79 @@ $(document).ready(function() {
 
         });
     }
+
+    $("#filter-date").change(function(){
+        filter = $("#filter-date").val();
+
+        if(filter === "Posting Date (asc.)"){
+            $('.request-item').sort(filterPDAscending).appendTo('.container-requests');
+        }
+        else if (filter === "Posting Date (desc.)"){
+            $('.request-item').sort(filterPDDescending).appendTo('.container-requests');
+        }
+        else if (filter === "Date Submitted (asc.)"){
+            $('.request-item').sort(filterSDAscending).appendTo('.container-requests');
+        }
+        else if (filter === "Date Submitted (desc.)"){
+            $('.request-item').sort(filterSDDescending).appendTo('.container-requests');
+        }
+        
+        $('.request-item').sort(filterByDate).appendTo('.container-requests');
+    });
+
+    function filterPDDescending (a, b){
+
+        var date1 = $(a).find(".posting_date_sort").text();
+        date1 = date1.split('-');
+        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
+        var date2 = $(b).find(".posting_date_sort").text();
+        date2 = date2.split('-');
+        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+
+
+        return date2 - date1;
+    }
+
+    function filterPDAscending(a, b){
+
+        var date1 = $(a).find(".posting_date_sort").text();
+        date1 = date1.split('-');
+        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
+        var date2 = $(b).find(".posting_date_sort").text();
+        date2 = date2.split('-');
+        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+
+
+        return date1 - date2;
+    }
+
+    function filterSDDescending (a, b){
+
+        var date1 = $(a).find(".submitted_date_sort").text();
+        date1 = date1.split('-');
+        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
+        var date2 = $(b).find(".submitted_date_sort").text();
+        date2 = date2.split('-');
+        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+
+
+        return date2 - date1;
+    }
+
+    function filterSDAscending(a, b){
+
+        var date1 = $(a).find(".submitted_date_sort").text();
+        date1 = date1.split('-');
+        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
+        var date2 = $(b).find(".submitted_date_sort").text();
+        date2 = date2.split('-');
+        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+
+
+        return date1 - date2;
+    }
+
+
 });
 
 $.fn.infotoggle = function(a, b) {
