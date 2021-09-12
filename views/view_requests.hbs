@@ -42,145 +42,147 @@
                 </select>
             </div>
             
-            <hr>
-            <div id="no_requests" style="color: grey;font-family: OpenSans-SemiBold;text-align: center;">
-                no assigned requests...
-            </div>
-            
+            <hr>      
+            {{#if request_data}}
+                {{#each request_data }}
+                <div class="request-item">
+                    <div class="row">
+                        <div class="col request-header">
+                            <p class = "request_id_hidden" hidden>{{this.request_id}}</p>
 
-            {{#each request_data }}
-            <div class="request-item">
-                <div class="row">
-                    <div class="col request-header">
-                        <p class = "request_id_hidden" hidden>{{this.request_id}}</p>
+                            <select class="status request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;' value = "Finished">
+                                {{#if this.nsFlag}}
+                                <option class = ".nsSelect" value = "Not Started" selected>Not Started</option>
+                                {{else}}
+                                <option class = ".nsSelect" value = "Not Started">Not Started</option>
+                                {{/if}}
 
-                        <select class="status request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;' value = "Finished">
-                            {{#if this.nsFlag}}
-                            <option class = ".nsSelect" value = "Not Started" selected>Not Started</option>
-                            {{else}}
-                            <option class = ".nsSelect" value = "Not Started">Not Started</option>
-                            {{/if}}
+                                {{#if this.ipFlag}}
+                                <option class = ".ipSelect"value = "In Progress" selected>In Progress</option>
+                                {{else}}s
+                                <option class = ".ipSelect"value = "In Progress">In Progress</option>
+                                {{/if}}
 
-                            {{#if this.ipFlag}}
-                            <option class = ".ipSelect"value = "In Progress" selected>In Progress</option>
-                            {{else}}s
-                            <option class = ".ipSelect"value = "In Progress">In Progress</option>
-                            {{/if}}
+                                {{#if this.fFlag}}
+                                <option class = ".fSelect"value = "Finished" selected>Finished</option>
+                                {{else}}
+                                <option class = ".fSelect"value = "Finished">Finished</option>
+                                {{/if}}
+                            </select>
 
-                            {{#if this.fFlag}}
-                            <option class = ".fSelect"value = "Finished" selected>Finished</option>
-                            {{else}}
-                            <option class = ".fSelect"value = "Finished">Finished</option>
-                            {{/if}}
-                        </select>
+                            <div class="request activity-header" style="flex: 1; order: 2;">
+                                <span class="activity-name">{{this.activity_name}}</span>
+                                
+                                <div class = "editMediaBox" style="display: inline-block">
+                                    [<button class="request btn-edit edit-media" data-bs-toggle="modal" data-bs-target="#editMediaModal">
+                                        <img style="width: 15px" src="img/edit.png">
+                                    </button>
+                                    <a class = "media_link_href" <!--href="https://www.google.com"-->>Media Link</a> | 
+                                    <a class = "related_files_href" href="google.com">Related Files</a> 
+                                    ]
+                                </div>
+                            </div>
 
-                        <div class="request activity-header" style="flex: 1; order: 2;">
-                            <span class="activity-name">{{this.activity_name}}</span>
-                            
-                            <div class = "editMediaBox" style="display: inline-block">
-                                [<button class="request btn-edit edit-media" data-bs-toggle="modal" data-bs-target="#editMediaModal">
-                                    <img style="width: 15px" src="img/edit.png">
+                            <div class="request btn-expand-info">
+                                <button>
+                                    <i id="down" class="expand-icon bi bi-caret-down-fill"></i>
+                                    <i id="up" class="expand-icon bi bi-caret-up-fill hidden"></i>
                                 </button>
-                                <a class = "media_link_href" <!--href="https://www.google.com"-->>Media Link</a> | 
-                                <a class = "related_files_href" href="google.com">Related Files</a> 
-                                ]
                             </div>
                         </div>
-
-                        <div class="request btn-expand-info">
-                            <button>
-                                <i id="down" class="expand-icon bi bi-caret-down-fill"></i>
-                                <i id="up" class="expand-icon bi bi-caret-up-fill hidden"></i>
-                            </button>
-                        </div>
                     </div>
-                </div>
 
-                <hr class="request">
-
-                <div class="request-row">
-                    <span class="request-field-label">Submitted :</span>
-                    <div class="request-field-content">{{this.submitted_date}}</div>   
-                </div>
-
-                <div class="request-row">
-                    <span class="request-field-label">Posting Date :</span>
-                    <div class="request-field-content">{{this.posting_date}}</div>   
-                </div>
-
-                <div class="request-row caption editCaptionBox">
-                    <span class="request-field-label">
-                        <button id="edit-caption" class="request btn-edit edit-captionbtn" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
-                        style="background-color: transparent; border: transparent;">
-                            <img style="width: 15px" src="img/edit.png">
-                        </button>
-                        Caption :
-                    </span>
-                    <div class="request-field-content caption-cut">
-                        {{{this.caption}}}
-                    </div>   
-                </div>
-
-                <div class="extra-info hidden">
-                    
                     <hr class="request">
 
                     <div class="request-row">
-                        <span class="request-field-label">Requester:</span>
-                        <div class="request-field-content">{{this.reqname}} ({{this.committee}})</div>   
+                        <span class="request-field-label">Submitted :</span>
+                        <div class="request-field-content">{{this.submitted_date}}</div>   
                     </div>
 
                     <div class="request-row">
-                        <span class="request-field-label">Pub Type:</span>
-                        <div class="request-field-content">{{this.pubType}}</div>   
+                        <span class="request-field-label">Posting Date :</span>
+                        <div class="request-field-content">{{this.posting_date}}</div>   
                     </div>
 
-                    <div class="request-row">
-                        <span class="request-field-label">Post-event:</span>
-                        <div class="request-field-content">{{this.postevent}}</div>   
-                    </div>
-
-                    <div class="request-row darkened">
-                         <span class="request-field-label">Description :</span>
-                         <div class="request-field-content">
-                             {{this.description}}
-                         </div>
-                    </div>
-
-                    <div class="request-row">
-                        <span class="request-field-label">Theme :</span>
-                        <div class="request-field-content">{{this.theme}}</div>   
-                    </div>
-
-                    <div class="request-row">
-                        <span class="request-field-label">Venue :</span>
-                        <div class="request-field-content" style="word-break: break-all;">{{this.venue}}</div>   
-                    </div>
-
-                    <div class="request-row">
-                        <span class="request-field-label">Activity Time :</span>
-                        <div class="request-field-content">From {{this.start_date}} {{this.start_time}} <br>to {{this.end_date}} {{this.end_time}} </div>   
-                    </div>
-
-                    <div class="request-row darkened">
-                        <span class="request-field-label">Additional Details :</span>
-                        <div class="request-field-content"> None
+                    <div class="request-row caption editCaptionBox">
+                        <span class="request-field-label">
+                            <button id="edit-caption" class="request btn-edit edit-captionbtn" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
+                            style="background-color: transparent; border: transparent;">
+                                <img style="width: 15px" src="img/edit.png">
+                            </button>
+                            Caption :
+                        </span>
+                        <div class="request-field-content caption-cut">
+                            {{{this.caption}}}
                         </div>   
                     </div>
 
-                    <div class="request-row">
-                        <span class="request-field-label">Comments :</span>
-                        <div class="request-field-content">{{this.comments}}</div>   
-                    </div>
+                    <div class="extra-info hidden">
+                        
+                        <hr class="request">
 
-                    <div class="request-row">
-                        <span class="request-field-label">Special Request :</span>
-                        <div class="request-field-content">{{this.specialRequest}}</div>   
-                    </div>
+                        <div class="request-row">
+                            <span class="request-field-label">Requester:</span>
+                            <div class="request-field-content">{{this.reqname}} ({{this.committee}})</div>   
+                        </div>
 
+                        <div class="request-row">
+                            <span class="request-field-label">Pub Type:</span>
+                            <div class="request-field-content">{{this.pubType}}</div>   
+                        </div>
+
+                        <div class="request-row">
+                            <span class="request-field-label">Post-event:</span>
+                            <div class="request-field-content">{{this.postevent}}</div>   
+                        </div>
+
+                        <div class="request-row darkened">
+                            <span class="request-field-label">Description :</span>
+                            <div class="request-field-content">
+                                {{this.description}}
+                            </div>
+                        </div>
+
+                        <div class="request-row">
+                            <span class="request-field-label">Theme :</span>
+                            <div class="request-field-content">{{this.theme}}</div>   
+                        </div>
+
+                        <div class="request-row">
+                            <span class="request-field-label">Venue :</span>
+                            <div class="request-field-content" style="word-break: break-all;">{{this.venue}}</div>   
+                        </div>
+
+                        <div class="request-row">
+                            <span class="request-field-label">Activity Time :</span>
+                            <div class="request-field-content">From {{this.start_date}} {{this.start_time}} <br>to {{this.end_date}} {{this.end_time}} </div>   
+                        </div>
+
+                        <div class="request-row darkened">
+                            <span class="request-field-label">Additional Details :</span>
+                            <div class="request-field-content"> None
+                            </div>   
+                        </div>
+
+                        <div class="request-row">
+                            <span class="request-field-label">Comments :</span>
+                            <div class="request-field-content">{{this.comments}}</div>   
+                        </div>
+
+                        <div class="request-row">
+                            <span class="request-field-label">Special Request :</span>
+                            <div class="request-field-content">{{this.specialRequest}}</div>   
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-            {{/each}}
+                {{/each}}
+                
+                {{else}}
+                    <div id="no_requests" style="color: grey;font-family: OpenSans-SemiBold;text-align: center;">
+                        no assigned requests...
+                    </div>
+            {{/if}}
 
         </div>
     </div>
