@@ -178,5 +178,4 @@ $(document).ready(function() {
 
         });
     });
-
 });
