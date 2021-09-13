@@ -371,6 +371,10 @@ thead, tbody, tfoot, tr, td, th {
     padding-right: 10px;
 }
 
+td, th{
+    white-space: nowrap;
+}
+
 table{
     padding-top: 20px;
     padding-bottom: 10px;
