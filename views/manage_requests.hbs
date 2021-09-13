@@ -24,7 +24,7 @@
 
         <div class="container-table">
 
-            <table id="example" class="display nowrap" style="width: 100%">
+            <table id="requeststable" class="display nowrap" style="width: 100%">
                 <thead>
                     <tr>
                         <th scope="col" data-priority="3"><div class="thead_label">Activity ID</div></th>
@@ -319,7 +319,7 @@
         } );
  
         $(document).ready(function() {
-            $('#example').DataTable({
+            $('#requeststable').DataTable({
                 columnDefs: [
                     { orderable: false, targets: 7 }
                 ]
