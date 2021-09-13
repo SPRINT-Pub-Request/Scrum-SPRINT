@@ -84,10 +84,11 @@ const mailController = {
                         if(err) {
                             console.log(err);
                             res.send(false);
+                        } else {
+                            console.log("Server has sent all mail, Info: " + info.response);
+                            res.send(true);
                         }
                                         
-                        console.log("Server has sent all mail, Info: " + info.response);
-                        res.send(true);
                     });
 
                 } else {
