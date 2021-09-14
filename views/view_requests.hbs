@@ -34,11 +34,15 @@
                 </select>
                 Sort by Date : 
                 <select id="filter-date" class="request" style='font-family: "OpenSans-Bold", Sans-Serif; border: 1px solid black; border-radius: 4px;'>
-                    <option selected style="display: none"></option>
-                    <option value = "Date Submitted (asc.)">Date Submitted (asc.)</option>
-                    <option value = "Posting Date (asc.)">Posting Date (asc.)</option>
+                    <option value = "Date Submitted (asc.)" selected>Date Submitted (asc.)</option>
                     <option value = "Date Submitted (desc.)">Date Submitted (desc.)</option>
+                    <option value = "Posting Date (asc.)">Posting Date (asc.)</option>
                     <option value = "Posting Date (desc.)">Posting Date (desc.)</option>
+                    <option value = "Start Date (asc.)">Start Date (asc.)</option>
+                    <option value = "Start Date (desc.)">Start Date (desc.)</option>
+                    <option value = "End Date (asc.)">End Date (asc.)</option>
+                    <option value = "End Date (desc.)">End Date (desc.)</option>
+                    <option value = "Alphabetical">Alphabetical</option>
                 </select>
             </div>
             
@@ -77,8 +81,8 @@
                                     [<button class="request btn-edit edit-media" data-bs-toggle="modal" data-bs-target="#editMediaModal">
                                         <img style="width: 15px" src="img/edit.png">
                                     </button>
-                                    <a class = "media_link_href" <!--href="https://www.google.com"-->>Media Link</a> | 
-                                    <a class = "related_files_href" href="google.com">Related Files</a> 
+                                    <a class = "media_link_href" href = "{{this.pubLink}}">Media Link</a> | 
+                                    <a class = "related_files_href" href="">Related Files</a> 
                                     ]
                                 </div>
                             </div>
@@ -155,7 +159,7 @@
 
                         <div class="request-row">
                             <span class="request-field-label">Activity Time :</span>
-                            <div class="request-field-content">From {{this.start_date}} {{this.start_time}} <br>to {{this.end_date}} {{this.end_time}} </div>   
+                            <div class="sded-sort request-field-content">From {{this.start_date}} {{this.start_time}} <br>to {{this.end_date}} {{this.end_time}} </div>   
                         </div>
 
                         <div class="request-row darkened">
