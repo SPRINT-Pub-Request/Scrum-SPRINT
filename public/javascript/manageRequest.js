@@ -37,10 +37,15 @@ $(document).ready(function() {
             $.get('/deleteRequest' , {request_id} , function(result) {
                 if(result) { 
                     alert("Successfully Deleted Request");
-                    location.reload();
-                } else 
+                    $('#request_data tr').each(function() {
+                        if($(this).find(".activity_id").text() === request_id)
+                            $(this).hide();
+                    });
+                } else {
                     alert("An Error Occured, Please Try deleting again later");
                     location.reload();
+                }
+                
             });
                     
         });

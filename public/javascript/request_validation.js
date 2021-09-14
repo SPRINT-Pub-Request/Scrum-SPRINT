@@ -51,7 +51,7 @@ $(document).ready(function(){
             if(result) {
                 $.post('/add_request' , pubRequest , function(result) {
                     if(result) {
-                        alert("Successfully Added Request and Notified Committee");
+                        alert("Successfully Submitted Request and Notified Committee");
                         location.reload(); 
                     } else {
                         alert("Request Failed! Try again!\nERROR: DB Issue");
