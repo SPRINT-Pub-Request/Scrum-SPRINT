@@ -47,25 +47,22 @@ $(document).ready(function(){
             other : $('#type_other_value').val()
         }
         
-        
-        $.post('/add_request' , pubRequest , function(result) {
+        $.get('/sendNewAssign' , pubRequest, function(result) {
             if(result) {
-                $.get('/sendNewAssign' , pubRequest, function(result) {
+                $.post('/add_request' , pubRequest , function(result) {
                     if(result) {
                         alert("Successfully Added Request and Notified Committee");
-                        location.reload();  
+                        location.reload(); 
                     } else {
-                        alert("Request Failed! Try again!");
-                        location.reload();
+                        alert("Request Failed! Try again!\nERROR: DB Issue");
+                        location.reload(); 
                     }
                 });
-            }
-            else {
-                alert("Request Failed! Try again!");
+            } else {
+                alert("Request Failed! Please Contact an Admin!\nERROR: This issue might be an mail issue");
                 location.reload();
             }
         });
-
 
     });
 

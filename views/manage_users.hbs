@@ -41,15 +41,14 @@
                         <th class="btn-col" data-priority="1"></th>
                     </tr>
                 </thead>
-                <tbody id = "users_data">
+                <tbody id = "users_data" class = "users_data">
                     {{#each users_data}}
                     <tr class = "users_info">
-                        <td class = "emailInfo" style="max-width: 14ch;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                            {{this.email}}
+                        <td class = "emailInfo" style="max-width: 14ch;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{this.email}}
                         </td>
                         <td class = "nameInfo">{{this.name}}</td>
-                        <td class = "roleInfo">{{this.role}}</td>
-                        <td>{{this.assigned_committee}}</td>
+                        <td class = "roleInfo" id = "roleInfo">{{this.role}}</td>
+                        <td class = "assigned_committee">{{this.assigned_committee}}</td>
                         <td class="btn-col" scope="row">
                             <button type = "button" class="edit" 
                             data-bs-toggle="modal" data-bs-target="#userdetailsModal"> EDIT </button>
