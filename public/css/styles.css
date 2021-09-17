@@ -11594,13 +11594,14 @@ fieldset:disabled .btn {
     width: 90% !important;
   }
   .container-form {
-    min-width: 90%;
+    min-width: 90% !important;
   }
 }
 
 @media (max-width: 575.98px) {
   .request-item, .request.status-select, .request.btn-expand-info,
-  .pagination, .dataTables_length > label, .dataTables_filter > label {
+  .pagination, .dataTables_length > label, .dataTables_filter > label,
+  label.btn {
     font-size: smaller !important;
   }
   .request-row {
@@ -11622,6 +11623,8 @@ fieldset:disabled .btn {
   .container-form {
     padding: 2px !important;
     min-width: 80%;
+    border: none !important;
+    background: none !important;
   }
   .sidebar-content {
     padding: 3px !important;
@@ -11663,6 +11666,7 @@ label {
 
 .btn-group .btn, .form-row .btn :not(.btn.btn-dark) {
   background: #d2cbe1;
+  overflow: auto;
 }
 
 body {
@@ -11734,7 +11738,6 @@ select.error > option {
 
 .container-content {
   padding: 2%;
-  width: 50%;
 }
 
 .container-sidebar {
