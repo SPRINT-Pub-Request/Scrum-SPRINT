@@ -78,9 +78,12 @@
                                 <span class="activity-name">{{this.activity_name}}</span>
                                 
                                 <div class = "editMediaBox" style="display: inline-block">
-                                    [<button class="request btn-edit edit-media" data-bs-toggle="modal" data-bs-target="#editMediaModal">
+                                    [
+                                    {{#if this.pubsFlag}}
+                                    <button class="request btn-edit edit-media" data-bs-toggle="modal" data-bs-target="#editMediaModal">
                                         <img style="width: 15px" src="img/edit.png">
                                     </button>
+                                    {{/if}}
                                     <a class = "media_link_href" href = "{{this.pubLink}}">Media Link</a> | 
                                     <a class = "related_files_href" href="">Related Files</a> 
                                     ]
@@ -110,10 +113,12 @@
 
                     <div class="request-row caption editCaptionBox">
                         <span class="request-field-label">
+                            {{#if secreFlag}}
                             <button id="edit-caption" class="request btn-edit edit-captionbtn" data-bs-toggle="modal" data-bs-target="#editCaptionModal"
                             style="background-color: transparent; border: transparent;">
                                 <img style="width: 15px" src="img/edit.png">
                             </button>
+                            {{/if}}
                             Caption :
                         </span>
                         <div class="request-field-content caption-cut">

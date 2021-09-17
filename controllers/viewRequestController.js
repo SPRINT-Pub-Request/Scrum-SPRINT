@@ -19,16 +19,28 @@ const viewRequestController = {
                     let mReqFlag = false;
                     let mUserFlag = false;
 
+                    let filter = {};
+
                     if (result.role === "Publicity and Creatives") {
                         viewFlag = true;
-                    } else if (result.role === "Secretariat") {
+                        filter["pubName"] = result.name;
+                    } 
+                    
+                    else if (result.role === "Secretariat") {
                         viewFlag = true;
                         mReqFlag = true;
-                    } else if (result.role === "Administrator") {
+                        filter["secName"] = result.name;
+                    } 
+                    
+                    else if (result.role === "Administrator") {
                         viewFlag = true;
                         mReqFlag = true;
                         mUserFlag = true;
+                        filter["pubName"] = result.name;
+                        filter["secName"] = result.name;
                     }
+
+
 
                     request_data = [];
 
@@ -37,7 +49,7 @@ const viewRequestController = {
                     console.log(temp_ac);
                     console.log('=================');
 
-                    db.findMany(PubRequest , {} , {} , function(result){
+                    db.findMany(PubRequest , filter , {} , function(result){
                         for (i of result) {
                                 if(temp_ac.includes(i.committee)){
                                 let temp_data = {};
@@ -69,6 +81,20 @@ const viewRequestController = {
                                 temp_data["secName"] = i.secName;
                                 temp_data["caption"] = i.caption;
                                 temp_data["status"] = i.status;
+
+                                temp_data["secreFlag"] = false;
+                                temp_data["pubsFlag"] = false;
+
+                                if(req.session.role === "Secretariat"){
+                                    temp_data["secreFlag"] = true;
+                                }
+                                else if (req.session.role === "Publicity and Creatives"){
+                                    temp_data["pubsFlag"] = true;
+                                }
+                                else if (req.session.role === "Administrator"){
+                                    temp_data["pubsFlag"] = true;
+                                    temp_data["secreFlag"] = true;
+                                }
 
                                 if (temp_data['comments'] === ''){
                                     temp_data['commnets'] = 'None';
