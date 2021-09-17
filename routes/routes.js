@@ -18,7 +18,7 @@ app.get('/'  , loginController.getIndex);
 app.get('/failed' , loginController.loginFailed);
 
 // Request Controllers
-app.post('/add_request', requestController.postRequest);
+app.get('/post_request', requestController.addRequest);
 app.get('/add_request' ,  requestController.getIndex)
 app.get('/manage_requests' ,  requestController.getManageReq);
 app.get('/getPubRequest' , requestController.getPubRequest);

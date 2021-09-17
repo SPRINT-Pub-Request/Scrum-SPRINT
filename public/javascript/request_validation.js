@@ -46,7 +46,17 @@ $(document).ready(function(){
             specialRequest : $('#specialRequest').val(),
             other : $('#type_other_value').val()
         }
-        
+
+        $.get('/post_request' , pubRequest , function(result) {
+            if(result) {
+                alert("Successfully Submitted Request and Notified Committee");
+                location.reload(); 
+            } else {
+                alert("Request Failed! Try again!\nERROR: DB Issue");
+                location.reload(); 
+            }
+        });
+        /*
         $.get('/sendNewAssign' , pubRequest, function(result) {
             if(result) {
                 $.post('/add_request' , pubRequest , function(result) {
@@ -62,7 +72,7 @@ $(document).ready(function(){
                 alert("Request Failed! Please Contact an Admin!\nERROR: This issue might be an mail issue");
                 location.reload();
             }
-        });
+        });*/
 
     });
 

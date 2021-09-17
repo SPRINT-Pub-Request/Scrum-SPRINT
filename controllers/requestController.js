@@ -392,28 +392,27 @@ const requestController = {
 
     },
 
-    postRequest: (req, res) => {
+    addRequest: (req, res) => {
 
         try {
-
             db.findOne(Settings , {} , {} , function(result) {
-                const reqname = req.body.reqname;
-                const committee = req.body.committee;
-                const activity_name = req.body.activity_name;
-                const description = req.body.description;
-                const start_date = req.body.start_date;
-                const start_time = req.body.start_time;
-                const end_date = req.body.end_date;
-                const end_time = req.body.end_time;
-                const venue = req.body.venue;
-                const theme = req.body.theme;
-                const posting_date = req.body.posting_date;
-                const posting_time = req.body.posting_time;
-                const postevent = req.body.postevent;
-                const links = req.body.files_url;
-                const details = req.body.details;
-                const comments = req.body.comments;
-                const specialRequest = req.body.specialRequest;
+                const reqname = req.query.reqname;
+                const committee = req.query.committee;
+                const activity_name = req.query.activity_name;
+                const description = req.query.description;
+                const start_date = req.query.start_date;
+                const start_time = req.query.start_time;
+                const end_date = req.query.end_date;
+                const end_time = req.query.end_time;
+                const venue = req.query.venue;
+                const theme = req.query.theme;
+                const posting_date = req.query.posting_date;
+                const posting_time = req.query.posting_time;
+                const postevent = req.query.postevent;
+                const links = req.query.links;
+                const details = req.query.details;
+                const comments = req.query.comments;
+                const specialRequest = req.query.specialRequest;
                 const request_id = (parseInt(result.id_given) + 1).toString();
                 
                 db.updateOne(Settings , {} , {
@@ -422,10 +421,10 @@ const requestController = {
                     }
                 } , function(result) {});
                 
-                let pubType = req.body.pubType;
+                let pubType = req.query.pubType;
                 
                 if(pubType == 'other') {
-                    pubType = req.body.Other;
+                    pubType = req.query.other;
                 }
 
                 const today = new Date();
@@ -449,7 +448,7 @@ const requestController = {
                     posting_date,
                     posting_time,
                     postevent,
-                    links,
+                    links : links,
                     details,
                     comments,
                     specialRequest,
@@ -480,6 +479,7 @@ const requestController = {
                 console.log("specialRequest: " + specialRequest);
                 console.log("Pub Type: " + pubType);
                 console.log("Post Event: " + postevent);
+                console.log("Links : " + links);
                 
                 db.insertOne(PubRequest, pubrequest, function(flag) {
                     console.log(flag);
