@@ -138,12 +138,26 @@ $(document).ready(function(){
             return false;
     }
 
+    function isValidLink (){
+        const link = $("#files_url").val();
+
+        if (validator.isEmpty(link)){
+            return true;
+        }
+        else{
+            if (link.substring(0,8) === "https://"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
 
     function validateField (field, fieldName, error){
         const value = validator.trim(field.val());
         const empty = validator.isEmpty(value);
-
-        const tempError = $('#error')
         
         if(empty) {
             field.prop('value', '');
@@ -154,10 +168,10 @@ $(document).ready(function(){
         
         const filled = isFilled();
         const datesValid = isValidEventDates(field);
+        const validLink = isValidLink();
     
-        //tempError.text(filled + " " + datesValid);
 
-        if (filled && datesValid) {
+        if (filled && datesValid && validLink) {
             $('#submit').prop('disabled', false);
         } else {
             $('#submit').prop('disabled', true);
@@ -235,6 +249,10 @@ $(document).ready(function(){
     });
 
     $('#type_other_value').keyup(function () {
+        validateField($('#type_other_value'), 'Other', $('#usernameError'));
+    });
+
+    $('#files_url').keyup(function () {
         validateField($('#type_other_value'), 'Other', $('#usernameError'));
     });
 });
