@@ -56,6 +56,22 @@ $(document).ready(function() {
         $("#edit-media-input").val(mediaEdit.attr("href"));
     });
 
+    $(".editMediaBox").on('click', '.media_link_href', function(){
+        if($(this).attr("href") === "N/A"){
+            alert("No Media Link");
+            return false;
+        }
+    });
+
+    $(".editMediaBox").on('click', '.related_files_href', function(){
+        if($(this).attr("href") === ""){
+            alert("No Related Files Link");
+            return false;
+        }
+    });
+
+
+
     $("#edit-media-input").keyup(function(){
         const link = $("#edit-media-input").val();
         if (link.substring(0,8) === "https://"){

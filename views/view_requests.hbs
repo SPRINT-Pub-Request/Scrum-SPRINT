@@ -85,7 +85,7 @@
                                     </button>
                                     {{/if}}
                                     <a class = "media_link_href" href = "{{this.pubLink}}">Media Link</a> | 
-                                    <a class = "related_files_href" href="">Related Files</a> 
+                                    <a class = "related_files_href" href="{{this.links}}">Related Files</a> 
                                     ]
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
 
                         <div class="request-row darkened">
                             <span class="request-field-label">Additional Details :</span>
-                            <div class="request-field-content"> None
+                            <div class="request-field-content"> {{this.details}}
                             </div>   
                         </div>
 

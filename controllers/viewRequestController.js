@@ -36,8 +36,6 @@ const viewRequestController = {
                         viewFlag = true;
                         mReqFlag = true;
                         mUserFlag = true;
-                        filter["pubName"] = result.name;
-                        filter["secName"] = result.name;
                     }
 
 
