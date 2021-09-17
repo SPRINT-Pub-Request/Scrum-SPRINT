@@ -7,6 +7,8 @@ $(document).ready(function() {
     let captionEdit;
     let filter = "all";
 
+    $('.request-item').sort(filterSDAscending).appendTo('.container-requests');
+
     $('.status').each(function(){
         var status = $(this).val();
         
@@ -51,6 +53,7 @@ $(document).ready(function() {
     $(".editMediaBox").on('click', '.edit-media', function(){
         idModalAccess = $(this).parent().parent().siblings(".request_id_hidden").text();
         mediaEdit = $(this).siblings(".media_link_href");
+        $("#edit-media-input").val(mediaEdit.attr("href"));
     });
 
     $("#edit-media-input").keyup(function(){
@@ -150,18 +153,34 @@ $(document).ready(function() {
         else if (filter === "Date Submitted (desc.)"){
             $('.request-item').sort(filterSDDescending).appendTo('.container-requests');
         }
-        
-        $('.request-item').sort(filterByDate).appendTo('.container-requests');
+        else if (filter === "Start Date (asc.)"){
+            $('.request-item').sort(filterStartDAscending).appendTo('.container-requests');
+        }
+        else if (filter === "Start Date (desc.)"){
+            $('.request-item').sort(filterStartDDescending).appendTo('.container-requests');
+        }
+        else if (filter === "End Date (asc.)"){
+            $('.request-item').sort(filterEndDAscending).appendTo('.container-requests');
+        }
+        else if (filter === "End Date (desc.)"){
+            $('.request-item').sort(filterEndDDescending).appendTo('.container-requests');
+        }
+        else if (filter === "Alphabetical"){
+            $('.request-item').sort(filterAlphabetical).appendTo('.container-requests');
+        }
     });
+
+    //POSTING DATE FILTER
 
     function filterPDDescending (a, b){
 
-        var date1 = $(a).find(".posting_date_sort").text();
+        let date1 = $(a).find(".posting_date_sort").text();
         date1 = date1.split('-');
-        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
-        var date2 = $(b).find(".posting_date_sort").text();
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+
+        let date2 = $(b).find(".posting_date_sort").text();
         date2 = date2.split('-');
-        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
 
 
         return date2 - date1;
@@ -169,25 +188,28 @@ $(document).ready(function() {
 
     function filterPDAscending(a, b){
 
-        var date1 = $(a).find(".posting_date_sort").text();
+        let date1 = $(a).find(".posting_date_sort").text();
         date1 = date1.split('-');
-        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
-        var date2 = $(b).find(".posting_date_sort").text();
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+
+        let date2 = $(b).find(".posting_date_sort").text();
         date2 = date2.split('-');
-        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
 
 
         return date1 - date2;
     }
 
+    //SUBMITTED DATE FILTER
+
     function filterSDDescending (a, b){
 
-        var date1 = $(a).find(".submitted_date_sort").text();
+        let date1 = $(a).find(".submitted_date_sort").text();
         date1 = date1.split('-');
-        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
-        var date2 = $(b).find(".submitted_date_sort").text();
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+        let date2 = $(b).find(".submitted_date_sort").text();
         date2 = date2.split('-');
-        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
 
 
         return date2 - date1;
@@ -195,18 +217,95 @@ $(document).ready(function() {
 
     function filterSDAscending(a, b){
 
-        var date1 = $(a).find(".submitted_date_sort").text();
+        let date1 = $(a).find(".submitted_date_sort").text();
         date1 = date1.split('-');
-        date1 = new Date(date1[2], date1[1] - 1, date1[0]);
-        var date2 = $(b).find(".submitted_date_sort").text();
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+        let date2 = $(b).find(".submitted_date_sort").text();
         date2 = date2.split('-');
-        date2 = new Date(date2[2], date2[1] - 1, date2[0]);
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
 
 
         return date1 - date2;
     }
 
+    //START DATE FILTER
+    
+    function filterStartDAscending(a, b){
 
+        const text1 = $(a).find(".sded-sort").text().split(" ")[1];
+        const text2 = $(b).find(".sded-sort").text().split(" ")[1];
+        
+        let date1 = text1.split('-');
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+
+        let date2 = text2.split('-');
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
+
+
+        return date1 - date2;
+    }
+
+    function filterStartDDescending(a, b){
+
+        const text1 = $(a).find(".sded-sort").text().split(" ")[1];
+        const text2 = $(b).find(".sded-sort").text().split(" ")[1];
+        
+        let date1 = text1.split('-');
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+
+        let date2 = text2.split('-');
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
+
+
+        return date2 - date1;
+    }
+
+
+    //END DATE FILTER
+
+    function filterEndDAscending(a, b){
+
+        const text1 = $(a).find(".sded-sort").html().split(" ")[6];
+        const text2 = $(b).find(".sded-sort").html().split(" ")[6];
+        
+        let date1 = text1.split('-');
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+
+        let date2 = text2.split('-');
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
+
+
+        return date1 - date2;
+    }
+
+    function filterEndDDescending(a, b){
+
+        const text1 = $(a).find(".sded-sort").html().split(" ")[6];
+        const text2 = $(b).find(".sded-sort").html().split(" ")[6];
+        
+        let date1 = text1.split('-');
+        date1 = new Date(date1[0], date1[1] - 1, date1[2]);
+
+        let date2 = text2.split('-');
+        date2 = new Date(date2[0], date2[1] - 1, date2[2]);
+
+
+        return date2 - date1;
+    }
+
+    //ALPHABETICAL FILTER
+
+    function filterAlphabetical(a, b){
+
+        const name1 = $(a).find(".activity-name").text();
+        const name2 = $(b).find(".activity-name").text();
+
+        if (name1 > name2){
+            return 1;
+        }
+        else (name2 > name1)
+            return -1;
+    }
 });
 
 $.fn.infotoggle = function(a, b) {

@@ -70,11 +70,6 @@ const viewRequestController = {
                                 temp_data["caption"] = i.caption;
                                 temp_data["status"] = i.status;
 
-
-                                //const tempCaption = i.caption;
-                                //const parser = new DOMParser();
-                                //temp_data["caption"] = parser.parseFromString(tempCaption, 'text/html');
-
                                 if (temp_data['comments'] === ''){
                                     temp_data['commnets'] = 'None';
                                 }

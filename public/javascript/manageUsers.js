@@ -25,15 +25,24 @@ $(document).ready(function () {
         }
     });
 
+    $('#filter-requesters').on('click' , function() {
+        $('#users_data').each(function() {
+            
+            const role = $(this).children().siblings('.roleInfo').text().trim();
+            if(role === "Requester") 
+                $(this).hide();
+        });
+    });
+
 
     $('#users_data').on('click', '.delete', function () {
 
-        emailUser = $(this).parent().siblings('.emailInfo').text();
+        emailUser = $(this).parent().siblings('.emailInfo').text().trim();
 
-        const role = $(this).parent().siblings('.roleInfo').text();
+        const role = $(this).parent().siblings('.roleInfo').text().trim();
 
         const user = {
-            name : $(this).parent().siblings('.nameInfo').text()
+            name : $(this).parent().siblings('.nameInfo').text().trim()
         } 
 
         $.get('/checkInProgress' , user , function(result) {
@@ -77,8 +86,8 @@ $(document).ready(function () {
     $('#btn-save').click(function(){
         
         const committees = ["Activities", "Finance","HRD","Externals","TND","P-EVP","SocioCivic", "Secretariat"]
-        const email = $('#userEmail').text();
-        const role = $('#role').val();
+        const email = $('#userEmail').text().trim();
+        const role = $('#role').val().trim();
         let assigned_committee = "";
 
         for (let i = 0; i < committees.length; i++){
@@ -99,8 +108,14 @@ $(document).ready(function () {
         $.get('/checkCommittee' , user , function(res) {
             if(res == false) {
                 $.get('/updateUser', user, function(result) {       
-        
-                    location.reload();
+                    
+                    $('tr.users_info').each(function() {
+                        if(user.email == $(this).find('.emailInfo').text().trim()){
+                            $(this).find('.roleInfo').text(user.role);
+                            $(this).find('.assigned_committee').text(user.assigned_committee);
+                        }
+                    });
+
                     if(result) {
                         $.get('/sendNotif' , user , function(ans) {
                             alert(ans);
@@ -154,11 +169,11 @@ $(document).ready(function () {
 
     $('#users_data').on('click', '.edit', function () {
         //your code here
-        const email = $(this).parent().siblings('.emailInfo').text();
+        const email = $(this).parent().siblings('.emailInfo').text().trim();
         emailUser = email;
-        const role = $(this).parent().siblings('.roleInfo').text();
+        const role = $(this).parent().siblings('.roleInfo').text().trim();
         userRole = role;
-        const name = $(this).parent().siblings('.nameInfo').text();
+        const name = $(this).parent().siblings('.nameInfo').text().trim();
         $.get('/getUser', {email: email}, function(result){
             userRole = result.role;
 
@@ -307,9 +322,27 @@ $(document).ready(function () {
 
     var hide = function() { 
         $("#filter-requesters").html('Show Requesters');
+
+        $('tr.users_info').each(function() {
+            
+            const role = $(this).children('.roleInfo').text();
+
+            if(role === "Requester") 
+                $(this).hide();
+        
+        });
+
+
     }
     var show = function() { 
         $("#filter-requesters").html('Hide Requesters');
+
+        $('tr.users_info').each(function() {
+            
+            $(this).show();
+        
+        });
+            
     }
 
     $('#filter-requesters').showtoggle(hide, show);
