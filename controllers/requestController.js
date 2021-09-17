@@ -106,6 +106,7 @@ const requestController = {
                             temp_data["secName"] = i.secName;
                             temp_data["caption"] = i.caption;
                             temp_data["status"] = i.status;
+                            temp_data["submitted_date"] = i.submitted_date;
                             
                             request_data.push(temp_data);
                         }
