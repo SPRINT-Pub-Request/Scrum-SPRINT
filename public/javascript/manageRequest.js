@@ -5,6 +5,27 @@ $(document).ready(function() {
             $('.bi-trash-fill').css("visibility" , "hidden");
     });
 
+    $('#requeststable tbody tr').each(function(){
+        var status = $(this).children('.status-col').text();
+
+        console.log(status);
+        
+        switch(status){
+            case "Not Started" :
+                $(this).css("background", "#c9462873");
+                break;
+
+            case "In Progress" : 
+                $(this).css("background", "#dd975e73");
+                break;
+
+            case "Finished" : 
+                $(this).css("background", "#50937573");
+                break;
+        }
+
+    });
+
 
     let Modal = document.getElementById('requestdetailsModal');
     
@@ -66,8 +87,13 @@ $(document).ready(function() {
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
-                alert("Successfully Updated Changes!")
-                location.reload();
+                //alert("Successfully Updated Changes!")
+                $('.notif').show().delay(1500).fadeOut();
+                setTimeout(
+                    function() 
+                    {
+                        location.reload();
+                    }, 1900);
             }
             else {
                 alert("An Error Occured, Nothing was Updated \nPlease Try again later");

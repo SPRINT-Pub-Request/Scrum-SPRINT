@@ -11527,6 +11527,9 @@ fieldset:disabled .btn {
   .container-form {
     min-width: 60%;
   }
+  ul > li > .dtr-title > .thead_label {
+    width: 200px !important;
+  }
 }
 
 @media (max-width: 1199.98px) {
@@ -11573,6 +11576,9 @@ fieldset:disabled .btn {
   ::-webkit-input-placeholder,
   ::-moz-placeholder {
     font-size: small;
+  }
+  ul > li > .dtr-title > .thead_label {
+    width: 170px !important;
   }
   .inline-warning > div {
     margin-left: 0px !important;
@@ -11650,7 +11656,7 @@ h1, .h1, h2, .h2, h5, .h5 {
   font-family: NexaBold;
 }
 
-h3, .h3, h4, .h4, .notif,
+h3, .h3, h4, .h4, .notif, .status-col,
 .btn.btn-dark, .btn-delete {
   font-family: OpenSans-Bold;
 }

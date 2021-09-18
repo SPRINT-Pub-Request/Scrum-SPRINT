@@ -33,6 +33,10 @@ $dark: #1D1A1A;
     .container-form{
         min-width: 60%;
     }
+
+    ul > li > .dtr-title > .thead_label{
+        width: 200px !important;
+    }
 }
 
 @include media-breakpoint-down(xl) {
@@ -79,6 +83,10 @@ $dark: #1D1A1A;
     ::-webkit-input-placeholder,
     ::-moz-placeholder {
         font-size: small;
+    }
+
+    ul > li > .dtr-title > .thead_label{
+        width: 170px !important;
     }
 
     .inline-warning > div{
@@ -170,7 +178,7 @@ h1,h2,h5{
     font-family: NexaBold;
 }
 
-h3,h4, .notif,
+h3,h4, .notif, .status-col,
 .btn.btn-dark, .btn-delete{
     font-family: OpenSans-Bold;
 }
