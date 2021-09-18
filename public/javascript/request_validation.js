@@ -56,7 +56,7 @@ $(document).ready(function(){
                 location.reload(); 
             }
         });
-        /*
+        
         $.get('/sendNewAssign' , pubRequest, function(result) {
             if(result) {
                 $.post('/add_request' , pubRequest , function(result) {
@@ -72,7 +72,7 @@ $(document).ready(function(){
                 alert("Request Failed! Please Contact an Admin!\nERROR: This issue might be an mail issue");
                 location.reload();
             }
-        });*/
+        });
 
     });
 

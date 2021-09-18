@@ -384,7 +384,11 @@ const requestController = {
             const request_id = req.query.request_id;
 
             db.deleteOne(PubRequest , {request_id : request_id}  , function(result) {
-                res.send(result);
+                if(result) {
+                    res.send(request_id);
+                } else {
+                    res.send(result);
+                }
             });
         } catch(err) {
             console.log(err);

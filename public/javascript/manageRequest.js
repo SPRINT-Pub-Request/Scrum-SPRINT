@@ -32,14 +32,16 @@ $(document).ready(function() {
 
     $('#request_data').on('click' , '#btn_delete' , function() {
         const request_id = $(this).parent().siblings('.activity_id').text();
-        
+
         $('#btnRemoveRequest').on('click' , function() {
             $.get('/deleteRequest' , {request_id} , function(result) {
-                if(result) { 
-                    alert("Successfully Deleted Request");
+                if(result === request_id) { 
                     $('#request_data tr').each(function() {
-                        if($(this).find(".activity_id").text() === request_id)
+                        if($(this).children(".activity_id").text() === request_id){
+                            alert("Successfully Deleted Request");
                             $(this).hide();
+                            $(this).remove();
+                        }
                     });
                 } else {
                     alert("An Error Occured, Please Try deleting again later");
