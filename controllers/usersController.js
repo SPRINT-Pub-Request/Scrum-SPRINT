@@ -271,18 +271,17 @@ const usersController = {
 
     },
 
-    addUser : (req, res) => {
-
+    addUser: (req, res) => {
 
         const email = req.query.email;
         const role = req.query.role;
-
+        
         db.findOne(User ,  {email : email}, {} , function(result) {
-            if(result){
+            if(result) {
                 console.log('User exists');
                 res.send(null)
             }
-            else{
+            else {
                 user = {
                     userID : "",
                     name : "Not Signed In Yet",
@@ -298,7 +297,7 @@ const usersController = {
                 });
             }
         });
-    }
+    },
 }
 
 module.exports = usersController;
