@@ -168,6 +168,7 @@ const viewRequestController = {
         changes = {
             pubLink : req.query.pubLink
         }
+
         db.updateOne(PubRequest, {request_id: req.query.request_id}, changes, function(result){
             res.send(result);
         });
