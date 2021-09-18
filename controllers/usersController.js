@@ -180,12 +180,14 @@ const usersController = {
                                     } else {
                                         res.send(false);
                                     }
-                                } else 
+                                } else {
                                     res.send(false);
+                                }
                             });
                         }
-                    } else 
+                    } else {
                         res.send(false);
+                    }
                         
                 });
             } else {

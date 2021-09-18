@@ -84,14 +84,19 @@ $(document).ready(function() {
         const request_id = $(this).parent().siblings('.activity_id').text();
     
         $.get('/getPubRequest' , {request_id}, (result) => {
-
-
+            
             $('#medialink').val(result.pubLink);
             $('#status').val(result.status);
-            $('#caption').val(result.caption);
+            
+            var caption = result.caption;
+
+            caption = $(caption)[0].textContent;
+
+            $('#caption').val(caption);  
+            
             $('#assignPub').val(result.pubName);
             $('#assignSec').val(result.secName);
-
+            $('.dateSub').text(result.start_date.split('T')[0]);
             $('#req_id').val(result.request_id);
             $('#reqname').val(result.reqname);
             $('#committee').val(result.committee);

@@ -2,7 +2,19 @@ $(document).ready(function () {
 
     let emailUser = "";
     let userRole = "";
-    
+
+    const user = {
+        name : $(this).find('.nameInfo').text().trim()
+    } 
+
+    $.get('/checkInProgress' , user , function(result) {
+        if(result) {
+            $('.inprogressInfo').text("Yes");
+        } else {
+            $('.inprogressInfo').text("No");
+        }
+    });
+
     $.get('/getNoAssigned' , {} , function(result){
         const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
         let committee = [];
@@ -46,9 +58,8 @@ $(document).ready(function () {
         } 
 
         $.get('/checkInProgress' , user , function(result) {
-            if(result === false) {
-
-                if(role === 'Administrator'){   
+            if(result == false) {
+                if(role === "Administrator"){   
                     $.get('/checkAdmins', {email: emailUser}, function(result) {
                         if (result.length == 1){
                             $("#removeuserModal").modal('hide');
@@ -76,9 +87,21 @@ $(document).ready(function () {
         const email = emailUser;
         $.get('/deleteUser', {email: email}, function(result){
             if(result)
-                alert("Successfully Removed User");
-                
-            location.reload();
+            {
+                const email = emailUser;
+                $.get('/sendDeletedNotif' , {email : email} , function(result) {
+                   if(result) {
+                        alert("Successfully Deleted User and Notified");
+                        location.reload();
+                   } else {
+                        alert("Failed to Delete User\n ERROR for Admins: This might be a email issue");
+                        location.reload();
+                   }
+                });
+            } else {
+                alert("Failed to Delete User\n ERROR for Admins: This might be a backend issue");
+                location.reload();
+            }
         });
     });
 
@@ -143,7 +166,7 @@ $(document).ready(function () {
         //Modal on Close event handler
 
         $('#userEmail').text("Loading...");
-            $('#userName').text("Loading...");
+        $('#userName').text("Loading...");
         $('#committee').prop('disabled', true);
         $('#role').prop('disabled', true);
 
