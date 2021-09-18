@@ -5,6 +5,26 @@ $(document).ready(function() {
             $('.bi-trash-fill').css("visibility" , "hidden");
     });
 
+    $('#requeststable tbody tr').each(function(){
+        var status = $(this).children('.status-col').text();
+
+        alert(status);
+
+        switch(status){
+            case "Not Started" :
+                $(this).css("background", "#c9462873");
+                break;
+
+            case "In Progress" : 
+                $(this).css("background", "#dd975e73");
+                break;
+
+            case "Finished" : 
+                $(this).css("background", "#50937573");
+                break;
+        }
+
+    });
 
     let Modal = document.getElementById('requestdetailsModal');
     
