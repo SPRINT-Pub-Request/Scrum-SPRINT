@@ -48,12 +48,13 @@ $(document).ready(function(){
         }
 
         $.get('/post_request' , pubRequest , function(result) {
-            if(result) {
-                alert("Successfully Submitted Request and Notified Committee");
-                location.reload(); 
+            if(result) {    
+                //alert("Successfully Submitted Request and Notified Committee");
+                $('.notif').show().delay(3000).fadeOut();
+                clearAll(); 
             } else {
                 alert("Request Failed! Try again!\nERROR: DB Issue");
-                location.reload(); 
+                location.reload();
             }
         });
         
@@ -61,8 +62,9 @@ $(document).ready(function(){
             if(result) {
                 $.post('/add_request' , pubRequest , function(result) {
                     if(result) {
-                        alert("Successfully Submitted Request and Notified Committee");
-                        location.reload(); 
+                        //alert("Successfully Submitted Request and Notified Committee");
+                        $('.notif').show().delay(3000).fadeOut();
+                        clearAll(); 
                     } else {
                         alert("Request Failed! Try again!\nERROR: DB Issue");
                         location.reload(); 
@@ -75,6 +77,20 @@ $(document).ready(function(){
         });
 
     });
+
+    function clearAll(){
+        $('#reqname').val(''),
+        $('#committee').val(''),
+        $('#activity_name').val(''),
+        $('#description').val(''),
+        $('#venue').val(''),
+        $('#theme').val(''),
+        $('#files_url').val(''),
+        $('#details').val(''),
+        $('#comments').val(''),
+        $('#specialRequest').val(''),
+        $('#type_other_value').val('')
+    }
 
     function isFilled(){
 

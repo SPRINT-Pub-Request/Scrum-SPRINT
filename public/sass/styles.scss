@@ -115,7 +115,7 @@ $dark: #1D1A1A;
         font-size: smaller !important;
     }
     
-    .request-row{
+    .request-row, .notif{
         font-size: 12px !important;
     }
 
@@ -170,7 +170,7 @@ h1,h2,h5{
     font-family: NexaBold;
 }
 
-h3,h4,
+h3,h4, .notif,
 .btn.btn-dark, .btn-delete{
     font-family: OpenSans-Bold;
 }
@@ -602,6 +602,16 @@ hr.request{
     margin-left: 10px;
     padding-left: 10px;
     border-left: 2px solid white;
+}
+
+.notif{
+    position:fixed; 
+    background:#0000008f; 
+    border-radius: 5px;
+    right: 20px; 
+    bottom: 20px; 
+    padding:10px;
+    color: white;
 }
 
 .hidden{
