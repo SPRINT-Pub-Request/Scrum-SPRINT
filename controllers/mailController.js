@@ -14,6 +14,38 @@ const transporter = nodemailer.createTransport( {
 
 const mailController = {
 
+    sendDeletedNotif: (req , res) => {
+        try {
+
+            const query = {
+                email : req.query.email
+            }
+            
+            const options = {
+                    from : process.env.MAIL_AUTHEMAIL,
+                    to : query.email,
+                    subject : "Account Changes",
+                    text : "Good day!" + " \nThis is to notify you that your account has been deleted"
+            }
+
+            transporter.sendMail(options, (err , info) => {
+                if(err) {
+                    console.log(err);
+                    res.send(false);
+                } 
+                
+                console.log("Server has sent mail, Info: " + info.response);
+                res.send(true);
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect(false);
+        }
+
+
+    },
+
     sendNotif: (req , res) => {
 
         try {
@@ -75,7 +107,7 @@ const mailController = {
                         from : process.env.MAIL_AUTHEMAIL,
                         to : users,
                         subject : "Request Added to your Assigned Committee",
-                        text : "Good day " +  "!\nThis is to notify you there is a new request in your assigned committee \n\n"
+                        text : "Good day" +  "!\nThis is to notify you there is a new request in your assigned committee \n\n"
                     }
 
                     transporter.sendMail(options, (err , info) => {

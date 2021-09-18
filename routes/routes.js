@@ -50,5 +50,6 @@ app.get('/updateCaption', viewRequestController.updateCaption);
 // Mail Controllers
 app.get('/sendNotif' , mailController.sendNotif);
 app.get('/sendNewAssign' , mailController.sendNewAssign);
+app.get('/sendDeletedNotif' , mailController.sendDeletedNotif);
 
 module.exports = app;

@@ -84,20 +84,20 @@ $(document).ready(function() {
         const request_id = $(this).parent().siblings('.activity_id').text();
     
         $.get('/getPubRequest' , {request_id}, (result) => {
-
-
+            
+            
+            var date = result.start_date.split('T')[0];
             $('#medialink').val(result.pubLink);
             $('#status').val(result.status);
-            $('#caption').val(result.caption);
             $('#assignPub').val(result.pubName);
             $('#assignSec').val(result.secName);
-
+            $('.dateSub').text(date);
             $('#req_id').val(result.request_id);
             $('#reqname').val(result.reqname);
             $('#committee').val(result.committee);
             $('#activity_name').val(result.activity_name);
             $('#description').val(result.description);
-            $('#start_date').val(result.start_date.split('T')[0]);
+            $('#start_date').val(date);
             $('#start_time').val(result.start_time);
             $('#end_date').val(result.end_date.split('T')[0]);
             $('#end_time').val(result.end_time);
@@ -109,6 +109,8 @@ $(document).ready(function() {
             $('#details').text(result.details);
             $('#comments').text(result.comments);
             $('#specialRequest').text(result.specialRequest);
+            $('#caption').val(result.caption.replace(/(<([^>]+)>)/ig,""));
+            
 
             const pubTypes = ["#type_poster" , "#type_album" , "#type_video" , "#type_fbcover"]
             let other = false;
