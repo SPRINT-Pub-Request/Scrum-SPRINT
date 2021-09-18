@@ -5,6 +5,24 @@ $(document).ready(function() {
             $('.bi-trash-fill').css("visibility" , "hidden");
     });
 
+    $('#requeststable tbody tr').each(function(){
+        var status = $(this).children('.status-col').text();
+
+        switch(status){
+            case "Not Started" :
+                $(this).css("background", "#c9462873");
+                break;
+
+            case "In Progress" : 
+                $(this).css("background", "#dd975e73");
+                break;
+
+            case "Finished" : 
+                $(this).css("background", "#50937573");
+                break;
+        }
+
+    });
 
     let Modal = document.getElementById('requestdetailsModal');
     
@@ -85,24 +103,19 @@ $(document).ready(function() {
     
         $.get('/getPubRequest' , {request_id}, (result) => {
             
+            
+            var date = result.start_date.split('T')[0];
             $('#medialink').val(result.pubLink);
             $('#status').val(result.status);
-            
-            var caption = result.caption;
-
-            caption = $(caption)[0].textContent;
-
-            $('#caption').val(caption);  
-            
             $('#assignPub').val(result.pubName);
             $('#assignSec').val(result.secName);
-            $('.dateSub').text(result.start_date.split('T')[0]);
+            $('.dateSub').text(date);
             $('#req_id').val(result.request_id);
             $('#reqname').val(result.reqname);
             $('#committee').val(result.committee);
             $('#activity_name').val(result.activity_name);
             $('#description').val(result.description);
-            $('#start_date').val(result.start_date.split('T')[0]);
+            $('#start_date').val(date);
             $('#start_time').val(result.start_time);
             $('#end_date').val(result.end_date.split('T')[0]);
             $('#end_time').val(result.end_time);
@@ -114,6 +127,8 @@ $(document).ready(function() {
             $('#details').text(result.details);
             $('#comments').text(result.comments);
             $('#specialRequest').text(result.specialRequest);
+            $('#caption').val(result.caption.replace(/(<([^>]+)>)/ig,""));
+            
 
             const pubTypes = ["#type_poster" , "#type_album" , "#type_video" , "#type_fbcover"]
             let other = false;

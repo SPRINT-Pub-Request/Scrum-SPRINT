@@ -34,6 +34,8 @@
                         <th scope="col" data-priority="2"><div class="thead_label">Status</div></th>
                         <th scope="col"><div class="thead_label">Assigned Pubs</div></th>
                         <th scope="col"><div class="thead_label">Assigned Secretariat</div></th>
+                        <th scope="col"><div class="thead_label">Media Link</div></th>
+                        <th scope="col"><div class="thead_label">Caption</div></th>
                         <th class="btn-col" data-priority="1"></th>
                     </tr>
                 </thead>
@@ -42,13 +44,15 @@
                     <tr>
                         <td class = "activity_id">{{this.request_id}}</td>
                         <td class = "activity_name" style="max-width: 14ch;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                            {{this.activity_name}}
+                            <div class="table-data-cut">{{this.activity_name}}</div>
                         </td>
                         <td>{{this.submitted_date}} </td>
                         <td>{{this.posting_date}} {{this.posting_time}}</td>
-                        <td>{{this.status}}</td>
-                        <td>{{this.pubName}}</td>
-                        <td>{{this.secName}}</td>
+                        <td class="status-col">{{this.status}}</td>
+                        <td><div class="table-data-cut">{{this.pubName}}</div></td>
+                        <td><div class="table-data-cut">{{this.secName}}</div></td>
+                        <td>{{this.pubLink}}</td>
+                        <td><div class="table-data-cut">{{this.caption}}</div></td>
                         <td class="btn-col" scope="row">
                             <a class="edit"
                             data-bs-toggle="modal" data-bs-target="#requestdetailsModal">+Details</a>
@@ -77,7 +81,7 @@
                     <form method = "post" action = "/add_request">
                         <div class="col form-row"><label>Date Submitted:</label> <label class = "dateSub"> ... </label> </div>
                         <div class="row form-row">
-                            <div class="col">
+                            <div class="col col-md-">
                                 <label for="status">Status</label>
                                 <select style='font-family: "OpenSans-Bold", Sans-Serif;' class="form-select"  id = "status" name = "status" disabled>
                                     <option class="not_started" value = "Not Started">Not Started</option>
@@ -86,7 +90,7 @@
                                 </select>
                             </div>
 
-                            <div class="col col-9">
+                            <div class="col col-md-9">
                                 <label for="medialink">Media Link</label>
                                 <input type="text" class="form-control" name = "medialink" id="medialink" placeholder="..." disabled>
                             </div>
@@ -310,6 +314,11 @@
             </div>
         </div>
 
+    <!-- Request Updated Notification -->
+    <div class="notif hidden">
+        Updating request info...
+    </div>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.2/r-2.2.9/datatables.min.js"></script>
 
@@ -321,7 +330,7 @@
         $(document).ready(function() {
             $('#requeststable').DataTable({
                 columnDefs: [
-                    { orderable: false, targets: 7 }
+                    { orderable: false, targets: 9 }
                 ]
             });
         } );

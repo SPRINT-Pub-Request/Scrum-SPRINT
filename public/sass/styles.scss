@@ -33,6 +33,10 @@ $dark: #1D1A1A;
     .container-form{
         min-width: 60%;
     }
+
+    ul > li > .dtr-title > .thead_label{
+        width: 200px !important;
+    }
 }
 
 @include media-breakpoint-down(xl) {
@@ -81,6 +85,10 @@ $dark: #1D1A1A;
         font-size: small;
     }
 
+    ul > li > .dtr-title > .thead_label{
+        width: 170px !important;
+    }
+
     .inline-warning > div{
         margin-left: 0px !important;
         padding-left: 0px !important;
@@ -115,7 +123,7 @@ $dark: #1D1A1A;
         font-size: smaller !important;
     }
     
-    .request-row{
+    .request-row, .notif{
         font-size: 12px !important;
     }
 
@@ -170,7 +178,7 @@ h1,h2,h5{
     font-family: NexaBold;
 }
 
-h3,h4,
+h3,h4, .notif, .status-col,
 .btn.btn-dark, .btn-delete{
     font-family: OpenSans-Bold;
 }
@@ -446,7 +454,7 @@ table.dataTable > tbody > tr.child ul.dtr-details > li{
     border-bottom: 2px solid #d0686852;
 }
 
-.dtr-data{
+.table-data-cut{
     max-width: 20ch;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -602,6 +610,16 @@ hr.request{
     margin-left: 10px;
     padding-left: 10px;
     border-left: 2px solid white;
+}
+
+.notif{
+    position:fixed; 
+    background:#0000008f; 
+    border-radius: 5px;
+    right: 20px; 
+    bottom: 20px; 
+    padding:10px;
+    color: white;
 }
 
 .hidden{

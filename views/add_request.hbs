@@ -12,7 +12,7 @@
     <script src="javascript/validator.min.js" type="text/javascript"></script>
     <title>Add Pub Request</title>
 </head>
-<body>
+<body style="display: relative;">
 
     {{> sidebar viewFlag=viewFlag mReqFlag=mReqFlag mUserFlag=mUserFlag}}
     <div class="container-center with-sidebar">
@@ -186,6 +186,11 @@
         </div>
         
     </div>
+    </div>
+
+    <!-- Request Submitted Notification -->
+    <div class="notif hidden">
+        Request submitted, committee has been notified.
     </div>
 
     <div class="h-spacer50"></div>

@@ -3,17 +3,26 @@ $(document).ready(function () {
     let emailUser = "";
     let userRole = "";
 
-    const user = {
-        name : $(this).find('.nameInfo').text().trim()
-    } 
+    $('.users_data tr').each(function() {
 
-    $.get('/checkInProgress' , user , function(result) {
-        if(result) {
-            $('.inprogressInfo').text("Yes");
-        } else {
-            $('.inprogressInfo').text("No");
-        }
+        const name = $(this).find('.nameInfo').text()
+
+        $.get('/checkInProgress' , {name} , function(result) {
+            $('.users_data tr').each(function() {
+                if(name == $(this).find('.nameInfo').text()) {
+                    if(result) {
+                        $(this).find('#inProgressInfo').text("Yes");
+                    } else {
+                        $(this).find('#inProgressInfo').text("No");
+                    }
+                }
+            });
+
+        });
+
     });
+
+
 
     $.get('/getNoAssigned' , {} , function(result){
         const namesCommittee = ["Activities" , "Finance" , "HRD" , "Externals" , "TND" , "P-EVP" , "SocioCivic" , "Secretariat"];
@@ -322,24 +331,24 @@ $(document).ready(function () {
         }
     });
 
-    $('#add_user').click(function () {
+    $('#add_user').on('click' , function () {
         const email = $('#add_email').val();
         const role = $('#add_role').val();
-
-        user = {
+         
+        userss = {
             email : email,
             role : role
         };
 
-        $.get('/addUser', user, function(result){
-            if (result){
+        $.get('/addUser' , userss, function(result) {
+            if(result) {
                 alert("User added!");
                 location.reload();
-            }
-            else{
+            } else {
                 alert("Add User Failed");
             }
         });
+
     });
 
     var hide = function() { 
