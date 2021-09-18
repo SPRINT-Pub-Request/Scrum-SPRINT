@@ -39,7 +39,6 @@ $(document).ready(function () {
 
     $('#filter-requesters').on('click' , function() {
         $('#users_data').each(function() {
-            
             const role = $(this).children().siblings('.roleInfo').text().trim();
             if(role === "Requester") 
                 $(this).hide();
@@ -61,12 +60,12 @@ $(document).ready(function () {
             if(result == false) {
                 if(role === "Administrator"){   
                     $.get('/checkAdmins', {email: emailUser}, function(result) {
-                        if (result.length == 1){
-                            $("#removeuserModal").modal('hide');
-                            alert('Only 1 Admin Left! Assign someone as Admin');
+                        if (result){
+                            $("#removeuserModal").modal('show');
                         }
                         else {
-                            $("#removeuserModal").modal('show');
+                            $("#removeuserModal").modal('hide');
+                            alert('Only 1 Admin Left! Assign someone as Admin');
                         }
                     });
                 }

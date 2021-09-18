@@ -16,23 +16,21 @@ const viewRequestController = {
             db.findOne(User, query, {}, function(result) {
 
                 let user_name = result.name;
+                let user_role = result.role;
 
                 if (result != null) {
                     let viewFlag = false;
                     let mReqFlag = false;
                     let mUserFlag = false;
 
-                    let filter = {};
 
                     if (result.role === "Publicity and Creatives") {
                         viewFlag = true;
-                        filter["pubName"] = result.name;
                     } 
                     
                     else if (result.role === "Secretariat") {
                         viewFlag = true;
                         mReqFlag = true;
-                        filter["secName"] = result.name;
                     } 
                     
                     else if (result.role === "Administrator") {
@@ -50,7 +48,7 @@ const viewRequestController = {
                     console.log(temp_ac);
                     console.log('=================');
 
-                    db.findMany(PubRequest , filter , {} , function(result){
+                    db.findMany(PubRequest , {} , {} , function(result){
                         for (i of result) {
                                 if(temp_ac.includes(i.committee)){
                                 let temp_data = {};
@@ -83,9 +81,6 @@ const viewRequestController = {
                                 temp_data["caption"] = i.caption;
                                 temp_data["status"] = i.status;
 
-                                temp_data["secreFlag"] = false;
-                                temp_data["pubsFlag"] = false;
-
                                 if (temp_data['comments'] === ''){
                                     temp_data['commnets'] = 'None';
                                 }
@@ -108,30 +103,21 @@ const viewRequestController = {
                                     temp_data['fFlag'] = true;
                                 }
 
-                                if(req.session.role === "Secretariat"){
+                                temp_data["secreFlag"] = false;
+                                temp_data["pubsFlag"] = false;
+
+                                if(user_role === "Secretariat"){
                                     temp_data["secreFlag"] = true;
-                                    request_data.push(temp_data);
                                 }
-                                else if (req.session.role === "Publicity and Creatives"){
+                                else if (user_role === "Publicity and Creatives"){
                                     temp_data["pubsFlag"] = true;
-                                    request_data.push(temp_data);
                                 }
-                                else if (req.session.role === "Administrator"){
-                                    let addFlag = false;
-                                    if(temp_data["pubName"] === user_name){
-                                        temp_data["pubsFlag"] = true;
-                                        addFlag = true;
-                                    }
-
-                                    if(temp_data["secName"] === user_name){
-                                        temp_data["secreFlag"] = true;
-                                        addFlag = true;
-                                    }
-
-                                    if(addFlag){
-                                        request_data.push(temp_data);
-                                    }
+                                else if (user_role === "Administrator"){
+                                    temp_data["pubsFlag"] = true;
+                                    temp_data["secreFlag"] = true;
                                 }
+
+                                request_data.push(temp_data);
                             }
                         }
 
