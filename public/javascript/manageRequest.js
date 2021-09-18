@@ -8,8 +8,6 @@ $(document).ready(function() {
     $('#requeststable tbody tr').each(function(){
         var status = $(this).children('.status-col').text();
 
-        alert(status);
-
         switch(status){
             case "Not Started" :
                 $(this).css("background", "#c9462873");
