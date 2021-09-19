@@ -236,17 +236,21 @@ const usersController = {
                 let total = 0;
 
                 for(i = 0; i < result.length; i++) {
-                    if(result[i].name !== "Not Signed In Yet") 
+                    if(result[i].name !== "Not Signed In Yet"){
+                        console.log(total);
                         total++;
+                    } 
                 }
-
-
+                /*
                 if(total > 1) {
-                    res.send(true);
                     console.log('Admins Available');
+                    return res.send(true);
                 } else {
-                    res.send(false);
-                }
+                    console.log('No Admins Available');
+                    return res.send(false);
+                }*/
+
+                res.send(total > 1);
             });
 
         } catch(err) {

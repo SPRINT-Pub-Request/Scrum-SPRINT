@@ -44,15 +44,15 @@
                     <tr>
                         <td class = "activity_id">{{this.request_id}}</td>
                         <td class = "activity_name" style="max-width: 14ch;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
-                            {{this.activity_name}}
+                            <div class="table-data-cut">{{this.activity_name}}</div>
                         </td>
                         <td>{{this.submitted_date}} </td>
                         <td>{{this.posting_date}} {{this.posting_time}}</td>
                         <td class="status-col">{{this.status}}</td>
-                        <td>{{this.pubName}}</td>
-                        <td>{{this.secName}}</td>
+                        <td><div class="table-data-cut">{{this.pubName}}</div></td>
+                        <td><div class="table-data-cut">{{this.secName}}</div></td>
                         <td>{{this.pubLink}}</td>
-                        <td>{{this.caption}}</td>
+                        <td><div class="table-data-cut">{{this.caption}}</div></td>
                         <td class="btn-col" scope="row">
                             <a class="edit"
                             data-bs-toggle="modal" data-bs-target="#requestdetailsModal">+Details</a>
