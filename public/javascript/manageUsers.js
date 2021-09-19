@@ -344,6 +344,15 @@ $(document).ready(function () {
         $.get('/addUser' , userss, function(result) {
             if(result) {
                 alert("User added!");
+
+                $.get('/sendAddedNotif' , userss , function(result) {
+                    if(result) {
+                        alert("User added!")
+                    } else {
+                        alert("Add User Failed\nERROR: This might be a mail error");
+                    }
+                });
+
                 location.reload();
             } else {
                 alert("Add User Failed");

@@ -14,6 +14,38 @@ const transporter = nodemailer.createTransport( {
 
 const mailController = {
 
+    sendAddedNotif: (req , res) => {
+
+        try {
+
+            const query = {
+                email : req.query.email
+            }
+            
+            const options = {
+                    from : process.env.MAIL_AUTHEMAIL,
+                    to : query.email,
+                    subject : "Account Added",
+                    text : "Good day!" + " \nThis is to notify you that your account has been added to Sprint Pub Tracker\n Link : https://sprint-pubtracker.herokuapp.com/"
+            }
+
+            transporter.sendMail(options, (err , info) => {
+                if(err) {
+                    console.log(err);
+                    res.send(false);
+                } 
+                
+                console.log("Server has sent mail, Info: " + info.response);
+                res.send(true);
+            });
+
+        } catch(err) {
+            console.log(err);
+            res.redirect(false);
+        }
+
+    },
+
     sendDeletedNotif: (req , res) => {
         try {
 

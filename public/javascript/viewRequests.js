@@ -96,7 +96,7 @@ $(document).ready(function() {
     });
     
     $("#btnSaveCaption").click(function(){
-        const caption = $("textarea#edit-caption-input").html(myEditor.getData()).text().replace(/(<([^>]+)>)/ig,"");
+        const caption = $("textarea#edit-caption-input").html(myEditor.getData()).text();
 
         $.get('/updateCaption', {request_id : idModalAccess, caption : caption}, function(result){
             if(result){
