@@ -391,7 +391,6 @@ const requestController = {
     addRequest: (req, res) => {
 
         try {
-            console.log("entered 403")
             db.findOne(Settings , {} , {} , function(result) {
                 const reqname = req.query.reqname;
                 const committee = req.query.committee;
@@ -429,8 +428,7 @@ const requestController = {
                 const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                 const yyyy = today.getFullYear();
                 
-                
-                console.log("entered 442")
+
                 db.findMany(User , {} , {} , function(result) {
                     
                     let peopleInPubCommittee = "";
@@ -440,9 +438,9 @@ const requestController = {
 
                         let personAssigned = [];
                         personAssigned = result[i].assigned_committee.split(' ');
-//&& result[i].name !== "Not Signed In Yet"
+
                         for(j = 0; j < personAssigned.length; j++) {
-                            if(personAssigned[j] === committee && result[i].role === "Administrator"){
+                            if(personAssigned[j] === committee && result[i].role === "Administrator" && result[i].name !== "Not Signed In Yet"){
                                 if(peopleInPubCommittee === "" && peopleInSecCommittee === "") {
                                     peopleInPubCommittee += result[i].name;
                                     peopleInSecCommittee += result[i].name;
@@ -459,14 +457,14 @@ const requestController = {
 
                                 break;
                             }
-                            else if(personAssigned[j] === committee && result[i].role === "Publicity and Creatives"){
+                            else if(personAssigned[j] === committee && result[i].role === "Publicity and Creatives" && result[i].name !== "Not Signed In Yet"){
                                 if(peopleInPubCommittee === "") {
                                     peopleInPubCommittee += result[i].name;
                                 } else 
                                     peopleInPubCommittee += ("," + result[i].name);
 
                                 break;
-                            } else if(personAssigned[j] === committee && result[i].role === "Secretariat"){
+                            } else if(personAssigned[j] === committee && result[i].role === "Secretariat" && result[i].name !== "Not Signed In Yet"){
                                 if(peopleInSecCommittee === "") {
                                     peopleInSecCommittee += result[i].name;
                                 } else 

@@ -117,7 +117,9 @@ const usersController = {
                     console.log("transfer true!");
                     req.session.role = newUser.role;
                 }
-
+                
+                let name = result.name;
+                
                 db.updateOne(User , { email : email } , {
                     $set : {
                         role : newUser.role,
@@ -128,6 +130,85 @@ const usersController = {
                         if(transfer){
                             req.session.role = newUser.role;
                         }
+
+                        let userCommittee = [];
+                        if(newUser.assigned_committee !== null) {
+                            userCommittee = newUser.assigned_committee.split(' ');
+                        }
+
+                        db.findMany(PubRequest, {} , {} , function(pubs) {
+                            if(pubs.length !== 0) {
+                                
+                                for(i = 0; i < pubs.length; i++) {
+
+                                    let check = false;
+                                    let activity_id = pubs[i].request_id;
+                                    let pubNames = pubs[i].pubName;
+                                    let secNames = pubs[i].secName;
+
+                                    for(j = 0; j < userCommittee.length; j++) {
+                                        
+                                        if(pubs[i].committee === userCommittee[j]) {
+                                            
+                                            check = true;
+                                            if(newUser.role === "Administrator" && name !== "Not Signed In Yet") {
+                                                if(pubNames === "" && secNames === "") {
+                                                    pubNames += name;
+                                                    secNames += name;
+
+                                                } else if(pubNames === "" && secNames !== "") {
+                                                    pubNames += name;
+                                                    secNames += ("," + name);
+                                                } else if(pubNames !== "" && secNames === "") {
+                                                    pubNames += ("," + name);
+                                                    secNames += name;
+                                                } else {
+                                                    pubNames += ("," + name);
+                                                    secNames += ("," + name);
+                                                }
+                                                
+                                                break;
+                                            } else if(newUser.role === "Publicity and Creatives" && name !== "Not Signed In Yet") {
+                                                if(pubNames === "") {
+                                                    pubNames += name;
+                                                } else 
+                                                    pubNames += ("," + name);
+
+                                                break;
+                                            } else if(newUser.role === "Secretariat" && name !== "Not Signed In Yet") {
+                                                if(secNames === "") {
+                                                    secNames += name;
+                                                } else 
+                                                    secNames += ("," + name);
+
+                                                break;
+                                            }
+
+                                        }
+
+                                    }
+
+                                    if(check === false) {
+                                        pubNames = pubNames.replace(',' + name , "");
+                                        secNames = secNames.replace(',' + name , "");
+                                        pubNames = pubNames.replace(name , "");
+                                        secNames = secNames.replace(name , "");
+
+                                        console.log(pubNames);
+                                        console.log(secNames);
+                                    } 
+
+                                    db.updateOne(PubRequest , {request_id : activity_id} , {
+                                                $set : {
+                                                    pubName : pubNames,
+                                                    secName : secNames
+                                                }
+                                    } , function(result) {} );
+                                }
+
+                            } 
+                        });
+
                         res.send(result);
                     } else {
                         res.send(result);
