@@ -108,13 +108,13 @@ $(document).ready(function() {
 
             if(check == false) {
                 for(i = 0; i < pubNames.length; i++) {
-                    $('#assignedPub').append($('<label>' , {
+                    $('#assignedPub').append($('<div>' , {
                         text : pubNames[i]
                     }));
                 }
 
                 for(i = 0; i < secNames.length; i++) {
-                    $('#assignedSec').append($('<label>' , {
+                    $('#assignedSec').append($('<div>' , {
                         text : secNames[i]
                     }));
                 }
