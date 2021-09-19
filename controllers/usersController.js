@@ -4,6 +4,7 @@ const db = require('../models/db.js')
 const User = require('../models/UserModel.js');
 
 const PubRequest = require('../models/PubRequestModel.js');
+const { localsAsTemplateData } = require('hbs');
 
 const usersController = {
     
@@ -104,58 +105,123 @@ const usersController = {
             const role = req.query.role;
             const assigned_committee = req.query.assigned_committee;
 
-            newUser ={
+            newUser = {
                 email : email,
                 role : role,
                 assigned_committee : assigned_committee
             }
             
 
-            db.findOne(User, {email : email}, {}, function(result){
-                if (result.userID === req.session.userID){
+            db.findOne(User, {email : email}, {}, function(result) {
+                if (result.userID === req.session.userID) {
                     transfer = true;
                     console.log("transfer true!");
                     req.session.role = newUser.role;
                 }
-                
+
                 let name = result.name;
                 
-                db.updateOne(User , { email : email } , {
-                    $set : {
-                        role : newUser.role,
-                        assigned_committee : newUser.assigned_committee
+                let oldCommittee = result.assigned_committee; // old
+
+                let updatedCommittee = newUser.assigned_committee; // new
+
+                let tempCommittee ;
+                
+                console.log(oldCommittee.length + "    " + updatedCommittee.length);
+
+                if(result.assigned_committee.split(' ').length > newUser.assigned_committee.split(' ').length) { // removed
+                    
+                    updatedCommittee = newUser.assigned_committee.split(' ');
+                    for(i = 0; i < updatedCommittee.length; i++) {
+                        oldCommittee = oldCommittee.replace(updatedCommittee[i] , "");
                     }
-                } , function(result) {
-                    if(result) {
-                        if(transfer){
-                            req.session.role = newUser.role;
+
+                    tempCommittee = oldCommittee.trim();
+
+                    console.log(tempCommittee + "Removed (141)");
+                    db.updateOne(User , { email : email } , {
+                        $set : {
+                            role : newUser.role,
+                            assigned_committee : newUser.assigned_committee
                         }
+                    } , function(result) {
+                        if(result) {
+                            if(transfer) {
+                                req.session.role = newUser.role;
+                            }
 
-                        let userCommittee = [];
-                        if(newUser.assigned_committee !== null) {
-                            userCommittee = newUser.assigned_committee.split(' ');
+                            db.findMany(PubRequest, {} , {} , function(pubs) {
+                                if(pubs.length !== 0) {
+
+                                    for(i = 0; i < pubs.length; i++) {
+
+                                        if(pubs[i].committee === tempCommittee) {
+                                            let activity_id = pubs[i].request_id;
+                                            let pubNames = pubs[i].pubName;
+                                            let secNames = pubs[i].secName;
+
+                                            pubNames = pubNames.replace(',' + name , "");
+                                            secNames = secNames.replace(',' + name , "");
+                                            pubNames = pubNames.replace(name , "");
+                                            secNames = secNames.replace(name , "");
+
+                                            db.updateOne(PubRequest , {request_id : activity_id} , {
+                                                $set : {
+                                                    pubName : pubNames,
+                                                    secName : secNames
+                                                }
+                                            } , function(result) {} );
+
+                                        }
+
+                                    }
+
+                                }
+                            });
+
+                            res.send(result);
+                        } else {
+                            res.send(result);
                         }
+                    });
+                    
+                } else { // added
+                    
+                    oldCommittee = result.assigned_committee.split(' ');
+                    for(i = 0; i < oldCommittee.length; i++) {
+                        updatedCommittee = updatedCommittee.replace(oldCommittee[i] , "");
+                    }
 
-                        db.findMany(PubRequest, {} , {} , function(pubs) {
-                            if(pubs.length !== 0) {
-                                
-                                for(i = 0; i < pubs.length; i++) {
+                    tempCommittee = updatedCommittee.trim();
+                    
+                    console.log(tempCommittee + "Added (197)");
+                    db.updateOne(User , {email : email} , {
+                        $set : {
+                            role : newUser.role,
+                            assigned_committee : newUser.assigned_committee
+                        }
+                    } , function(result) {
+                        if(result) {
+                            if(transfer) {
+                                req.session.role = newUser.role;
+                            }
 
-                                    let check = false;
-                                    let activity_id = pubs[i].request_id;
-                                    let pubNames = pubs[i].pubName;
-                                    let secNames = pubs[i].secName;
-
-                                    for(j = 0; j < userCommittee.length; j++) {
+                            db.findMany(PubRequest, {} , {} , function(pubs) {
+                                if(pubs.length !== 0) {
+                                    for(i = 0; i < pubs.length; i++) {
+                                        let activity_id = pubs[i].request_id;
+                                        let pubNames = pubs[i].pubName;
+                                        let secNames = pubs[i].secName;
                                         
-                                        if(pubs[i].committee === userCommittee[j]) {
-                                            
-                                            check = true;
+                                        if(pubs[i].committee === tempCommittee) {
+
                                             if(newUser.role === "Administrator" && name !== "Not Signed In Yet") {
                                                 if(pubNames === "" && secNames === "") {
                                                     pubNames += name;
                                                     secNames += name;
-
+                                                    console.log("Enter 222");
+                                                    console.log(pubNames);
+                                                    console.log(secNames);
                                                 } else if(pubNames === "" && secNames !== "") {
                                                     pubNames += name;
                                                     secNames += ("," + name);
@@ -167,54 +233,45 @@ const usersController = {
                                                     secNames += ("," + name);
                                                 }
                                                 
-                                                break;
                                             } else if(newUser.role === "Publicity and Creatives" && name !== "Not Signed In Yet") {
                                                 if(pubNames === "") {
                                                     pubNames += name;
                                                 } else 
                                                     pubNames += ("," + name);
 
-                                                break;
                                             } else if(newUser.role === "Secretariat" && name !== "Not Signed In Yet") {
                                                 if(secNames === "") {
                                                     secNames += name;
                                                 } else 
                                                     secNames += ("," + name);
 
-                                                break;
                                             }
 
-                                        }
 
-                                    }
-
-                                    if(check === false) {
-                                        pubNames = pubNames.replace(',' + name , "");
-                                        secNames = secNames.replace(',' + name , "");
-                                        pubNames = pubNames.replace(name , "");
-                                        secNames = secNames.replace(name , "");
-
-                                        console.log(pubNames);
-                                        console.log(secNames);
-                                    } 
-
-                                    db.updateOne(PubRequest , {request_id : activity_id} , {
+                                            db.updateOne(PubRequest , {request_id : activity_id} , {
                                                 $set : {
                                                     pubName : pubNames,
                                                     secName : secNames
                                                 }
-                                    } , function(result) {} );
-                                }
+                                            } , function(result) {} );
+                                            console.log("updated test");
 
-                            } 
-                        });
+                                        }
+                                        
+                                    }
 
-                        res.send(result);
-                    } else {
-                        res.send(result);
-                    }
-        
-                });
+                                    res.send(result);
+                                } else {
+                                    res.send(result);
+                                } 
+
+                            });
+                        }
+                    });
+                    
+                }
+
+
             });
 
         } catch(err) {
@@ -249,14 +306,36 @@ const usersController = {
             const name = req.query.name;
 
             if(name !== "Not Signed In Yet") {
-                db.findOne(PubRequest , {pubName : name , status : "In Progress"} , {} , function(result) {
+                db.findOne(PubRequest , {status : "In Progress"} , {} , function(result) {
                     if(result !== null) {
-                        if(result.status === "In Progress") {
+
+                        let splittedPubName = result.pubName.split(',');
+                        let check = false;
+
+                        for(i = 0; i < splittedPubName.length; i++) {
+                            if(splittedPubName[i] === name) {
+                                check = true;
+                                break;
+                            }
+                        }
+
+                        if(result.status === "In Progress" && check) {
                             res.send(true);
-                        } else {
-                            db.findOne(PubRequest , {secName : name , status : "In Progress"} , {} , function(flag) {
+                        } else{
+                            db.findOne(PubRequest , {status : "In Progress"} , {} , function(flag) {
                                 if(flag !== null) {
-                                    if(flag.status === "In Progress") {
+
+                                    let splittedSecName = result.secName.split(',');
+                                    let check = false;
+                                    
+                                    for(i = 0; i < splittedSecName.length; i++) {
+                                        if(splittedSecName[i] === name){
+                                            check = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if(flag.status === "In Progress" && check) {
                                         res.send(true);
                                     } else {
                                         res.send(false);

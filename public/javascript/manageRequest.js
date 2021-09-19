@@ -5,6 +5,17 @@ $(document).ready(function() {
             $('.bi-trash-fill').css("visibility" , "hidden");
     });
 
+
+    $('#request_data tr').each(function() {
+        if($(this).find('#pubNameee').text() === "") {
+            $(this).find('#pubNameee').text("Not Assigned");
+        } 
+
+        if($(this).find('#secNameee').text() === "") {
+            $(this).find('#secNameee').text("Not Assigned");
+        }
+    });
+
     $('#requeststable tbody tr').each(function(){
         var status = $(this).children('.status-col').text();
 
@@ -94,7 +105,6 @@ $(document).ready(function() {
 
     });
 
-    let check = false;
 
     $('#request_data').on('click' , '.edit' , function() {
 
@@ -106,22 +116,44 @@ $(document).ready(function() {
             let pubNames = result.pubName.split(',');
             let secNames = result.secName.split(',');
 
-            if(check == false) {
+            $('#assignedPub').empty();
+            $('#assignedSec').empty();
+
+            if(result.pubName === "" && result.secName === "") {
+                $('#assignedPub').append($('<div>' , {
+                        text : "Not Assigned",
+                        class : "pubs"
+                }));
+
+                $('#assignedSec').append($('<div>' , {
+                        text : "Not Assigned",
+                        class : "secs"
+                }));
+            } else if(result.secName === "") {
+                $('#assignedSec').append($('<div>' , {
+                        text : "Not Assigned",
+                        class : "secs"
+                }));
+            } else if(result.pubNames === "") {
+                $('#assignedPub').append($('<div>' , {
+                        text : "Not Assigned",
+                        class : "pubs"
+                }));
+            } else {
                 for(i = 0; i < pubNames.length; i++) {
                     $('#assignedPub').append($('<div>' , {
-                        text : pubNames[i]
+                        text : pubNames[i],
+                        class : "pubs"
                     }));
                 }
 
                 for(i = 0; i < secNames.length; i++) {
                     $('#assignedSec').append($('<div>' , {
-                        text : secNames[i]
+                        text : secNames[i],
+                        class : "secs"
                     }));
                 }
-
-                check = true;
             }
-            
             
             var date = result.start_date.split('T')[0];
             $('#medialink').val(result.pubLink);

@@ -143,7 +143,10 @@ $(document).ready(function () {
                     $('tr.users_info').each(function() {
                         if(user.email == $(this).find('.emailInfo').text().trim()){
                             $(this).find('.roleInfo').text(user.role);
-                            $(this).find('.assigned_committee').text(user.assigned_committee);
+                            if(user.assigned_committee === "") 
+                                $(this).find('.assigned_committee').text("None"); 
+                            else 
+                                $(this).find('.assigned_committee').text(user.assigned_committee);
                         }
                     });
 

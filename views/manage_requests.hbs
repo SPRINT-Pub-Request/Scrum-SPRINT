@@ -49,8 +49,8 @@
                         <td>{{this.submitted_date}} </td>
                         <td>{{this.posting_date}} {{this.posting_time}}</td>
                         <td class="status-col">{{this.status}}</td>
-                        <td><div class="table-data-cut">{{this.pubName}}</div></td>
-                        <td><div class="table-data-cut">{{this.secName}}</div></td>
+                        <td><div class="table-data-cut" id = "pubNameee">{{this.pubName}}</div></td>
+                        <td><div class="table-data-cut" id = "secNameee">{{this.secName}}</div></td>
                         <td>{{this.pubLink}}</td>
                         <td><div class="table-data-cut">{{this.caption}}</div></td>
                         <td class="btn-col" scope="row">
@@ -79,7 +79,7 @@
                 <!-- EDIT REQUEST DETAILS -->
                 <div class="modal-body">
                     <form method = "post" action = "/add_request">
-                        <div class="col form-row"><label>Date Submitted:</label> <label class = "dateSub"> ... </label> </div>
+                        <div class="col form-row"><label>Date Submitted:</label> <label class = "dateSub"> Loading... </label> </div>
                         <div class="row form-row">
                             <div class="col col-md-">
                                 <label for="status">Status</label>
@@ -105,12 +105,13 @@
                         </div>
 
                         <div class="row form-row">
+                            <label class="col" for="pub">Assigned Pub</label>
                             <div class="col" id = "assignedPub">
-                                <label for="pub">Assigned Pub</label>
+                                <div>Loading...</div>
                             </div>
-
+                            <label class = "col" for="secretariat">Assigned Secretariat</label>
                             <div class="col" id = "assignedSec">
-                                <label for="secretariat">Assigned Secretariat</label>
+                                <div>Loading...</div>
                             </div>
                         </div>
 
