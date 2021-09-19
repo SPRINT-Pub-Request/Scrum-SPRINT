@@ -46,7 +46,7 @@ $(document).ready(function(){
             specialRequest : $('#specialRequest').val(),
             other : $('#type_other_value').val()
         }
-
+        
         $.get('/post_request' , pubRequest , function(result) {
             if(result) {    
                 //alert("Successfully Submitted Request and Notified Committee");
@@ -58,6 +58,7 @@ $(document).ready(function(){
             }
         });
         
+
         $.get('/sendNewAssign' , pubRequest, function(result) {
             if(result) {
                 $.post('/add_request' , pubRequest , function(result) {

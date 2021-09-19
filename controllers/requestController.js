@@ -254,23 +254,14 @@ const requestController = {
             
             const newChanges = {
                 status : req.query.status,
-                pubName : req.query.pubName,
-                secName : req.query.secName,
                 caption : req.query.caption,
                 pubLink : req.query.pubLink,
                 request_id: req.query.request_id.toString()
             }
-            
-            if(newChanges.pubName === null)
-                newChanges.pubName = "Not Assigned";
-            else if(newChanges.secName === null)
-                newChanges.secName = "Not Assigned";
 
             db.updateOne(PubRequest , {request_id : newChanges.request_id} , {
                 $set : {
                     status: newChanges.status,
-                    pubName : newChanges.pubName,
-                    secName : newChanges.secName,
                     caption : newChanges.caption,
                     pubLink : newChanges.pubLink 
                 }
@@ -400,6 +391,7 @@ const requestController = {
     addRequest: (req, res) => {
 
         try {
+            console.log("entered 403")
             db.findOne(Settings , {} , {} , function(result) {
                 const reqname = req.query.reqname;
                 const committee = req.query.committee;
@@ -437,59 +429,115 @@ const requestController = {
                 const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
                 const yyyy = today.getFullYear();
                 
-                const pubrequest = {
-                    request_id,
-                    reqname, 
-                    committee,
-                    activity_name,
-                    description,
-                    start_date,
-                    start_time,
-                    end_date,
-                    end_time,
-                    venue,
-                    theme,
-                    pubType,
-                    posting_date,
-                    posting_time,
-                    postevent,
-                    links : links,
-                    details,
-                    comments,
-                    specialRequest,
-                    pubLink: 'N/A',
-                    caption: 'N/A',
-                    status: 'Not Started',
-                    pubName: 'Not Assigned',
-                    secName: 'Not Assigned',
-                    submitted_date : yyyy + "-" + mm + "-" + dd,
-                }
-
-                console.log("submitted date: "+ pubrequest.submitted_date);
-                console.log("request_id: " + request_id);
-                console.log("reqname: " + reqname);
-                console.log("committee: " + committee);
-                console.log("activty_name: " + activity_name);
-                console.log("description: " + description);
-                console.log("start_date: " + start_date);
-                console.log("start_time " + start_time);
-                console.log("end_date: " + end_date);
-                console.log("end_time: " + end_time);
-                console.log("venue: " + venue);
-                console.log("theme: " + theme);
-                console.log("posting_date: " + posting_date);
-                console.log("posting_time: " + posting_time);
-                console.log("details: " + details);
-                console.log("comments: " + comments);
-                console.log("specialRequest: " + specialRequest);
-                console.log("Pub Type: " + pubType);
-                console.log("Post Event: " + postevent);
-                console.log("Links : " + links);
                 
-                db.insertOne(PubRequest, pubrequest, function(flag) {
-                    console.log(flag);
-                    res.send(flag);
+                console.log("entered 442")
+                db.findMany(User , {} , {} , function(result) {
+                    
+                    let peopleInPubCommittee = "";
+                    let peopleInSecCommittee = "";
+
+                    for(i = 0; i < result.length; i++) {
+
+                        let personAssigned = [];
+                        personAssigned = result[i].assigned_committee.split(' ');
+//&& result[i].name !== "Not Signed In Yet"
+                        for(j = 0; j < personAssigned.length; j++) {
+                            if(personAssigned[j] === committee && result[i].role === "Administrator"){
+                                if(peopleInPubCommittee === "" && peopleInSecCommittee === "") {
+                                    peopleInPubCommittee += result[i].name;
+                                    peopleInSecCommittee += result[i].name;
+                                } else if(peopleInPubCommittee === "" && peopleInSecCommittee !== "") {
+                                    peopleInPubCommittee += result[i].name;
+                                    peopleInSecCommittee += ("," + result[i].name);
+                                } else if(peopleInPubCommittee !== "" && peopleInSecCommittee === "") {
+                                    peopleInPubCommittee += ("," + result[i].name);
+                                    peopleInSecCommittee += result[i].name;
+                                } else {
+                                    peopleInPubCommittee += ("," + result[i].name);
+                                    peopleInSecCommittee += ("," + result[i].name);
+                                }
+
+                                break;
+                            }
+                            else if(personAssigned[j] === committee && result[i].role === "Publicity and Creatives"){
+                                if(peopleInPubCommittee === "") {
+                                    peopleInPubCommittee += result[i].name;
+                                } else 
+                                    peopleInPubCommittee += ("," + result[i].name);
+
+                                break;
+                            } else if(personAssigned[j] === committee && result[i].role === "Secretariat"){
+                                if(peopleInSecCommittee === "") {
+                                    peopleInSecCommittee += result[i].name;
+                                } else 
+                                    peopleInSecCommitee += ("," + result[i].name);
+
+                                break;
+                            }
+                        }
+                    }
+                    
+                    console.log("Pubs Assigned : " + peopleInPubCommittee);
+                    console.log("Sec Assigned : " + peopleInSecCommittee);
+
+                    const pubrequest = {
+                        request_id,
+                        reqname, 
+                        committee,
+                        activity_name,
+                        description,
+                        start_date,
+                        start_time,
+                        end_date,
+                        end_time,
+                        venue,
+                        theme,
+                        pubType,
+                        posting_date,
+                        posting_time,
+                        postevent,
+                        links : links,
+                        details,
+                        comments,
+                        specialRequest,
+                        pubLink: 'N/A',
+                        caption: 'N/A',
+                        status: 'Not Started',
+                        pubName: peopleInPubCommittee,
+                        secName: peopleInSecCommittee,
+                        submitted_date : yyyy + "-" + mm + "-" + dd,
+                    }
+
+                    console.log("submitted date: "+ pubrequest.submitted_date);
+                    console.log("request_id: " + request_id);
+                    console.log("reqname: " + reqname);
+                    console.log("committee: " + committee);
+                    console.log("activty_name: " + activity_name);
+                    console.log("description: " + description);
+                    console.log("start_date: " + start_date);
+                    console.log("start_time " + start_time);
+                    console.log("end_date: " + end_date);
+                    console.log("end_time: " + end_time);
+                    console.log("venue: " + venue);
+                    console.log("theme: " + theme);
+                    console.log("posting_date: " + posting_date);
+                    console.log("posting_time: " + posting_time);
+                    console.log("details: " + details);
+                    console.log("comments: " + comments);
+                    console.log("specialRequest: " + specialRequest);
+                    console.log("Pub Type: " + pubType);
+                    console.log("Post Event: " + postevent);
+                    console.log("Links : " + links);
+                
+                    db.insertOne(PubRequest, pubrequest, function(flag) {
+                        console.log(flag);
+                        res.send(flag);
+                    });
+
                 });
+
+
+                
             });
                 
         } catch(err) {

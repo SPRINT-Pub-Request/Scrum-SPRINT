@@ -76,8 +76,6 @@ $(document).ready(function() {
         const pubChanges = {
             pubLink : $('#medialink').val(),
             status : $('#status').val(),
-            pubName : $('#assignPub').val(),
-            secName : $('#assignSec').val(),
             caption : $('#caption').val(),
             request_id: $('#req_id').val()
         }
@@ -96,6 +94,7 @@ $(document).ready(function() {
 
     });
 
+    let check = false;
 
     $('#request_data').on('click' , '.edit' , function() {
 
@@ -103,12 +102,30 @@ $(document).ready(function() {
     
         $.get('/getPubRequest' , {request_id}, (result) => {
             
+
+            let pubNames = result.pubName.split(',');
+            let secNames = result.secName.split(',');
+
+            if(check == false) {
+                for(i = 0; i < pubNames.length; i++) {
+                    $('#assignedPub').append($('<label>' , {
+                        text : pubNames[i]
+                    }));
+                }
+
+                for(i = 0; i < secNames.length; i++) {
+                    $('#assignedSec').append($('<label>' , {
+                        text : secNames[i]
+                    }));
+                }
+
+                check = true;
+            }
+            
             
             var date = result.start_date.split('T')[0];
             $('#medialink').val(result.pubLink);
             $('#status').val(result.status);
-            $('#assignPub').val(result.pubName);
-            $('#assignSec').val(result.secName);
             $('.dateSub').text(date);
             $('#req_id').val(result.request_id);
             $('#reqname').val(result.reqname);
@@ -154,11 +171,15 @@ $(document).ready(function() {
                 $('#postevent_no').prop('checked' , true);
             
             
+
+
+
+
+            /*
             const activity = {
                 committee : result.committee
             } 
 
-            
             $.get('/getAssignedSec' , activity , function(res) {
 
                 for(i = 0; i < res.length; i++) {
@@ -201,7 +222,7 @@ $(document).ready(function() {
                         }));
                     }
             });
-            
+            */
 
         });
     });
