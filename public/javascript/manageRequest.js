@@ -67,7 +67,8 @@ $(document).ready(function() {
                 if(result === request_id) { 
                     $('#request_data tr').each(function() {
                         if($(this).children(".activity_id").text() === request_id){
-                            alert("Successfully Deleted Request");
+                            //alert("Successfully Deleted Request");
+                            $('#reqDel').show().delay(3000).fadeOut();
                             $(this).hide();
                             $(this).remove();
                         }
@@ -93,8 +94,9 @@ $(document).ready(function() {
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
-                alert("Successfully Updated Changes!")
-                location.reload();
+                //alert("Successfully Updated Changes!")
+                $('#reqUpdate').show().delay(3000).fadeOut();
+                setTimeout(location.reload.bind(location) , 3500);
             }
             else {
                 alert("An Error Occured, Nothing was Updated \nPlease Try again later");
@@ -203,59 +205,6 @@ $(document).ready(function() {
                 $('#postevent_no').prop('checked' , true);
             
             
-
-
-
-
-            /*
-            const activity = {
-                committee : result.committee
-            } 
-
-            $.get('/getAssignedSec' , activity , function(res) {
-
-                for(i = 0; i < res.length; i++) {
-                    if(res[i] == result.secName) {
-                        $('#assignSec').append($('<option>', {
-                            value : res[i],
-                            text : res[i],
-                            class : "selectedSec",
-                            selected : true
-                        }));
-                    }
-                    else if(res[i] != "Not Signed In Yet"){
-                        $('#assignSec').append($('<option>', {
-                            value : res[i],
-                            text : res[i],
-                            class : "selectedSec"
-                        }));
-                    }
-                }
-
-            });
-
-
-            $.get('/getAssignedPub' , activity , function(res) {
-
-                for(i = 0; i < res.length; i++)
-                    if(res[i] == result.pubName) {
-                        $('#assignPub').append($('<option>', {
-                            value : res[i],
-                            text : res[i],
-                            selected : true,
-                            class : "selectedPub"
-                        }));
-                    }
-                    else if(res[i] != "Not Signed In Yet"){
-                        $('#assignPub').append($('<option>', {
-                            value : res[i],
-                            text : res[i],
-                            class : "selectedPub"
-                        }));
-                    }
-            });
-            */
-
         });
     });
 });

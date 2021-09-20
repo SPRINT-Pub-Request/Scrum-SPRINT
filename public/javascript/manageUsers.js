@@ -84,7 +84,7 @@ $(document).ready(function () {
             }
             else {
                 $("#removeuserModal").modal('hide');
-                alert("Unable to delete user \nUser current has on progress work.");
+                $('#userNotifDelete').show().delay(3000).fadeOut();
             }
             
         });
@@ -99,8 +99,8 @@ $(document).ready(function () {
                 const email = emailUser;
                 $.get('/sendDeletedNotif' , {email : email} , function(result) {
                    if(result) {
-                        alert("Successfully Deleted User and Notified");
-                        location.reload();
+                        $('#userNotifDelete').show().delay(3000).fadeOut();
+                        setTimeout(location.reload.bind(location) , 3500);
                    } else {
                         alert("Failed to Delete User\n ERROR for Admins: This might be a email issue");
                         location.reload();
@@ -152,14 +152,18 @@ $(document).ready(function () {
 
                     if(result) {
                         $.get('/sendNotif' , user , function(ans) {
-                            alert(ans);
+                            if(ans === "Successfully Updated and Notified User!")
+                                $('#userNotifUp').show().delay(3000).fadeOut();
+                            else 
+                                alert('Updating User Failed, Please Refresh and Try Again!')
                         });
                     } else {
                         alert('Updating User Failed, Please Refresh and Try Again!')
                     }
                 });
             } else {
-                alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
+                $('#userNotifInProgress').show().delay(3000).fadeOut();
+                //alert('Cannot Removed Assigned Committee, as the user currently has in progress work for that committee');
             }
         });
             
@@ -345,17 +349,17 @@ $(document).ready(function () {
 
         $.get('/addUser' , userss, function(result) {
             if(result) {
-                alert("User added!");
+                $('#userNotifAdd').show().delay(3000).fadeOut();
 
                 $.get('/sendAddedNotif' , userss , function(result) {
                     if(result) {
-                        alert("User added!")
+                        $('#userNotifAdd').show().delay(3000).fadeOut();
                     } else {
                         alert("Add User Failed\nERROR: This might be a mail error");
                     }
                 });
 
-                location.reload();
+                setTimeout(location.reload.bind(location) , 3500);
             } else {
                 alert("Add User Failed");
             }
