@@ -54,7 +54,7 @@ const requestController = {
     },
 
     getManageReq: (req , res) => {
-        if(req.session.userID) {
+        if(req.session.userID && (req.session.role === "Administrator" || req.session.role === "Secretariat")) {
 
             const query = {
                 userID : req.session.userID
@@ -133,7 +133,7 @@ const requestController = {
     },
 
     getViewReq: (req , res) => {
-        if(req.session.userID) {
+        if(req.session.userID && req.session.role !== "Requester") {
 
             const query = {
                 userID : req.session.userID

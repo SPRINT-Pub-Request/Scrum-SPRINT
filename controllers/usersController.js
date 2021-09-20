@@ -159,9 +159,13 @@ const usersController = {
                                             let activity_id = pubs[i].request_id;
                                             let pubNames = pubs[i].pubName;
                                             let secNames = pubs[i].secName;
-
+                                            
+                                            pubNames = pubNames.replace(',' + name + ',', "");
+                                            secNames = secNames.replace(',' + name + ',', "");
                                             pubNames = pubNames.replace(',' + name , "");
                                             secNames = secNames.replace(',' + name , "");
+                                            pubNames = pubNames.replace(name + ',' , "");
+                                            secNames = secNames.replace(name + ',' , "");
                                             pubNames = pubNames.replace(name , "");
                                             secNames = secNames.replace(name , "");
 
