@@ -94,7 +94,6 @@ $(document).ready(function() {
 
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
-                //alert("Successfully Updated Changes!")
                 $('#reqUpdate').show().delay(3000).fadeOut();
                 setTimeout(location.reload.bind(location) , 3500);
             }
