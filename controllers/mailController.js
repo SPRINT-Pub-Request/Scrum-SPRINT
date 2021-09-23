@@ -14,6 +14,62 @@ const transporter = nodemailer.createTransport( {
 
 const mailController = {
 
+    sendMailDone: (req , res) => {
+        try {
+            let status = req.query.status;
+            let activity_id = req.query.request_id;
+
+            if(status === "Finished") {
+                db.findOne(PubRequest, {request_id : activity_id} , {} , function(result) {
+                    
+
+                    db.findOne(User, {name : result.reqname} , {} , function(result) {
+                        
+                        const options = {
+                            from : process.env.MAIL_AUTHEMAIL,
+                            to : result.email,
+                            subject : "Request Finished",
+                            text : "Good day!" + " \nThis is to notify you that your request is finished\nLink : https://sprint-pubtracker.herokuapp.com/"
+                        }
+
+                        transporter.sendMail(options, (err , info) => {
+                            if(err) {
+                                console.log(err);
+                                res.send(false);
+                            } 
+                            
+                            console.log("Server has sent mail, Info: " + info.response);
+                            res.send(true);
+                        });
+
+                    });
+
+
+                });
+
+            } else {
+                res.send(true);
+            }
+
+
+
+
+
+
+
+        }catch(err) {
+            console.log(err);
+            res.redirect('/');
+        }
+
+
+
+
+
+    },
+
+
+
     sendAddedNotif: (req , res) => {
 
         try {
@@ -26,7 +82,7 @@ const mailController = {
                     from : process.env.MAIL_AUTHEMAIL,
                     to : query.email,
                     subject : "Account Added",
-                    text : "Good day!" + " \nThis is to notify you that your account has been added to Sprint Pub Tracker\n Link : https://sprint-pubtracker.herokuapp.com/"
+                    text : "Good day!" + " \nThis is to notify you that your account has been added to Sprint Pub Tracker\nLink : https://sprint-pubtracker.herokuapp.com/"
             }
 
             transporter.sendMail(options, (err , info) => {

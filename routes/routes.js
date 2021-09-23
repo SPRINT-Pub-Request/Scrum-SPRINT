@@ -52,5 +52,6 @@ app.get('/sendNotif' , mailController.sendNotif);
 app.get('/sendNewAssign' , mailController.sendNewAssign);
 app.get('/sendDeletedNotif' , mailController.sendDeletedNotif);
 app.get('/sendAddedNotif' , mailController.sendAddedNotif);
+app.get('/sendMailDone' , mailController.sendMailDone);
 
 module.exports = app;

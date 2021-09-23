@@ -92,6 +92,14 @@ $(document).ready(function() {
             request_id: $('#req_id').val()
         }
 
+        if(pubChanges.status === "Finished") {
+            $.get('/sendMailDone' , pubChanges , function(result) {
+                if(result === false) {
+                    alert("An Error Occured, Requester Not Notifieid\nAdmin ERROR: This might be a mail error");
+                }
+            });
+        }
+
         $.get('/savePubChanges' , pubChanges , function(result) {
             if(result) {
                 $('#reqUpdate').show().delay(3000).fadeOut();
@@ -177,7 +185,7 @@ $(document).ready(function() {
             $('#details').text(result.details);
             $('#comments').text(result.comments);
             $('#specialRequest').text(result.specialRequest);
-            $('#caption').val(result.caption.replace(/(<([^>]+)>)/ig,""));
+            $('#caption').val(result.caption.replace(/<(.|\n)*?>/g, ''));
             
 
             const pubTypes = ["#type_poster" , "#type_album" , "#type_video" , "#type_fbcover"]
