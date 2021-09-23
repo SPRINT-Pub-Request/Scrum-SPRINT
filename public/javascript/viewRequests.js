@@ -127,7 +127,6 @@ $(document).ready(function() {
                         alert("An Error Occured, Requester Not Notifieid\nAdmin ERROR: This might be a mail error");
                     }
                     else{
-                        alert("Sent!");
                         $(this).css("background-color", "#509375");
                     }
                 });
