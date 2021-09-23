@@ -51,7 +51,7 @@ const mailController = {
                         from : process.env.MAIL_AUTHEMAIL,
                         to : result.reqemail,
                         subject : "Request Finished",
-                        text : "Good day!" + " \nThis is to notify you that your request is finished\nLink : https://sprint-pubtracker.herokuapp.com/"
+                        text : "Good day!" + " \nThis is to notify you that your request is finished\nLink : https://sprint-pubtracker.herokuapp.com/\nPub Link: " + result.pubLink + "\nCaption: " + result.caption
                     }
 
                     transporter.sendMail(options, (err , info) => {

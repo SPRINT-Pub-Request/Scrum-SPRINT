@@ -86,6 +86,7 @@ $(document).ready(function() {
         const link = $("#edit-media-input").val();
         mediaEdit.attr("href", link);
         $.get('/updatePubLink', {request_id : idModalAccess, pubLink : link}, function(result){});
+        $('#reqChanges').show().delay(3000).fadeOut();
     });
 
     $(".editCaptionBox").on('click', '.edit-captionbtn', function(){
@@ -101,6 +102,7 @@ $(document).ready(function() {
         $.get('/updateCaption', {request_id : idModalAccess, caption : caption}, function(result){
             if(result){
                 captionEdit.html(caption);
+                $('#reqChanges').show().delay(3000).fadeOut();
             }
             else{
                 alert("Fail");
@@ -114,10 +116,12 @@ $(document).ready(function() {
         switch(status){
             case "Not Started" :
                 $(this).css("background-color", "#c94628");
+                $('#reqChanges').show().delay(3000).fadeOut();
                 break;
 
             case "In Progress" : 
                 $(this).css("background-color", "#dd975e");
+                $('#reqChanges').show().delay(3000).fadeOut();
                 break;
 
             case "Finished" : 
@@ -128,6 +132,7 @@ $(document).ready(function() {
                     }
                     else{
                         $(this).css("background-color", "#509375");
+                        $('#requestSent').show().delay(3000).fadeOut();
                     }
                 });
                 break;
