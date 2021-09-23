@@ -22,7 +22,6 @@ const mailController = {
             if(status === "Finished") {
                 db.findOne(PubRequest, {request_id : activity_id} , {} , function(result) {
                     
-
                     db.findOne(User, {name : result.reqname} , {} , function(result) {
                         
                         const options = {
@@ -41,34 +40,17 @@ const mailController = {
                             console.log("Server has sent mail, Info: " + info.response);
                             res.send(true);
                         });
-
                     });
-
-
                 });
-
             } else {
                 res.send(true);
             }
-
-
-
-
-
-
 
         }catch(err) {
             console.log(err);
             res.redirect('/');
         }
-
-
-
-
-
     },
-
-
 
     sendAddedNotif: (req , res) => {
 

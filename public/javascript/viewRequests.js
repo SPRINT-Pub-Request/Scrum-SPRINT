@@ -122,6 +122,15 @@ $(document).ready(function() {
 
             case "Finished" : 
                 $(this).css("background-color", "#509375");
+                $.get('/sendMailDone' , {request_id : request_id, status : status} , function(result) {
+                    if(result === false) {
+                        alert("An Error Occured, Requester Not Notifieid\nAdmin ERROR: This might be a mail error");
+                    }
+                    else{
+                        alert("Sent!");
+                        $(this).css("background-color", "#509375");
+                    }
+                });
                 break;
         }
         $.get('/updateStatus', {request_id : request_id, status : status}, function(result){
