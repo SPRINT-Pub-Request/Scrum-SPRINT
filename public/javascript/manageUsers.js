@@ -2,6 +2,33 @@ $(document).ready(function () {
 
     let emailUser = "";
     let userRole = "";
+    
+    var table = $('#userstable').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: 4 }
+                ]
+            })
+
+    table.on('draw.dt' , function() {  
+        $('.users_data tr').each(function() {
+
+        const name = $(this).find('.nameInfo').text()
+
+        $.get('/checkInProgress' , {name} , function(result) {
+            $('.users_data tr').each(function() {
+                if(name == $(this).find('.nameInfo').text()) {
+                    if(result) {
+                        $(this).find('#inProgressInfo').text("Yes");
+                    } else {
+                        $(this).find('#inProgressInfo').text("No");
+                    }
+                }
+            });
+
+        });
+
+        });
+    });
 
     $('.users_data tr').each(function() {
 
@@ -21,7 +48,6 @@ $(document).ready(function () {
         });
 
     });
-
 
 
     $.get('/getNoAssigned' , {} , function(result){

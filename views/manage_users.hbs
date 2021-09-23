@@ -37,8 +37,8 @@
                         <th scope="col" data-priority="3"><div class="thead_label">Email</div></th>
                         <th scope="col" data-priority="1"><div class="thead_label">Name</div></th>
                         <th scope="col" data-priority="2"><div class="thead_label">Role</div></th>
-                        <th scope="col" data-priority="3"><div class="thead_label">Assigned Committees</div></th>
                         <th scope="col" data-priority="3"><div class="thead_label">In Progress</div></th>
+                        <th scope="col" data-priority="3"><div class="thead_label">Assigned Committee</div></th>
                         <th class="btn-col" data-priority="1"></th>
                     </tr>
                 </thead>
@@ -49,8 +49,8 @@
                         </td>
                         <td class = "nameInfo">{{this.name}}</td>
                         <td class = "roleInfo" id = "roleInfo">{{this.role}}</td>
-                        <td class = "assigned_committee">{{this.assigned_committee}}</td>
                         <td class = "inProgressInfo" id = "inProgressInfo"></td>
+                        <td class = "assigned_committee">{{this.assigned_committee}}</td>
                         <td class="btn-col" scope="row">
                             <button type = "button" class="edit" 
                             data-bs-toggle="modal" data-bs-target="#userdetailsModal"> EDIT </button>
@@ -230,11 +230,7 @@
         } );
  
         $(document).ready(function() {
-            $('#userstable').DataTable({
-                columnDefs: [
-                    { orderable: false, targets: 4 }
-                ]
-            });
+            
         } );
     </script>
 
