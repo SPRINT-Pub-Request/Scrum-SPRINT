@@ -480,7 +480,8 @@ const requestController = {
 
                     const pubrequest = {
                         request_id,
-                        reqname, 
+                        reqname,
+                        reqemail : req.session.email,
                         committee,
                         activity_name,
                         description,
@@ -526,12 +527,12 @@ const requestController = {
                     console.log("Pub Type: " + pubType);
                     console.log("Post Event: " + postevent);
                     console.log("Links : " + links);
+                    console.log("Request Email : " + req.session.email);
                 
                     db.insertOne(PubRequest, pubrequest, function(flag) {
                         console.log(flag);
                         res.send(flag);
                     });
-
                 });
 
 

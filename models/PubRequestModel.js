@@ -16,6 +16,11 @@ var PubRequestSchema = new mongoose.Schema({
         type : String,
         required: true
     },
+
+    reqemail: {
+        type:String,
+        required: true
+    },
     
     committee: {
         type : String,

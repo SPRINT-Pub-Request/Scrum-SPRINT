@@ -21,8 +21,9 @@ const mailController = {
 
             if(status === "Finished") {
                 db.findOne(PubRequest, {request_id : activity_id} , {} , function(result) {
-                    
-                    db.findOne(User, {name : result.reqname} , {} , function(result) {
+
+                    /*
+                    db.findOne(User, {name : result.reqemail} , {} , function(result) {
                         
                         const options = {
                             from : process.env.MAIL_AUTHEMAIL,
@@ -40,6 +41,27 @@ const mailController = {
                             console.log("Server has sent mail, Info: " + info.response);
                             res.send(true);
                         });
+                    });*/
+
+
+                    //Sends email to the request of the pub request
+
+                    console.log("Email!");
+                    const options = {
+                        from : process.env.MAIL_AUTHEMAIL,
+                        to : result.reqemail,
+                        subject : "Request Finished",
+                        text : "Good day!" + " \nThis is to notify you that your request is finished\nLink : https://sprint-pubtracker.herokuapp.com/"
+                    }
+
+                    transporter.sendMail(options, (err , info) => {
+                        if(err) {
+                            console.log(err);
+                            res.send(false);
+                        } 
+                        
+                        console.log("Server has sent mail, Info: " + info.response);
+                        res.send(true);
                     });
                 });
             } else {

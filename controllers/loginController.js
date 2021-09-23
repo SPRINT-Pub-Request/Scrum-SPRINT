@@ -27,6 +27,7 @@ const loginController = {
             if(domain === "dlsu.edu.ph") {
                 req.session.userID = req.user.id;
                 req.session.httpCode = 200;
+                req.session.email = req.user.email;
                 
                 const user = {
                     email : req.user.email,
